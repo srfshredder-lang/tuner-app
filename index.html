@@ -116,24 +116,24 @@
             <h1 class="font-display font-bold text-base sm:text-lg tracking-tight text-white">VOXKEY <span class="text-indigo-400">PRO</span></h1>
             <span class="text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">DSP 65–2600Hz</span>
           </div>
-          <p class="text-[11px] text-slate-400 hidden sm:block">Vocal, Hum & Whistle Pitch, Key & Pleasure-Clip Workstation</p>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Vocal, Hum & Whistle Pitch, Key & Session Recording Workstation</p>
         </div>
       </div>
 
-      <!-- Rolling Buffer & Pleasure Trigger Status Pills -->
+      <!-- Full-Session Recording Controls -->
       <div class="flex items-center gap-2 flex-wrap">
-        <!-- Ring Buffer Fill Indicator -->
+        <!-- Session Recording Elapsed Indicator -->
         <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 text-xs font-mono">
-          <i class="fa-solid fa-compact-disc text-amber-400 text-[11px]" id="bufferSpinIcon"></i>
-          <span class="text-slate-400 hidden xs:inline">PCM RING:</span>
-          <span id="ringBufferSeconds" class="text-amber-300 font-semibold font-tabular">0.0s / 12s</span>
+          <i class="fa-solid fa-compact-disc text-slate-500 text-[11px]" id="bufferSpinIcon"></i>
+          <span class="text-slate-400 hidden xs:inline">REC TIME:</span>
+          <span id="ringBufferSeconds" class="text-slate-300 font-semibold font-tabular">00:00</span>
         </div>
 
-        <!-- Pleasure Voice/Acoustic Detector Badge -->
-        <div id="speechDetectorBadge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 text-xs font-mono" title="Listens for vocal pleasure ('yes', 'nice', 'ooh', 'yeah', 'wow', laughs/exclamations)">
-          <i class="fa-solid fa-ear-listen text-emerald-400 text-[11px]"></i>
-          <span id="pleasureMonitorText" class="text-slate-300">Auto-Save: Ready</span>
-        </div>
+        <!-- Optional Session Recording Toggle Badge (Default OFF) -->
+        <button id="speechDetectorBadge" onclick="toggleSessionRecordOption()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 hover:border-slate-700 text-xs font-mono transition" title="Toggle full-session audio recording (Default: OFF)">
+          <i class="fa-solid fa-circle text-slate-500 text-[10px]" id="recArmDot"></i>
+          <span id="pleasureMonitorText" class="text-slate-400">Session Rec: OFF</span>
+        </button>
 
         <!-- Primary Mic Start/Stop Button (Desktop/Header) -->
         <button id="headerMicBtn" onclick="toggleMicrophone()" class="px-3.5 py-1.5 rounded-lg font-display font-bold text-xs uppercase tracking-wider bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/20 transition flex items-center gap-1.5">
@@ -201,10 +201,10 @@
 
       <div class="studio-panel rounded-xl p-3 flex items-center justify-between">
         <div>
-          <p class="text-[10px] font-mono uppercase tracking-wider text-slate-400">Pleasure Clips</p>
+          <p class="text-[10px] font-mono uppercase tracking-wider text-slate-400">Session Recordings</p>
           <div class="flex items-baseline gap-1.5 mt-0.5">
             <span id="kpiSavedClips" class="font-display font-extrabold text-xl text-amber-400 font-tabular">0</span>
-            <span class="text-[11px] font-mono text-slate-400">saved WAVs</span>
+            <span class="text-[11px] font-mono text-slate-400">saved takes</span>
           </div>
         </div>
         <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
@@ -465,72 +465,52 @@
           </div>
         </div>
 
-        <!-- AUDIBLE PLEASURE / EXCLAMATION DETECTOR & AUTO-CLIP SAVER PANEL -->
-        <div id="pleasureEngineCard" class="studio-panel rounded-2xl p-4 sm:p-5 space-y-3 border border-amber-500/20">
+        <!-- FULL-SESSION AUDIO RECORDER PANEL (DEFAULT OFF) -->
+        <div id="pleasureEngineCard" class="studio-panel rounded-2xl p-4 sm:p-5 space-y-3 border border-slate-800">
           <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                <i class="fa-solid fa-record-vinyl text-sm"></i>
               </div>
               <div>
-                <h2 class="font-display font-bold text-sm sm:text-base text-white">PLEASURE REACTION AUTO-SAVER</h2>
-                <p class="text-[11px] text-slate-400">Say <span class="text-amber-300 font-mono">"Yes!", "Nice!", "Ooh!", "Haha"</span> or cheer to capture phrase</p>
+                <h2 class="font-display font-bold text-sm sm:text-base text-white">FULL-SESSION AUDIO RECORDER</h2>
+                <p class="text-[11px] text-slate-400">Captures full audio from <span class="text-emerald-300 font-mono">Start Mic</span> to <span class="text-rose-300 font-mono">Stop Mic</span> (Default: OFF)</p>
               </div>
             </div>
-            <button onclick="triggerPleasureClipSave('Manual Button Tap')" class="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-display font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 transition flex items-center gap-1.5 shrink-0">
-              <i class="fa-solid fa-bookmark"></i>
-              <span>Save Clip Now</span>
-            </button>
-          </div>
-
-          <!-- Controls for Pleasure Sensitivity & Clip Duration -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-            <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div class="flex justify-between text-[11px] font-mono mb-1">
-                <span class="text-slate-400">Acoustic Exclamation Sens:</span>
-                <span id="pleasureSensLabel" class="text-amber-300 font-bold">70%</span>
-              </div>
-              <input id="pleasureSensSlider" type="range" min="10" max="95" value="70" oninput="updatePleasureSensitivity(this.value)" class="w-full accent-amber-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg" />
-            </div>
-
-            <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
-              <div class="flex justify-between text-[11px] font-mono">
-                <span class="text-slate-400">Lookback Clip Length:</span>
-                <span id="clipLengthLabel" class="text-amber-300 font-bold">10 sec</span>
-              </div>
-              <input id="clipLengthSlider" type="range" min="6" max="12" value="10" oninput="updateClipLookback(this.value)" class="w-full accent-amber-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg mt-1" />
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 bg-slate-950/80 px-3 py-2 rounded-lg border border-slate-800/80">
-            <div class="flex items-center gap-2 truncate">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span id="lastSpeechTranscript" class="truncate">Voice Trigger: Listening for "yes / nice / ooh / wow / laugh"...</span>
-            </div>
-            <label class="flex items-center gap-1.5 cursor-pointer shrink-0 ml-2">
-              <input type="checkbox" id="autoAcousticCheckbox" checked class="accent-amber-400 rounded" />
-              <span class="text-slate-300">Acoustic Burst</span>
+            <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-slate-500 transition shrink-0">
+              <input type="checkbox" id="sessionRecordToggle" onchange="toggleSessionRecordOption(this.checked)" class="accent-rose-500 w-4 h-4 rounded cursor-pointer" />
+              <span id="sessionRecordToggleLabel" class="font-display font-bold text-xs uppercase tracking-wider text-slate-300">REC: OFF</span>
             </label>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 bg-slate-950/80 px-3 py-2.5 rounded-lg border border-slate-800/80">
+            <div class="flex items-center gap-2 truncate">
+              <span id="sessionRecStatusDot" class="w-2 h-2 rounded-full bg-slate-600"></span>
+              <span id="lastSpeechTranscript" class="truncate">Session Recording Disabled (Default Off — Zero background audio overhead)</span>
+            </div>
+            <button id="manualFinalizeRecBtn" onclick="finalizeSessionRecordingNow()" class="hidden px-2.5 py-1 rounded bg-rose-500 hover:bg-rose-400 text-white font-bold text-[10px] uppercase tracking-wider shrink-0 ml-2 transition">
+              Save Session Now
+            </button>
           </div>
         </div>
 
       </div>
     </div>
 
-    <!-- HIGHLIGHTED PLEASURE CLIPS VAULT -->
+    <!-- SAVED FULL-SESSION RECORDINGS VAULT -->
     <section class="studio-panel rounded-2xl p-4 sm:p-5 space-y-3">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-          <h2 class="font-display font-bold text-base sm:text-lg text-white">HIGHLIGHTED PLEASURE CLIPS (WAV RING-BUFFER CAPTURES)</h2>
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+          <h2 class="font-display font-bold text-base sm:text-lg text-white">SAVED SESSION RECORDINGS</h2>
         </div>
-        <span class="text-xs font-mono text-slate-400">Captures the exact chord progression & raw audio when you express approval</span>
+        <span class="text-xs font-mono text-slate-400">Complete session audio captures with detected key & chord progression summary</span>
       </div>
 
       <div id="pleasureClipsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <div id="emptyClipsPlaceholder" class="col-span-full py-8 text-center border border-dashed border-slate-800 rounded-xl text-slate-400 text-sm font-mono">
-          <i class="fa-solid fa-wand-magic-sparkles text-amber-400/60 text-xl mb-2 block"></i>
-          No pleasure clips captured yet. Sing, hum, or whistle a melody, then say <span class="text-amber-300">"Yes!"</span>, <span class="text-amber-300">"Nice!"</span>, laugh, or tap <span class="text-amber-300">Save Clip Now</span> to extract the last 10 seconds as a playable WAV!
+          <i class="fa-solid fa-record-vinyl text-slate-600 text-xl mb-2 block"></i>
+          No session recordings saved yet. Toggle <span class="text-rose-400 font-bold">REC: ON</span> before starting the microphone to record and save your entire session!
         </div>
       </div>
     </section>
@@ -602,9 +582,9 @@
       <i class="fa-solid fa-rotate-left text-indigo-400"></i>
       <span>New Root</span>
     </button>
-    <button onclick="triggerPleasureClipSave('Mobile Quick-Tap')" class="py-2.5 px-3.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-amber-500 text-slate-950 flex items-center justify-center gap-1.5 shadow-lg">
-      <i class="fa-solid fa-star"></i>
-      <span>Pleasure Save</span>
+    <button id="mobileRecToggleBtn" onclick="toggleSessionRecordOption()" class="py-2.5 px-3.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700 flex items-center justify-center gap-1.5 shadow-lg">
+      <i class="fa-solid fa-circle text-slate-500" id="mobileRecToggleIcon"></i>
+      <span id="mobileRecToggleLabel">Rec: OFF</span>
     </button>
   </nav>
 
@@ -741,13 +721,14 @@
       scriptProcessor: null,
       masterRecordBus: null,
 
-      // Rolling 12-Second PCM Ring Buffer
+      // Full-Session Recorder State (Default OFF)
       sampleRate: 44100,
-      ringBufferMaxSeconds: 12,
-      ringBufferLookbackSeconds: 10,
-      ringBuffer: null,
-      ringWriteIndex: 0,
-      ringTotalSamplesWritten: 0,
+      sessionRecordEnabled: false,
+      isRecordingSession: false,
+      sessionRecordStartTime: 0,
+      mediaRecorder: null,
+      recordedChunks: [],
+      recordStreamDest: null,
 
       // Active Pitch Tracking & Stability Gate
       currentPitchHz: 0,
@@ -787,7 +768,6 @@
     window.addEventListener('load', () => {
       renderChromaticRibbon(null);
       initPitchCanvas();
-      initWebSpeechPleasureDetector();
       requestAnimationFrame(uiAnimationLoop);
     });
 
@@ -842,53 +822,26 @@
         state.audioCtx = new AudioContextClass();
         state.sampleRate = state.audioCtx.sampleRate;
 
-        // Allocate 12-second Float32 Ring Buffer
-        const totalSamples = state.sampleRate * state.ringBufferMaxSeconds;
-        state.ringBuffer = new Float32Array(totalSamples);
-        state.ringWriteIndex = 0;
-        state.ringTotalSamplesWritten = 0;
-
         // Create AnalyserNode (fftSize 2048 for accurate 65Hz - 2600Hz autocorrelation)
         state.analyser = state.audioCtx.createAnalyser();
         state.analyser.fftSize = 2048;
         state.analyser.smoothingTimeConstant = 0.0;
 
-        // Create Master Record Bus that feeds both Analyser and PCM Ring Buffer
+        // Create Master Bus that feeds Analyser (NO ScriptProcessor or audioCtx.destination link!)
         state.masterRecordBus = state.audioCtx.createGain();
         state.masterRecordBus.gain.value = 1.0;
-
-        // ScriptProcessorNode to continuously write time-domain PCM into the 12s ring buffer
-        state.scriptProcessor = state.audioCtx.createScriptProcessor(4096, 1, 1);
-        state.scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
-          const inputBuffer = audioProcessingEvent.inputBuffer.getChannelData(0);
-          const outputBuffer = audioProcessingEvent.outputBuffer.getChannelData(0);
-          outputBuffer.fill(0);
-          writeToRingBuffer(inputBuffer);
-        };
-
-        // Connect bus -> analyser & scriptProcessor
         state.masterRecordBus.connect(state.analyser);
-        state.masterRecordBus.connect(state.scriptProcessor);
-        // ScriptProcessor needs destination connection in some browsers to tick, use zero-gain mute node
-        const silentGain = state.audioCtx.createGain();
-        silentGain.gain.value = 0.0;
-        state.scriptProcessor.connect(silentGain);
-        silentGain.connect(state.audioCtx.destination);
+
+        // Optional MediaStreamDestination for full-session recording when enabled
+        if (typeof state.audioCtx.createMediaStreamDestination === 'function') {
+          state.recordStreamDest = state.audioCtx.createMediaStreamDestination();
+          state.masterRecordBus.connect(state.recordStreamDest);
+        }
       }
 
       if (state.audioCtx.state === 'suspended') {
         await state.audioCtx.resume();
       }
-    }
-
-    function writeToRingBuffer(inputSamples) {
-      if (!state.ringBuffer) return;
-      const len = state.ringBuffer.length;
-      for (let i = 0; i < inputSamples.length; i++) {
-        state.ringBuffer[state.ringWriteIndex] = inputSamples[i];
-        state.ringWriteIndex = (state.ringWriteIndex + 1) % len;
-      }
-      state.ringTotalSamplesWritten += inputSamples.length;
     }
 
     async function toggleMicrophone() {
@@ -899,7 +852,6 @@
 
       try {
         await ensureAudioContext();
-        // Request raw vocal/hum/whistle stream with DSP filters disabled
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: {
             echoCancellation: false,
@@ -914,9 +866,17 @@
         state.micSource.connect(state.masterRecordBus);
         state.isMicRunning = true;
 
+        if (state.sessionRecordEnabled) {
+          startSessionRecording();
+        }
+
         updateMicUI(true);
-        startWebSpeechRecognition();
-        showToast('Microphone Live — Sing, Hum, or Whistle a note to begin!', 'emerald');
+        showToast(
+          state.sessionRecordEnabled
+            ? 'Microphone Live + Full-Session Recording Started!'
+            : 'Microphone Live — Sing, Hum, or Whistle a note to begin!',
+          'emerald'
+        );
       } catch (err) {
         console.error('Microphone access error:', err);
         showToast('Mic access blocked or unavailable. You can still use the Reference Synth Pad!', 'rose');
@@ -924,6 +884,9 @@
     }
 
     function stopMicrophone() {
+      if (state.isRecordingSession) {
+        stopSessionRecording();
+      }
       if (state.micSource) {
         try { state.micSource.disconnect(); } catch (e) {}
         state.micSource = null;
@@ -935,7 +898,6 @@
       state.isMicRunning = false;
       finalizeActiveLockedNote(performance.now());
       updateMicUI(false);
-      stopWebSpeechRecognition();
     }
 
     function updateMicUI(isLive) {
@@ -1337,126 +1299,144 @@
      * 7. AUDIBLE PLEASURE DETECTOR (WEB SPEECH API + ACOUSTIC BURST)
      *    & WAV RING-BUFFER AUDIO CLIP ENCODER
      ***************************************************************************/
-    const PLEASURE_KEYWORDS = [
-      'yes', 'yeah', 'nice', 'ooh', 'oh', 'wow', 'good', 'great', 'love',
-      'haha', 'ha', 'sweet', 'awesome', 'save', 'fire', 'bingo', 'perfect', 'boom'
-    ];
+    function toggleSessionRecordOption(forceState) {
+      state.sessionRecordEnabled = typeof forceState === 'boolean' ? forceState : !state.sessionRecordEnabled;
 
-    function initWebSpeechPleasureDetector() {
-      const SpeechRecognition = undefined /* disabled: prevents mobile HAL audio tearing */ || undefined /* disabled: prevents mobile HAL audio tearing */;
-      if (!SpeechRecognition) {
-        document.getElementById('lastSpeechTranscript').textContent = 'Acoustic Burst Pleasure Trigger Ready (Speech API unsupported on this browser)';
-        return;
-      }
-
-      const recognition = new SpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = 'en-US';
-
-      recognition.onresult = (event) => {
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript.trim().toLowerCase();
-          document.getElementById('lastSpeechTranscript').textContent = `Heard: "${transcript}"`;
-
-          for (const kw of PLEASURE_KEYWORDS) {
-            if (transcript.includes(kw)) {
-              triggerPleasureClipSave(`Voice Pleasure ("${kw.toUpperCase()}!")`);
-              break;
-            }
-          }
-        }
-      };
-
-      recognition.onend = () => {
-        if (state.isMicRunning) {
-          try { recognition.start(); } catch (e) {}
-        }
-      };
-
-      state.speechRecognition = recognition;
-    }
-
-    function startWebSpeechRecognition() {
-      if (state.speechRecognition && !state.isSpeechActive) {
-        try {
-          state.speechRecognition.start();
-          state.isSpeechActive = true;
-        } catch (e) {}
-      }
-    }
-
-    function stopWebSpeechRecognition() {
-      if (state.speechRecognition && state.isSpeechActive) {
-        try {
-          state.speechRecognition.stop();
-          state.isSpeechActive = false;
-        } catch (e) {}
-      }
-    }
-
-    // Acoustic Exclamation / Laugh / Cheer Detector following a melodic phrase
-    function checkAcousticPleasureBurst(analysis, now) {
-      const autoAcoustic = document.getElementById('autoAcousticCheckbox');
-      if (!autoAcoustic || !autoAcoustic.checked) return;
-
-      // Require at least 2 notes played recently (within last 4.5 seconds)
-      const timeSinceLastNote = now - state.lastMelodicNoteTime;
-      if (state.phraseNotes.length < 2 || timeSinceLastNote < 180 || timeSinceLastNote > 4500) {
-        return;
-      }
-
-      // Sensitivity mapping: higher slider = easier trigger
-      const normSens = state.pleasureSensitivity / 100; // 0.10 to 0.95
-      const minRmsThreshold = 0.08 - (normSens * 0.05); // ~0.03 to 0.075
-      const minZcrThreshold = 0.13 - (normSens * 0.05); // High ZCR / broadband vocal burst
-
-      // An acoustic exclamation/laugh/cheer has strong amplitude, low harmonic autocorrelation clarity, and elevated ZCR
-      if (analysis.rms > minRmsThreshold && analysis.clarity < 0.45 && analysis.zcr > minZcrThreshold) {
-        triggerPleasureClipSave('Acoustic Pleasure Exclamation');
-      }
-    }
-
-    async function triggerPleasureClipSave(triggerReason = 'Manual Trigger') {
-      const now = performance.now();
-      // 2.5s cooldown so a single laugh doesn't save duplicate clips
-      if (now - state.lastPleasureSaveTime < 2500) return;
-      state.lastPleasureSaveTime = now;
-
-      await ensureAudioContext();
-
-      // Flash Pleasure Card
+      const checkbox = document.getElementById('sessionRecordToggle');
+      const toggleLabel = document.getElementById('sessionRecordToggleLabel');
+      const headerText = document.getElementById('pleasureMonitorText');
+      const recArmDot = document.getElementById('recArmDot');
+      const statusDot = document.getElementById('sessionRecStatusDot');
+      const statusText = document.getElementById('lastSpeechTranscript');
+      const mobileBtn = document.getElementById('mobileRecToggleBtn');
+      const mobileIcon = document.getElementById('mobileRecToggleIcon');
+      const mobileLabel = document.getElementById('mobileRecToggleLabel');
       const card = document.getElementById('pleasureEngineCard');
-      card.classList.remove('pleasure-flash');
-      void card.offsetWidth;
-      card.classList.add('pleasure-flash');
 
-      // Extract last N seconds from Ring Buffer
-      const secondsToExtract = Math.min(
-        state.ringBufferLookbackSeconds,
-        Math.max(2, state.ringTotalSamplesWritten / state.sampleRate)
-      );
-      const numSamples = Math.floor(secondsToExtract * state.sampleRate);
-      const extractedSamples = new Float32Array(numSamples);
+      if (checkbox) checkbox.checked = state.sessionRecordEnabled;
 
-      const ringLen = state.ringBuffer.length;
-      let readIndex = (state.ringWriteIndex - numSamples + ringLen) % ringLen;
-      for (let i = 0; i < numSamples; i++) {
-        extractedSamples[i] = state.ringBuffer[readIndex];
-        readIndex = (readIndex + 1) % ringLen;
+      if (state.sessionRecordEnabled) {
+        if (toggleLabel) {
+          toggleLabel.textContent = 'REC: ARMED';
+          toggleLabel.className = 'font-display font-bold text-xs uppercase tracking-wider text-rose-400';
+        }
+        if (headerText) {
+          headerText.textContent = 'Session Rec: ON';
+          headerText.className = 'text-rose-300 font-semibold';
+        }
+        if (recArmDot) recArmDot.className = 'fa-solid fa-circle text-rose-500 text-[10px] animate-pulse';
+        if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-rose-500 animate-pulse';
+        if (statusText) {
+          statusText.textContent = state.isMicRunning
+            ? 'Recording Full Session Audio...'
+            : 'Armed: Full session will record automatically when Start Mic is pressed.';
+        }
+        if (mobileBtn) {
+          mobileBtn.className = 'py-2.5 px-3.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-rose-500 text-white flex items-center justify-center gap-1.5 shadow-lg';
+          mobileIcon.className = 'fa-solid fa-circle text-white animate-pulse';
+          mobileLabel.textContent = 'Rec: ON';
+        }
+        if (card) card.className = 'studio-panel rounded-2xl p-4 sm:p-5 space-y-3 border border-rose-500/40';
+
+        if (state.isMicRunning && !state.isRecordingSession) {
+          startSessionRecording();
+        }
+      } else {
+        if (state.isRecordingSession) {
+          stopSessionRecording();
+        }
+        if (toggleLabel) {
+          toggleLabel.textContent = 'REC: OFF';
+          toggleLabel.className = 'font-display font-bold text-xs uppercase tracking-wider text-slate-300';
+        }
+        if (headerText) {
+          headerText.textContent = 'Session Rec: OFF';
+          headerText.className = 'text-slate-400';
+        }
+        if (recArmDot) recArmDot.className = 'fa-solid fa-circle text-slate-500 text-[10px]';
+        if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-slate-600';
+        if (statusText) statusText.textContent = 'Session Recording Disabled (Default Off — Zero background audio overhead)';
+        if (mobileBtn) {
+          mobileBtn.className = 'py-2.5 px-3.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700 flex items-center justify-center gap-1.5 shadow-lg';
+          mobileIcon.className = 'fa-solid fa-circle text-slate-500';
+          mobileLabel.textContent = 'Rec: OFF';
+        }
+        if (card) card.className = 'studio-panel rounded-2xl p-4 sm:p-5 space-y-3 border border-slate-800';
+      }
+    }
+
+    function startSessionRecording() {
+      const targetStream = state.micStream || (state.recordStreamDest && state.recordStreamDest.stream);
+      if (!targetStream || state.isRecordingSession) return;
+
+      state.recordedChunks = [];
+      let options = {};
+      if (typeof MediaRecorder !== 'undefined') {
+        if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+          options = { mimeType: 'audio/webm;codecs=opus' };
+        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+          options = { mimeType: 'audio/mp4' };
+        }
       }
 
-      // Encode Float32 PCM to 16-bit WAV Blob
-      const wavBlob = encodeWAV(extractedSamples, state.sampleRate);
-      const wavUrl = URL.createObjectURL(wavBlob);
+      try {
+        state.mediaRecorder = new MediaRecorder(targetStream, options);
+      } catch (err) {
+        state.mediaRecorder = new MediaRecorder(targetStream);
+      }
 
-      // Highlight recent phrase notes in telemetry log
-      const recentSlice = state.sessionLog.slice(0, 8);
-      recentSlice.forEach(item => { item.isPleasureHighlighted = true; });
+      state.mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          state.recordedChunks.push(e.data);
+        }
+      };
 
-      const notesSummary = state.phraseNotes.length > 0
-        ? state.phraseNotes.slice(-8).map(n => n.fullName).join(' → ')
-        : 'Ambient / Free Vocal Phrase';
+      state.mediaRecorder.onstop = () => {
+        saveCompletedSessionRecording();
+      };
+
+      state.mediaRecorder.start(1000);
+      state.isRecordingSession = true;
+      state.sessionRecordStartTime = performance.now();
+
+      const manualBtn = document.getElementById('manualFinalizeRecBtn');
+      if (manualBtn) manualBtn.classList.remove('hidden');
+      const statusText = document.getElementById('lastSpeechTranscript');
+      if (statusText) statusText.textContent = 'LIVE REC: Capturing entire session audio stream...';
+    }
+
+    function stopSessionRecording() {
+      if (!state.mediaRecorder || !state.isRecordingSession) return;
+      try {
+        state.mediaRecorder.stop();
+      } catch (e) {}
+      state.isRecordingSession = false;
+      const manualBtn = document.getElementById('manualFinalizeRecBtn');
+      if (manualBtn) manualBtn.classList.add('hidden');
+    }
+
+    function finalizeSessionRecordingNow() {
+      if (!state.isRecordingSession) return;
+      stopSessionRecording();
+      if (state.isMicRunning && state.sessionRecordEnabled) {
+        setTimeout(() => {
+          if (state.isMicRunning && state.sessionRecordEnabled) startSessionRecording();
+        }, 200);
+      }
+    }
+
+    function saveCompletedSessionRecording() {
+      if (!state.recordedChunks || state.recordedChunks.length === 0) return;
+
+      const mimeType = (state.mediaRecorder && state.mediaRecorder.mimeType) || 'audio/webm';
+      const ext = mimeType.includes('mp4') ? 'm4a' : 'webm';
+      const blob = new Blob(state.recordedChunks, { type: mimeType });
+      const audioUrl = URL.createObjectURL(blob);
+      const durationSec = Math.max(1, (performance.now() - state.sessionRecordStartTime) / 1000).toFixed(1);
+
+      const notesSummary = state.sessionLog.length > 0
+        ? state.sessionLog.slice(0, 12).reverse().map(n => n.fullName).join(' → ')
+        : 'Ambient / Unpitched Audio Session';
 
       const progSummary = state.chordProgression.length > 0
         ? state.chordProgression.map(c => `${c.roman} (${c.chordName})`).join(' → ')
@@ -1469,20 +1449,20 @@
       const clipObj = {
         id: state.pleasureClips.length + 1,
         timestamp: new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        triggerReason,
-        durationSec: secondsToExtract.toFixed(1),
+        triggerReason: 'Full Session Recording',
+        durationSec,
         keySummary,
         progSummary,
         notesSummary,
-        wavUrl,
-        filename: `VoxKey-PleasureClip-${state.pleasureClips.length + 1}-${keySummary.replace(/\s+/g, '_')}.wav`
+        wavUrl: audioUrl,
+        ext: ext.toUpperCase(),
+        filename: `VoxKey-Session-${state.pleasureClips.length + 1}-${keySummary.replace(/\s+/g, '_')}.${ext}`
       };
 
       state.pleasureClips.unshift(clipObj);
       renderPleasureClips();
-      renderTelemetryTable();
       updateSessionKPIs();
-      showToast(`★ ${triggerReason}! Saved ${clipObj.durationSec}s WAV & Progression`, 'amber');
+      showToast(`Saved Full Session Recording (${durationSec}s)`, 'emerald');
     }
 
     // Standard RIFF WAVE 16-bit PCM Encoder
@@ -1534,12 +1514,15 @@
           ? `Signal: ${analysis.rmsDb.toFixed(1)} dB`
           : 'Signal: -∞ dB';
 
-        // Update Ring Buffer counter in header
-        const bufferedSecs = Math.min(
-          state.ringBufferMaxSeconds,
-          state.ringTotalSamplesWritten / state.sampleRate
-        );
-        document.getElementById('ringBufferSeconds').textContent = `${bufferedSecs.toFixed(1)}s / 12s`;
+        // Update Session Recording Elapsed Timer in Header
+        if (state.isRecordingSession) {
+          const elapsedSec = Math.floor((now - state.sessionRecordStartTime) / 1000);
+          const mins = String(Math.floor(elapsedSec / 60)).padStart(2, '0');
+          const secs = String(elapsedSec % 60).padStart(2, '0');
+          document.getElementById('ringBufferSeconds').textContent = `${mins}:${secs}`;
+        } else {
+          document.getElementById('ringBufferSeconds').textContent = 'OFF';
+        }
 
         if (analysis.frequency > 0) {
           const pitchData = frequencyToPitchData(analysis.frequency);
@@ -1862,8 +1845,8 @@
           <div class="flex items-start justify-between gap-2">
             <div>
               <div class="flex items-center gap-1.5">
-                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-mono font-bold uppercase">
-                  ★ Clip #${clip.id} • ${clip.triggerReason}
+                <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-mono font-bold uppercase">
+                  ● Session #${clip.id} (${clip.durationSec}s)
                 </span>
                 <span class="text-[11px] font-mono text-slate-400">${clip.timestamp}</span>
               </div>
@@ -1871,8 +1854,8 @@
                 Key: <span class="text-indigo-300">${clip.keySummary}</span>
               </div>
             </div>
-            <a href="${clip.wavUrl}" download="${clip.filename}" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono font-bold text-[11px] flex items-center gap-1 shrink-0 transition">
-              <i class="fa-solid fa-download text-[10px]"></i> WAV
+            <a href="${clip.wavUrl}" download="${clip.filename}" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-mono font-bold text-[11px] flex items-center gap-1 shrink-0 transition">
+              <i class="fa-solid fa-download text-[10px]"></i> SAVE ${clip.ext || 'AUDIO'}
             </a>
           </div>
 
@@ -1983,15 +1966,12 @@
     }
 
     async function runDemoPhraseAndPleasure() {
-      showToast('Playing C Major Progression (C4 → F4 → G4 → A4) + Pleasure Save...', 'indigo');
+      showToast('Playing C Major Progression (C4 → F4 → G4 → A4 → C5)...', 'indigo');
       const notes = [261.63, 349.23, 392.00, 440.00, 523.25];
       for (let i = 0; i < notes.length; i++) {
         await playTestNote(notes[i], 380);
         await new Promise(r => setTimeout(r, 430));
       }
-      setTimeout(() => {
-        triggerPleasureClipSave('Demo Vocal Pleasure ("YES!")');
-      }, 250);
     }
 
     /***************************************************************************
