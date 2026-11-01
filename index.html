@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CHARtune Pitch & Key Tuner — Vocal, Hum & Whistle Pitch, Key & Progression Tracker</title>
+  <title>CHARtune Pitch & Key Tuner — Key & Progression Tracker</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
@@ -116,7 +116,7 @@
             <h1 class="font-display font-bold text-base sm:text-lg tracking-tight text-white">CHARtune <span class="text-indigo-400">Pitch & Key Tuner</span></h1>
             <span class="text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">DSP 65–2600Hz</span>
           </div>
-          <p class="text-[11px] text-slate-400 hidden sm:block">Vocal, Hum & Whistle Pitch, Key & Session Recording Workstation</p>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Session Recording Workstation</p>
         </div>
       </div>
 
@@ -421,15 +421,41 @@
                   <option value="11">B</option>
                 </select>
                 <select id="manualScaleSelect" onchange="applyManualKeyOverride()" class="bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-white w-1/2">
-                  <option value="auto">Auto Scale</option>
-                  <option value="Major">Major</option>
-                  <option value="Natural Minor">Nat Minor</option>
-                  <option value="Harmonic Minor">Harm Minor</option>
-                  <option value="Dorian">Dorian</option>
-                  <option value="Mixolydian">Mixolydian</option>
-                  <option value="Major Pentatonic">Maj Pentatonic</option>
-                  <option value="Minor Pentatonic">Min Pentatonic</option>
-                  <option value="Blues">Blues</option>
+                  <option value="auto">Auto Scale (All 24)</option>
+                  <optgroup label="I. Diatonic Modes (7)">
+                    <option value="Major">Ionian (Major)</option>
+                    <option value="Dorian">Dorian</option>
+                    <option value="Phrygian">Phrygian</option>
+                    <option value="Lydian">Lydian</option>
+                    <option value="Mixolydian">Mixolydian</option>
+                    <option value="Natural Minor">Aeolian (Nat Minor)</option>
+                    <option value="Locrian">Locrian</option>
+                  </optgroup>
+                  <optgroup label="II. Harmonic & Melodic (6)">
+                    <option value="Harmonic Minor">Harmonic Minor</option>
+                    <option value="Melodic Minor">Melodic Minor</option>
+                    <option value="Phrygian Dominant">Phrygian Dominant</option>
+                    <option value="Lydian Dominant">Lydian Dominant</option>
+                    <option value="Altered">Altered (Super Locrian)</option>
+                    <option value="Double Harmonic">Double Harmonic</option>
+                  </optgroup>
+                  <optgroup label="III. Pentatonic Systems (4)">
+                    <option value="Major Pentatonic">Major Pentatonic</option>
+                    <option value="Minor Pentatonic">Minor Pentatonic</option>
+                    <option value="Suspended Pentatonic">Suspended Pentatonic</option>
+                    <option value="Hirajoshi">Hirajoshi (In-Sen)</option>
+                  </optgroup>
+                  <optgroup label="IV. Hexatonic & Blues (3)">
+                    <option value="Blues">Minor Blues</option>
+                    <option value="Major Blues">Major Blues</option>
+                    <option value="Prometheus">Prometheus (Mystic)</option>
+                  </optgroup>
+                  <optgroup label="V. Symmetrical & Chromatic (4)">
+                    <option value="Whole Tone">Whole Tone</option>
+                    <option value="Octatonic Diminished">Octatonic Diminished</option>
+                    <option value="Enigmatic">Enigmatic</option>
+                    <option value="Chromatic Cluster">Chromatic Cluster</option>
+                  </optgroup>
                 </select>
               </div>
             </div>
@@ -574,12 +600,12 @@
          NEW MODULE: SPEECH PROSODY, VOCAL KEY DISTRIBUTION & PERCEPTUAL PSYCHOACOUSTIC ENGINE
          ========================================================================= -->
     <section id="speechProsodyModule" class="studio-panel rounded-2xl p-4 sm:p-6 space-y-5 border border-indigo-500/30 shadow-2xl shadow-indigo-950/20">
-      <!-- 1. MODULE HEADER & CONTROLS -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800/90 pb-4">
+      <!-- 1. MODULE HEADER & LIVE / MATRIX CONTROLS -->
+      <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 border-b border-slate-800/90 pb-4">
         <div class="space-y-1">
           <div class="flex flex-wrap items-center gap-2">
             <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[10px] font-mono uppercase tracking-widest font-bold">
-              PROSODIC DSP & PSYCHOACOUSTICS
+              24 SCALE STRUCTURES × 12 ROOTS = 288 VOCAL ARCHITECTURES
             </span>
             <span id="speechCaptureStatusBadge" class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-mono uppercase tracking-wider">
               55ms Vowel-Nucleus Gate: Standby
@@ -589,56 +615,156 @@
             <i class="fa-solid fa-waveform-lines text-indigo-400"></i>
             SPEECH PROSODY, VOCAL KEY DISTRIBUTION & PERCEPTUAL PSYCHOACOUSTIC ENGINE
           </h2>
-          <p class="text-xs text-slate-400 max-w-3xl">
-            Speak the calibrated phonetic prompts below to map your spoken pitch-class distribution (%), multi-key speech composition (%), and how listeners subconsciously interpret your vocal signature.
+          <p class="text-xs text-slate-400 max-w-4xl">
+            Human speech is not limited to 6 archetypes—it spans <span class="text-indigo-300 font-semibold">24 distinct modal, harmonic, pentatonic, hexatonic, and symmetrical tone structures</span> across <span class="text-indigo-300 font-semibold">12 chromatic roots (288 total speaking key signatures)</span>. Speak the calibration prompts below or explore any Root × Scale combination in the 288-Matrix Explorer.
           </p>
         </div>
 
-        <!-- Control Buttons & Archetype Selector -->
-        <div class="flex flex-wrap items-center gap-2">
+        <!-- Control Buttons -->
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
           <button id="speechCaptureBtn" onclick="toggleSpeechProsodyCapture()" class="px-3.5 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition flex items-center gap-2">
             <i id="speechCaptureIcon" class="fa-solid fa-microphone-lines"></i>
             <span id="speechCaptureBtnText">Start Speech Capture</span>
           </button>
 
-          <button onclick="simulateSpeechArchetype('B_HARMONIC_MINOR', true)" class="px-3 py-2 rounded-xl font-mono font-bold text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition flex items-center gap-1.5" title="Load and audition the B Harmonic Minor speech profile">
+          <button onclick="selectSpeechRootAndScale(11, 'Harmonic Minor', true)" class="px-3 py-2 rounded-xl font-mono font-bold text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition flex items-center gap-1.5" title="Load and audition the B Harmonic Minor reference profile">
             <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
-            <span>Simulate "B Harmonic Minor" Speech</span>
+            <span>Load "B Harmonic Minor"</span>
           </button>
 
-          <select id="speechArchetypeSelect" onchange="simulateSpeechArchetype(this.value, false)" class="bg-slate-900 border border-slate-700 hover:border-indigo-400 rounded-xl px-2.5 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-indigo-500">
-            <option value="B_HARMONIC_MINOR" selected>Archetype: B Harmonic Minor (High-Contrast Command)</option>
-            <option value="D_DORIAN">Archetype: D Dorian (Analytical / Stoic Precision)</option>
-            <option value="CSHARP_NATURAL_MINOR">Archetype: C# Natural Minor (Gravitas / Dialectical Intensity)</option>
-            <option value="G_MIXOLYDIAN">Archetype: G Mixolydian (Pragmatic / Directive Momentum)</option>
-            <option value="F_MAJOR">Archetype: F Major (Accessible / Consensus Builder)</option>
-            <option value="E_PHRYGIAN">Archetype: E Phrygian (Tactical / Unyielding Edge)</option>
-          </select>
+          <button onclick="auditionActiveSpeechCadence()" class="px-3 py-2 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/30 text-xs font-mono text-indigo-300 border border-indigo-500/30 transition flex items-center gap-1.5" title="Synthesize the spoken prosodic cadence of the active Root × Scale">
+            <i class="fa-solid fa-volume-high"></i>
+            <span>Audition Cadence</span>
+          </button>
 
           <button onclick="resetSpeechProsodyData()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-rose-950/70 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-800/60 text-xs font-mono transition flex items-center gap-1.5">
             <i class="fa-solid fa-rotate-left"></i>
-            <span>Reset Speech Data</span>
+            <span>Reset Live Voice</span>
           </button>
         </div>
       </div>
 
-      <!-- 2. INTERACTIVE SPEECH CALIBRATION SCRIPT & PROMPT CAROUSEL -->
+      <!-- 2. INTERACTIVE 288-ARCHITECTURE MATRIX EXPLORER (12 ROOTS × 24 STRUCTURES) -->
+      <div class="studio-panel-elevated rounded-2xl p-4 sm:p-5 border border-indigo-500/25 space-y-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-table-cells text-indigo-400 text-xs"></i>
+              <h3 class="font-display font-bold text-xs sm:text-sm uppercase tracking-wider text-white">
+                288-ARCHITECTURE VOCAL MATRIX EXPLORER (12 ROOTS × 24 SPEAKING TONE STRUCTURES)
+              </h3>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Select any Root Note (F0 vocal anchor) and any of the 24 Scale/Mode Structures to simulate its spoken pitch distribution and inspect its 6-Vector Perceptual Dossier
+            </p>
+          </div>
+
+          <!-- Dual Dropdown Selector (Root x Scale) -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1.5">
+              <label for="speechMatrixRootSelect" class="text-[10px] font-mono uppercase text-slate-400">Root:</label>
+              <select id="speechMatrixRootSelect" onchange="onSpeechMatrixSelectorChange()" class="bg-transparent text-xs font-mono font-bold text-indigo-300 focus:outline-none cursor-pointer">
+                <option value="0">C (130.8 Hz / C3)</option>
+                <option value="1">C# / Db (138.6 Hz / C#3)</option>
+                <option value="2">D (146.8 Hz / D3)</option>
+                <option value="3">D# / Eb (155.6 Hz / Eb3)</option>
+                <option value="4">E (164.8 Hz / E3)</option>
+                <option value="5">F (174.6 Hz / F3)</option>
+                <option value="6">F# / Gb (185.0 Hz / F#3)</option>
+                <option value="7">G (196.0 Hz / G3)</option>
+                <option value="8">G# / Ab (207.7 Hz / Ab3)</option>
+                <option value="9">A (110.0 Hz / A2)</option>
+                <option value="10">A# / Bb (116.5 Hz / Bb2)</option>
+                <option value="11" selected>B (123.5 Hz / B2)</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1.5">
+              <label for="speechMatrixScaleSelect" class="text-[10px] font-mono uppercase text-slate-400">Structure (24):</label>
+              <select id="speechMatrixScaleSelect" onchange="onSpeechMatrixSelectorChange()" class="bg-transparent text-xs font-mono font-bold text-amber-300 focus:outline-none cursor-pointer">
+                <optgroup label="Family I: Diatonic Modes (7)">
+                  <option value="Major">01. Ionian (Major) — Transparent / Consensus</option>
+                  <option value="Dorian">02. Dorian — Stoic / Analytical Precision</option>
+                  <option value="Phrygian">03. Phrygian — Incisive / Flat-2nd Edge</option>
+                  <option value="Lydian">04. Lydian — Visionary / Raised-4th Elevation</option>
+                  <option value="Mixolydian">05. Mixolydian — Pragmatic / Directive Momentum</option>
+                  <option value="Natural Minor">06. Aeolian (Natural Minor) — Sober / Gravitas</option>
+                  <option value="Locrian">07. Locrian — Unresolved / Diminished 5th</option>
+                </optgroup>
+                <optgroup label="Family II: Harmonic & Melodic Minor Systems (6)">
+                  <option value="Harmonic Minor" selected>08. Harmonic Minor — High-Contrast / Finality</option>
+                  <option value="Melodic Minor">09. Melodic Minor — Hybrid Executive / Sophisticated</option>
+                  <option value="Phrygian Dominant">10. Phrygian Dominant — Imperative / Oracular Command</option>
+                  <option value="Lydian Dominant">11. Lydian Dominant (Acoustic) — Lucid / Overtone Authority</option>
+                  <option value="Altered">12. Altered (Super Locrian) — Dialectical Disruption</option>
+                  <option value="Double Harmonic">13. Double Harmonic (Byzantine) — Dual Aug-2nd / Absolute</option>
+                </optgroup>
+                <optgroup label="Family III: Pentatonic & Anhemitonic Frameworks (4)">
+                  <option value="Major Pentatonic">14. Major Pentatonic — Frictionless / High-Rapport</option>
+                  <option value="Minor Pentatonic">15. Minor Pentatonic — Direct / Grounded Kinetic</option>
+                  <option value="Suspended Pentatonic">16. Suspended Pentatonic (Egyptian) — Neutral / Mediator</option>
+                  <option value="Hirajoshi">17. Hirajoshi (In-Sen) — Minimalist / Asymmetric Focus</option>
+                </optgroup>
+                <optgroup label="Family IV: Hexatonic & Blues Inflections (3)">
+                  <option value="Blues">18. Blues (Hexatonic) — Grit / Authentic Subtext</option>
+                  <option value="Major Blues">19. Major Blues — Charismatic / Conversational</option>
+                  <option value="Prometheus">20. Prometheus (Mystic Hexatonic) — Speculative / Deep</option>
+                </optgroup>
+                <optgroup label="Family V: Symmetrical & Chromatic Systems (4)">
+                  <option value="Whole Tone">21. Whole Tone — Suspended / Equidistant Ambiguity</option>
+                  <option value="Octatonic Diminished">22. Octatonic Diminished (H-W) — Labyrinthine / Tactical</option>
+                  <option value="Enigmatic">23. Enigmatic — Cryptic / High-Abstraction</option>
+                  <option value="Chromatic Cluster">24. Chromatic Cluster — Micro-Inflected / Dense</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <button onclick="toggleTaxonomyGridDrawer()" id="toggleTaxonomyDrawerBtn" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-grip text-indigo-400"></i>
+              <span id="toggleTaxonomyDrawerText">Hide 24-Structure Atlas</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick 12-Root Selector Pill Strip -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 mr-1">12 Chromatic Roots:</span>
+            <div id="speechRootPillStrip" class="flex flex-wrap items-center gap-1">
+              <!-- Populated dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Family Filter Pills for the 24-Structure Atlas -->
+          <div class="flex items-center gap-1 flex-wrap">
+            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 mr-1">Filter Family:</span>
+            <button onclick="setSpeechTaxonomyFamilyFilter('ALL')" id="famFilter-ALL" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-500 text-white transition">All (24)</button>
+            <button onclick="setSpeechTaxonomyFamilyFilter('I. Diatonic')" id="famFilter-I. Diatonic" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">I. Diatonic (7)</button>
+            <button onclick="setSpeechTaxonomyFamilyFilter('II. Harmonic/Melodic')" id="famFilter-II. Harmonic/Melodic" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">II. Harmonic/Melodic (6)</button>
+            <button onclick="setSpeechTaxonomyFamilyFilter('III. Pentatonic')" id="famFilter-III. Pentatonic" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">III. Pentatonic (4)</button>
+            <button onclick="setSpeechTaxonomyFamilyFilter('IV. Hexatonic/Blues')" id="famFilter-IV. Hexatonic/Blues" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">IV. Hexatonic (3)</button>
+            <button onclick="setSpeechTaxonomyFamilyFilter('V. Symmetrical')" id="famFilter-V. Symmetrical" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">V. Symmetrical (4)</button>
+          </div>
+        </div>
+
+        <!-- 24-Structure Interactive Atlas Grid -->
+        <div id="speechTaxonomyGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-[340px] overflow-y-auto pr-1 pt-1">
+          <!-- Populated dynamically by JS with all 24 speaking tone structures -->
+        </div>
+      </div>
+
+      <!-- 3. INTERACTIVE SPEECH CALIBRATION SCRIPT & PROMPT CAROUSEL (10 PROMPTS) -->
       <div class="studio-panel-elevated rounded-2xl p-4 sm:p-5 border border-slate-800/90 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
             <h3 class="font-display font-bold text-xs sm:text-sm uppercase tracking-wider text-indigo-300">
-              CALIBRATED PHONETIC & PROSODIC SCRIPT PROMPTS (READ ALOUD AT NATURAL CADENCE)
+              10 CALIBRATED PHONETIC & PROSODIC SCRIPT PROMPTS (READ ALOUD AT NATURAL CADENCE)
             </h3>
           </div>
-          <!-- Prompt Number Selector Pills -->
-          <div class="flex items-center gap-1.5 flex-wrap">
-            <button onclick="selectSpeechPrompt(0)" id="promptPill-0" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-500 text-white transition">1. Words</button>
-            <button onclick="selectSpeechPrompt(1)" id="promptPill-1" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">2. Declarative</button>
-            <button onclick="selectSpeechPrompt(2)" id="promptPill-2" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">3. Directive</button>
-            <button onclick="selectSpeechPrompt(3)" id="promptPill-3" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">4. Analytical</button>
-            <button onclick="selectSpeechPrompt(4)" id="promptPill-4" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">5. Interrogative</button>
-            <button onclick="selectSpeechPrompt(5)" id="promptPill-5" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">6. Full Passage</button>
+          <!-- Prompt Number Selector Pills (10 Prompts) -->
+          <div id="speechPromptPillsContainer" class="flex items-center gap-1 flex-wrap">
+            <!-- Populated by JS -->
           </div>
         </div>
 
@@ -646,7 +772,7 @@
         <div class="p-4 sm:p-5 rounded-xl bg-slate-950/90 border border-indigo-500/30 relative overflow-hidden">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
             <span id="activePromptCategory" class="text-[11px] font-mono uppercase tracking-wider text-indigo-400 font-semibold">
-              PROMPT 1 OF 6 — LEXICAL RESONANCE ANCHORS (ISOLATED WORDS)
+              PROMPT 1 OF 10 — LEXICAL RESONANCE ANCHORS (ISOLATED WORDS)
             </span>
             <span id="activePromptObjective" class="text-[11px] font-mono text-slate-400">
               Target: Maps baseline F0 anchor, open-vowel formants & terminal drop
@@ -674,7 +800,7 @@
             <div class="flex flex-wrap items-center gap-3 text-xs font-mono font-tabular">
               <div class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
                 <span class="text-slate-500">Syllable Nuclei:</span>
-                <span id="speechSyllableCount" class="text-emerald-400 font-bold ml-1">142</span>
+                <span id="speechSyllableCount" class="text-emerald-400 font-bold ml-1">156</span>
               </div>
               <div class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
                 <span class="text-slate-500">Mean Spoken F0:</span>
@@ -693,15 +819,18 @@
         </div>
       </div>
 
-      <!-- 3. PRIMARY SPEECH KEY DECLARATION BANNER -->
+      <!-- 4. PRIMARY SPEECH KEY DECLARATION BANNER -->
       <div class="rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-indigo-950/80 via-slate-900/95 to-slate-900/90 border border-indigo-500/40 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div class="space-y-1">
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
             <span class="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">
-              DOMINANT VOCAL KEY SIGNATURE
+              DOMINANT VOCAL KEY SIGNATURE (1 OF 288)
+            </span>
+            <span id="speechActiveFamilyBadge" class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              Family II: Harmonic & Melodic Minor Systems
             </span>
             <span id="speechProfileSourceLabel" class="text-[11px] font-mono text-slate-400">
-              Active Profile: Calibrated B Harmonic Minor Reference
+              Active Profile: B Harmonic Minor Reference
             </span>
           </div>
           <div class="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
@@ -732,7 +861,7 @@
         </div>
       </div>
 
-      <!-- 4. QUANTITATIVE TONES & KEYS BREAKDOWN (% OF SPEECH) -->
+      <!-- 5. QUANTITATIVE TONES & KEYS BREAKDOWN (% OF SPEECH) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         <!-- PANEL A (7 COLS): SPOKEN TONE / PITCH-CLASS DISTRIBUTION (% OF SPEECH PER NOTE) -->
@@ -743,33 +872,33 @@
                 <i class="fa-solid fa-chart-bar text-cyan-400"></i>
                 SPOKEN TONE DISTRIBUTION (% OF SPEECH PER NOTE)
               </h3>
-              <p class="text-[11px] text-slate-400">Exact percentage of spoken vowel nuclei & syllables anchored on each pitch class</p>
+              <p class="text-[11px] text-slate-400">Exact percentage of spoken vowel nuclei & syllables anchored on each of the 12 chromatic pitch classes</p>
             </div>
             <button id="sortTonesBtn" onclick="toggleSpeechToneSort()" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-[11px] font-mono text-slate-300 transition">
               Sort: <span id="sortTonesLabel" class="text-indigo-300 font-bold">By % Share</span>
             </button>
           </div>
 
-          <div id="speechToneDistributionList" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+          <div id="speechToneDistributionList" class="space-y-2 max-h-[410px] overflow-y-auto pr-1">
             <!-- Dynamically populated by JS -->
           </div>
         </div>
 
-        <!-- PANEL B (5 COLS): MULTI-KEY & MODAL SPEECH COMPOSITION (% OF SPEECH PER KEY) -->
+        <!-- PANEL B (5 COLS): MULTI-KEY & MODAL SPEECH COMPOSITION (TOP 5 OF 288 KEYS BY % OF SPEECH) -->
         <div class="lg:col-span-5 studio-panel-elevated rounded-2xl p-4 sm:p-5 border border-slate-800/90 flex flex-col justify-between space-y-3">
           <div class="space-y-3">
             <div class="border-b border-slate-800/80 pb-2.5">
               <h3 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
                 <i class="fa-solid fa-layer-group text-amber-400"></i>
-                MULTI-KEY SPEECH COMPOSITION (% BY KEY)
+                MULTI-KEY SPEECH COMPOSITION (TOP 5 OF 288 KEYS)
               </h3>
-              <p class="text-[11px] text-slate-400">Natural speech modulates across primary & secondary modal centers depending on clause intent</p>
+              <p class="text-[11px] text-slate-400">Evaluates your spoken pitch histogram against all 288 Root × Scale architectures to quantify modal shifts across clauses</p>
             </div>
 
             <!-- Multi-Segment Stacked Bar -->
             <div>
               <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-1">
-                <span>Cumulative Modal Breakdown</span>
+                <span>Cumulative Modal Breakdown (5 Active Centers)</span>
                 <span>100% of Speech</span>
               </div>
               <div id="multiKeyStackedBar" class="h-4 w-full rounded-lg bg-slate-950 overflow-hidden flex border border-slate-800">
@@ -777,8 +906,8 @@
               </div>
             </div>
 
-            <!-- Key Breakdown Cards -->
-            <div id="speechKeyCompositionList" class="space-y-2.5">
+            <!-- Key Breakdown Cards (Click any card to inspect that key's perceptual framework) -->
+            <div id="speechKeyCompositionList" class="space-y-2">
               <!-- Populated by JS -->
             </div>
           </div>
@@ -796,23 +925,26 @@
 
       </div>
 
-      <!-- 5. IN-DEPTH PERCEPTUAL & INTERPRETIVE FRAMEWORK (PSYCHOACOUSTIC DOSSIER) -->
+      <!-- 6. IN-DEPTH PERCEPTUAL & INTERPRETIVE FRAMEWORK (PSYCHOACOUSTIC DOSSIER) -->
       <div class="studio-panel-elevated rounded-2xl p-4 sm:p-6 border border-indigo-500/30 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/90 pb-3.5">
           <div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-wrap">
               <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono uppercase tracking-wider font-bold">
-                LISTENER NEURO-ACOUSTIC DECODING
+                LISTENER NEURO-ACOUSTIC DECODING (6 VECTORS)
               </span>
               <span id="dossierActiveKeyBadge" class="text-xs font-mono text-indigo-300 font-bold">
                 Profile: B Harmonic Minor
+              </span>
+              <span id="dossierIntervalGeometryBadge" class="text-[11px] font-mono text-slate-400">
+                • 2 Semitones • 1 Aug 2nd (300¢) • 1 Tritone
               </span>
             </div>
             <h3 class="font-display font-extrabold text-base sm:text-lg text-white mt-1">
               PERCEPTUAL & INTERPRETIVE FRAMEWORK: HOW OTHERS PERCEIVE & INTERPRET YOUR SPEECH
             </h3>
             <p class="text-xs text-slate-400">
-              In-depth psychoacoustic, cognitive, and interpersonal analysis of how a listener's auditory cortex and limbic system decode your spoken scale intervals
+              Comprehensive psychoacoustic, cognitive, and interpersonal analysis derived from the exact interval geometry and root frequency of your active vocal key
             </p>
           </div>
 
@@ -869,8 +1001,17 @@
       'Min 6th (b6)', 'Maj 6th (6)', 'Dom 7th (b7)', 'Maj 7th (7)'
     ];
 
+    // COMPLETE 24-SCALE / MODE ACOUSTIC TAXONOMY ACROSS 5 STRUCTURAL FAMILIES
     const SCALE_DEFINITIONS = {
+      // FAMILY I: DIATONIC MODES (7)
       'Major': {
+        code: '01',
+        family: 'I. Diatonic',
+        familyFull: 'Family I: Diatonic Modes',
+        displayName: 'Ionian (Major)',
+        archetype: 'Transparent / Consensus Architect',
+        tensionIndex: 34,
+        tensionLabel: 'Consonant / High-Trust',
         intervals: [0, 2, 4, 5, 7, 9, 11],
         formula: '1 - 2 - 3 - 4 - 5 - 6 - 7',
         chords: {
@@ -883,33 +1024,14 @@
           11: { roman: 'vii°', suffix: 'dim' }
         }
       },
-      'Natural Minor': {
-        intervals: [0, 2, 3, 5, 7, 8, 10],
-        formula: '1 - 2 - b3 - 4 - 5 - b6 - b7',
-        chords: {
-          0: { roman: 'i', suffix: 'm' },
-          2: { roman: 'ii°', suffix: 'dim' },
-          3: { roman: 'III', suffix: '' },
-          5: { roman: 'iv', suffix: 'm' },
-          7: { roman: 'v', suffix: 'm' },
-          8: { roman: 'VI', suffix: '' },
-          10: { roman: 'VII', suffix: '' }
-        }
-      },
-      'Harmonic Minor': {
-        intervals: [0, 2, 3, 5, 7, 8, 11],
-        formula: '1 - 2 - b3 - 4 - 5 - b6 - 7',
-        chords: {
-          0: { roman: 'i', suffix: 'm' },
-          2: { roman: 'ii°', suffix: 'dim' },
-          3: { roman: 'III+', suffix: 'aug' },
-          5: { roman: 'iv', suffix: 'm' },
-          7: { roman: 'V', suffix: '' },
-          8: { roman: 'VI', suffix: '' },
-          11: { roman: 'vii°', suffix: 'dim' }
-        }
-      },
       'Dorian': {
+        code: '02',
+        family: 'I. Diatonic',
+        familyFull: 'Family I: Diatonic Modes',
+        displayName: 'Dorian',
+        archetype: 'Stoic / Analytical Precision',
+        tensionIndex: 58,
+        tensionLabel: 'Symmetrical / Dialectical',
         intervals: [0, 2, 3, 5, 7, 9, 10],
         formula: '1 - 2 - b3 - 4 - 5 - 6 - b7',
         chords: {
@@ -922,20 +1044,14 @@
           10: { roman: 'VII', suffix: '' }
         }
       },
-      'Mixolydian': {
-        intervals: [0, 2, 4, 5, 7, 9, 10],
-        formula: '1 - 2 - 3 - 4 - 5 - 6 - b7',
-        chords: {
-          0: { roman: 'I', suffix: '' },
-          2: { roman: 'ii', suffix: 'm' },
-          4: { roman: 'iii°', suffix: 'dim' },
-          5: { roman: 'IV', suffix: '' },
-          7: { roman: 'v', suffix: 'm' },
-          9: { roman: 'vi', suffix: 'm' },
-          10: { roman: 'bVII', suffix: '' }
-        }
-      },
       'Phrygian': {
+        code: '03',
+        family: 'I. Diatonic',
+        familyFull: 'Family I: Diatonic Modes',
+        displayName: 'Phrygian',
+        archetype: 'Incisive / Unyielding Edge',
+        tensionIndex: 86,
+        tensionLabel: 'Flat-2nd Compression',
         intervals: [0, 1, 3, 5, 7, 8, 10],
         formula: '1 - b2 - b3 - 4 - 5 - b6 - b7',
         chords: {
@@ -948,7 +1064,136 @@
           10: { roman: 'bvii', suffix: 'm' }
         }
       },
+      'Lydian': {
+        code: '04',
+        family: 'I. Diatonic',
+        familyFull: 'Family I: Diatonic Modes',
+        displayName: 'Lydian',
+        archetype: 'Visionary / Conceptual Elevation',
+        tensionIndex: 48,
+        tensionLabel: 'Raised-4th Luminosity',
+        intervals: [0, 2, 4, 6, 7, 9, 11],
+        formula: '1 - 2 - 3 - #4 - 5 - 6 - 7',
+        chords: {
+          0: { roman: 'I', suffix: '' },
+          2: { roman: 'II', suffix: '' },
+          4: { roman: 'iii', suffix: 'm' },
+          6: { roman: '#iv°', suffix: 'dim' },
+          7: { roman: 'V', suffix: '' },
+          9: { roman: 'vi', suffix: 'm' },
+          11: { roman: 'vii', suffix: 'm' }
+        }
+      },
+      'Mixolydian': {
+        code: '05',
+        family: 'I. Diatonic',
+        familyFull: 'Family I: Diatonic Modes',
+        displayName: 'Mixolydian',
+        archetype: 'Pragmatic / Directive Momentum',
+        tensionIndex: 52,
+        tensionLabel: 'Subtonic Drive (b7)',
+        intervals: [0, 2, 4, 5, 7, 9, 10],
+        formula: '1 - 2 - 3 - 4 - 5 - 6 - b7',
+        chords: {
+          0: { roman: 'I', suffix: '' },
+          2: { roman: 'ii', suffix: 'm' },
+          4: { roman: 'iii°', suffix: 'dim' },
+          5: { roman: 'IV', suffix: '' },
+          7: { roman: 'v', suffix: 'm' },
+          9: { roman: 'vi', suffix: 'm' },
+          10: { roman: 'bVII', suffix: '' }
+        }
+      },
+      'Natural Minor': {
+        code: '06',
+        family: 'I. Diatonic',
+        familyFull: 'Family I: Diatonic Modes',
+        displayName: 'Aeolian (Natural Minor)',
+        archetype: 'Sober Gravitas / Reflective Realism',
+        tensionIndex: 70,
+        tensionLabel: 'Minor-6th Gravity',
+        intervals: [0, 2, 3, 5, 7, 8, 10],
+        formula: '1 - 2 - b3 - 4 - 5 - b6 - b7',
+        chords: {
+          0: { roman: 'i', suffix: 'm' },
+          2: { roman: 'ii°', suffix: 'dim' },
+          3: { roman: 'III', suffix: '' },
+          5: { roman: 'iv', suffix: 'm' },
+          7: { roman: 'v', suffix: 'm' },
+          8: { roman: 'VI', suffix: '' },
+          10: { roman: 'VII', suffix: '' }
+        }
+      },
+      'Locrian': {
+        code: '07',
+        family: 'I. Diatonic',
+        familyFull: 'Family I: Diatonic Modes',
+        displayName: 'Locrian',
+        archetype: 'Deconstructive / Diminished Axis',
+        tensionIndex: 94,
+        tensionLabel: 'Diminished-5th Instability',
+        intervals: [0, 1, 3, 5, 6, 8, 10],
+        formula: '1 - b2 - b3 - 4 - b5 - b6 - b7',
+        chords: {
+          0: { roman: 'i°', suffix: 'dim' },
+          1: { roman: 'bII', suffix: '' },
+          3: { roman: 'biii', suffix: 'm' },
+          5: { roman: 'iv', suffix: 'm' },
+          6: { roman: 'bV', suffix: '' },
+          8: { roman: 'bVI', suffix: '' },
+          10: { roman: 'bvii', suffix: 'm' }
+        }
+      },
+
+      // FAMILY II: HARMONIC & MELODIC MINOR SYSTEMS (6)
+      'Harmonic Minor': {
+        code: '08',
+        family: 'II. Harmonic/Melodic',
+        familyFull: 'Family II: Harmonic & Melodic Minor Systems',
+        displayName: 'Harmonic Minor',
+        archetype: 'High-Contrast Command / Finality',
+        tensionIndex: 88,
+        tensionLabel: 'High-Contrast / Chiaroscuro',
+        intervals: [0, 2, 3, 5, 7, 8, 11],
+        formula: '1 - 2 - b3 - 4 - 5 - b6 - 7',
+        chords: {
+          0: { roman: 'i', suffix: 'm' },
+          2: { roman: 'ii°', suffix: 'dim' },
+          3: { roman: 'III+', suffix: 'aug' },
+          5: { roman: 'iv', suffix: 'm' },
+          7: { roman: 'V', suffix: '' },
+          8: { roman: 'VI', suffix: '' },
+          11: { roman: 'vii°', suffix: 'dim' }
+        }
+      },
+      'Melodic Minor': {
+        code: '09',
+        family: 'II. Harmonic/Melodic',
+        familyFull: 'Family II: Harmonic & Melodic Minor Systems',
+        displayName: 'Melodic Minor (Ascending)',
+        archetype: 'Hybrid Executive / Precision Nuance',
+        tensionIndex: 76,
+        tensionLabel: 'Minor-3rd + Major-6/7 Lift',
+        intervals: [0, 2, 3, 5, 7, 9, 11],
+        formula: '1 - 2 - b3 - 4 - 5 - 6 - 7',
+        chords: {
+          0: { roman: 'i(maj7)', suffix: 'mMaj7' },
+          2: { roman: 'ii', suffix: 'm' },
+          3: { roman: 'III+', suffix: 'aug' },
+          5: { roman: 'IV7', suffix: '7' },
+          7: { roman: 'V7', suffix: '7' },
+          9: { roman: 'vi°', suffix: 'dim' },
+          11: { roman: 'vii°', suffix: 'dim' }
+        }
+      },
       'Phrygian Dominant': {
+        code: '10',
+        family: 'II. Harmonic/Melodic',
+        familyFull: 'Family II: Harmonic & Melodic Minor Systems',
+        displayName: 'Phrygian Dominant',
+        archetype: 'Imperative / Oracular Command',
+        tensionIndex: 90,
+        tensionLabel: 'Aug-2nd (b2→3) Authority',
         intervals: [0, 1, 4, 5, 7, 8, 10],
         formula: '1 - b2 - 3 - 4 - 5 - b6 - b7',
         chords: {
@@ -961,7 +1206,76 @@
           10: { roman: 'bvii', suffix: 'm' }
         }
       },
+      'Lydian Dominant': {
+        code: '11',
+        family: 'II. Harmonic/Melodic',
+        familyFull: 'Family II: Harmonic & Melodic Minor Systems',
+        displayName: 'Lydian Dominant (Acoustic)',
+        archetype: 'Lucid Overtone / Intellectual Mastery',
+        tensionIndex: 66,
+        tensionLabel: 'Acoustic Overtone (#4 + b7)',
+        intervals: [0, 2, 4, 6, 7, 9, 10],
+        formula: '1 - 2 - 3 - #4 - 5 - 6 - b7',
+        chords: {
+          0: { roman: 'I7', suffix: '7' },
+          2: { roman: 'II7', suffix: '7' },
+          4: { roman: 'iii°', suffix: 'dim' },
+          6: { roman: '#iv°', suffix: 'dim' },
+          7: { roman: 'v', suffix: 'm' },
+          9: { roman: 'vi', suffix: 'm' },
+          10: { roman: 'bVII+', suffix: 'aug' }
+        }
+      },
+      'Altered': {
+        code: '12',
+        family: 'II. Harmonic/Melodic',
+        familyFull: 'Family II: Harmonic & Melodic Minor Systems',
+        displayName: 'Altered (Super Locrian)',
+        archetype: 'Dialectical Disruption / Reframing',
+        tensionIndex: 95,
+        tensionLabel: 'Maximum Dominant Tension',
+        intervals: [0, 1, 3, 4, 6, 8, 10],
+        formula: '1 - b2 - b3 - b4 - b5 - b6 - b7',
+        chords: {
+          0: { roman: 'I7alt', suffix: '7alt' },
+          1: { roman: 'bII', suffix: 'm' },
+          3: { roman: 'bIII', suffix: '' },
+          4: { roman: 'bIV', suffix: '' },
+          6: { roman: 'bV', suffix: '' },
+          8: { roman: 'bVI+', suffix: 'aug' },
+          10: { roman: 'bvii°', suffix: 'dim' }
+        }
+      },
+      'Double Harmonic': {
+        code: '13',
+        family: 'II. Harmonic/Melodic',
+        familyFull: 'Family II: Harmonic & Melodic Minor Systems',
+        displayName: 'Double Harmonic (Byzantine)',
+        archetype: 'Sovereign / Dual Aug-2nd Decree',
+        tensionIndex: 96,
+        tensionLabel: 'Dual Augmented-2nd Lock',
+        intervals: [0, 1, 4, 5, 7, 8, 11],
+        formula: '1 - b2 - 3 - 4 - 5 - b6 - 7',
+        chords: {
+          0: { roman: 'I', suffix: '' },
+          1: { roman: 'bII', suffix: '' },
+          4: { roman: 'iii', suffix: 'm' },
+          5: { roman: 'iv', suffix: 'm' },
+          7: { roman: 'V(b5)', suffix: '7b5' },
+          8: { roman: 'bVI+', suffix: 'aug' },
+          11: { roman: 'vii°', suffix: 'dim' }
+        }
+      },
+
+      // FAMILY III: PENTATONIC & ANHEMITONIC FRAMEWORKS (4)
       'Major Pentatonic': {
+        code: '14',
+        family: 'III. Pentatonic',
+        familyFull: 'Family III: Pentatonic & Anhemitonic Frameworks',
+        displayName: 'Major Pentatonic',
+        archetype: 'Frictionless / Universal Rapport',
+        tensionIndex: 22,
+        tensionLabel: 'Zero-Semitone Openness',
         intervals: [0, 2, 4, 7, 9],
         formula: '1 - 2 - 3 - 5 - 6',
         chords: {
@@ -973,6 +1287,13 @@
         }
       },
       'Minor Pentatonic': {
+        code: '15',
+        family: 'III. Pentatonic',
+        familyFull: 'Family III: Pentatonic & Anhemitonic Frameworks',
+        displayName: 'Minor Pentatonic',
+        archetype: 'Direct / Unvarnished Kinetic',
+        tensionIndex: 44,
+        tensionLabel: 'Anhemitonic Minor Drive',
         intervals: [0, 3, 5, 7, 10],
         formula: '1 - b3 - 4 - 5 - b7',
         chords: {
@@ -983,7 +1304,52 @@
           10: { roman: 'VII', suffix: '' }
         }
       },
+      'Suspended Pentatonic': {
+        code: '16',
+        family: 'III. Pentatonic',
+        familyFull: 'Family III: Pentatonic & Anhemitonic Frameworks',
+        displayName: 'Suspended Pentatonic (Egyptian)',
+        archetype: 'Diplomatic Neutrality / Mediator',
+        tensionIndex: 30,
+        tensionLabel: '3rd-Less Modal Equilibrium',
+        intervals: [0, 2, 5, 7, 10],
+        formula: '1 - 2 - 4 - 5 - b7',
+        chords: {
+          0: { roman: 'Isus4', suffix: 'sus4' },
+          2: { roman: 'ii7', suffix: 'm7' },
+          5: { roman: 'IVsus2', suffix: 'sus2' },
+          7: { roman: 'v7', suffix: 'm7' },
+          10: { roman: 'bVII', suffix: '' }
+        }
+      },
+      'Hirajoshi': {
+        code: '17',
+        family: 'III. Pentatonic',
+        familyFull: 'Family III: Pentatonic & Anhemitonic Frameworks',
+        displayName: 'Hirajoshi (In-Sen)',
+        archetype: 'Surgical Minimalist / High-Precision',
+        tensionIndex: 78,
+        tensionLabel: 'Wide-Leap + Semitone Focus',
+        intervals: [0, 1, 5, 7, 8],
+        formula: '1 - b2 - 4 - 5 - b6',
+        chords: {
+          0: { roman: 'i(b2)', suffix: 'm' },
+          1: { roman: 'bII', suffix: 'maj7' },
+          5: { roman: 'iv', suffix: 'm' },
+          7: { roman: 'V', suffix: 'sus' },
+          8: { roman: 'bVI', suffix: '' }
+        }
+      },
+
+      // FAMILY IV: HEXATONIC & BLUES INFLECTIONS (3)
       'Blues': {
+        code: '18',
+        family: 'IV. Hexatonic/Blues',
+        familyFull: 'Family IV: Hexatonic & Blues Inflections',
+        displayName: 'Blues (Hexatonic)',
+        archetype: 'Earned Grit / Authentic Subtext',
+        tensionIndex: 68,
+        tensionLabel: 'Blue-Note Tritone Inflection',
         intervals: [0, 3, 5, 6, 7, 10],
         formula: '1 - b3 - 4 - b5 - 5 - b7',
         chords: {
@@ -993,6 +1359,131 @@
           6: { roman: 'bV°', suffix: 'dim' },
           7: { roman: 'V7', suffix: '7' },
           10: { roman: 'VII7', suffix: '7' }
+        }
+      },
+      'Major Blues': {
+        code: '19',
+        family: 'IV. Hexatonic/Blues',
+        familyFull: 'Family IV: Hexatonic & Blues Inflections',
+        displayName: 'Major Blues',
+        archetype: 'Charismatic Raconteur / Persuasive',
+        tensionIndex: 46,
+        tensionLabel: 'b3→3 Chromatic Warmth',
+        intervals: [0, 2, 3, 4, 7, 9],
+        formula: '1 - 2 - b3 - 3 - 5 - 6',
+        chords: {
+          0: { roman: 'I7', suffix: '7' },
+          2: { roman: 'ii', suffix: 'm' },
+          3: { roman: 'bIII', suffix: '' },
+          4: { roman: 'iii', suffix: 'm' },
+          7: { roman: 'V7', suffix: '7' },
+          9: { roman: 'vi', suffix: 'm' }
+        }
+      },
+      'Prometheus': {
+        code: '20',
+        family: 'IV. Hexatonic/Blues',
+        familyFull: 'Family IV: Hexatonic & Blues Inflections',
+        displayName: 'Prometheus (Mystic Hexatonic)',
+        archetype: 'Philosophical / Speculative Depth',
+        tensionIndex: 72,
+        tensionLabel: 'Mystic Tritone-Sixth Synthesis',
+        intervals: [0, 2, 4, 6, 9, 10],
+        formula: '1 - 2 - 3 - #4 - 6 - b7',
+        chords: {
+          0: { roman: 'I7#11', suffix: '7#11' },
+          2: { roman: 'II7', suffix: '7' },
+          4: { roman: 'iii°', suffix: 'dim' },
+          6: { roman: '#iv°', suffix: 'dim' },
+          9: { roman: 'vi', suffix: 'm' },
+          10: { roman: 'bVII+', suffix: 'aug' }
+        }
+      },
+
+      // FAMILY V: SYMMETRICAL & CHROMATIC SYSTEMS (4)
+      'Whole Tone': {
+        code: '21',
+        family: 'V. Symmetrical',
+        familyFull: 'Family V: Symmetrical & Chromatic Systems',
+        displayName: 'Whole Tone',
+        archetype: 'Suspended Horizon / Non-Binary',
+        tensionIndex: 80,
+        tensionLabel: 'Equidistant 200¢ Symmetry',
+        intervals: [0, 2, 4, 6, 8, 10],
+        formula: '1 - 2 - 3 - #4 - #5 - b7',
+        chords: {
+          0: { roman: 'I+', suffix: 'aug' },
+          2: { roman: 'II+', suffix: 'aug' },
+          4: { roman: 'III+', suffix: 'aug' },
+          6: { roman: '#IV+', suffix: 'aug' },
+          8: { roman: '#V+', suffix: 'aug' },
+          10: { roman: 'bVII+', suffix: 'aug' }
+        }
+      },
+      'Octatonic Diminished': {
+        code: '22',
+        family: 'V. Symmetrical',
+        familyFull: 'Family V: Symmetrical & Chromatic Systems',
+        displayName: 'Octatonic Diminished (H-W)',
+        archetype: 'Labyrinthine / Multi-Axis Strategist',
+        tensionIndex: 92,
+        tensionLabel: 'Alternating 100¢/200¢ Matrix',
+        intervals: [0, 1, 3, 4, 6, 7, 9, 10],
+        formula: '1 - b2 - b3 - 3 - #4 - 5 - 6 - b7',
+        chords: {
+          0: { roman: 'I°7', suffix: 'dim7' },
+          1: { roman: 'bII°7', suffix: 'dim7' },
+          3: { roman: 'bIII°7', suffix: 'dim7' },
+          4: { roman: 'III7', suffix: '7' },
+          6: { roman: '#IV°7', suffix: 'dim7' },
+          7: { roman: 'V7', suffix: '7' },
+          9: { roman: 'vi°7', suffix: 'dim7' },
+          10: { roman: 'bVII7', suffix: '7' }
+        }
+      },
+      'Enigmatic': {
+        code: '23',
+        family: 'V. Symmetrical',
+        familyFull: 'Family V: Symmetrical & Chromatic Systems',
+        displayName: 'Enigmatic',
+        archetype: 'Cryptic / High-Abstraction Polymath',
+        tensionIndex: 89,
+        tensionLabel: 'b2 + Whole-Tone + Leading 7',
+        intervals: [0, 1, 4, 6, 8, 10, 11],
+        formula: '1 - b2 - 3 - #4 - #5 - b7 - 7',
+        chords: {
+          0: { roman: 'I+', suffix: 'augMaj7' },
+          1: { roman: 'bII', suffix: '' },
+          4: { roman: 'III+', suffix: 'aug' },
+          6: { roman: '#IV°', suffix: 'dim' },
+          8: { roman: '#V+', suffix: 'aug' },
+          10: { roman: 'bVII', suffix: '7' },
+          11: { roman: 'vii°', suffix: 'dim' }
+        }
+      },
+      'Chromatic Cluster': {
+        code: '24',
+        family: 'V. Symmetrical',
+        familyFull: 'Family V: Symmetrical & Chromatic Systems',
+        displayName: 'Chromatic Cluster',
+        archetype: 'Hyper-Nuanced / Micro-Inflected',
+        tensionIndex: 98,
+        tensionLabel: '12-Tone Continuous Glissando',
+        intervals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        formula: '1-b2-2-b3-3-4-b5-5-b6-6-b7-7',
+        chords: {
+          0: { roman: 'Chr', suffix: '12' },
+          1: { roman: 'bII', suffix: 'chr' },
+          2: { roman: 'II', suffix: 'chr' },
+          3: { roman: 'bIII', suffix: 'chr' },
+          4: { roman: 'III', suffix: 'chr' },
+          5: { roman: 'IV', suffix: 'chr' },
+          6: { roman: 'bV', suffix: 'chr' },
+          7: { roman: 'V', suffix: 'chr' },
+          8: { roman: 'bVI', suffix: 'chr' },
+          9: { roman: 'VI', suffix: 'chr' },
+          10: { roman: 'bVII', suffix: 'chr' },
+          11: { roman: 'VII', suffix: 'chr' }
         }
       }
     };
@@ -1059,17 +1550,18 @@
         isCapturingSpeech: false,
         activePromptIndex: 0,
         sortTonesByShare: true,
+        taxonomyFamilyFilter: 'ALL',
+        showTaxonomyAtlas: true,
         syllableGateMs: 55,
         candidateSpeechMidi: null,
         candidateSpeechStart: 0,
         lastLockedSpeechTime: 0,
-        pitchClassCounts: [2, 6, 15, 1, 10, 1, 24, 20, 2, 3, 26, 38], // Default initialized to B Harmonic Minor (148 syllables)
-        totalSyllables: 148,
+        pitchClassCounts: [2, 7, 16, 1, 11, 1, 25, 21, 2, 3, 27, 39], // Default initialized to B Harmonic Minor (155 syllables)
+        totalSyllables: 155,
         f0HistoryHz: [123.5, 146.8, 185.0, 196.0, 233.1, 246.9, 138.6, 164.8],
         midiHistory: [47, 50, 54, 55, 58, 59, 49, 52],
         primaryRootPc: 11, // B (11)
         primaryScaleName: 'Harmonic Minor',
-        activeArchetypeId: 'B_HARMONIC_MINOR',
         isLiveUserVoice: false
       }
     };
@@ -2477,137 +2969,181 @@
 
     /***************************************************************************
      * 13. SPEECH PROSODY, VOCAL KEY DISTRIBUTION & PERCEPTUAL PSYCHOACOUSTICS
+     *     COMPLETE 24-STRUCTURE × 12-ROOT (288 ARCHITECTURES) ENGINE
      ***************************************************************************/
     const SPEECH_CALIBRATION_PROMPTS = [
       {
-        category: 'PROMPT 1 OF 6 — LEXICAL RESONANCE ANCHORS (ISOLATED WORDS)',
+        shortTitle: '1. Lexical Words',
+        category: 'PROMPT 1 OF 10 — LEXICAL RESONANCE ANCHORS (ISOLATED WORDS)',
         objective: 'Target: Maps baseline F0 anchor, open-vowel formants & terminal drop',
         text: '"Architecture — Equilibrium — Velocity — Precision — Sovereignty — Finality — Resolution — Threshold."'
       },
       {
-        category: 'PROMPT 2 OF 6 — DECLARATIVE BASELINE CADENCE',
+        shortTitle: '2. Declarative',
+        category: 'PROMPT 2 OF 10 — DECLARATIVE BASELINE CADENCE',
         objective: 'Target: Establishes tonic resting pitch and subdominant/dominant clause drift',
         text: '"The baseline parameters are locked, and the operational trajectory remains unchanged across all sectors."'
       },
       {
-        category: 'PROMPT 3 OF 6 — HIGH-CONTRAST DIRECTIVE AUTHORITY',
+        shortTitle: '3. Directive',
+        category: 'PROMPT 3 OF 10 — HIGH-CONTRAST DIRECTIVE AUTHORITY',
         objective: 'Target: Measures sharp leading-tone tension (7→1) and downward command resolution',
         text: '"Execute the transition immediately; we do not negotiate on structural integrity or foundational metrics."'
       },
       {
-        category: 'PROMPT 4 OF 6 — ANALYTICAL & CONDITIONAL SUSPENSION',
-        objective: 'Target: Captures mid-sentence modal shifts (b6 and 5th degree half-cadences)',
+        shortTitle: '4. Analytical',
+        category: 'PROMPT 4 OF 10 — ANALYTICAL & CONDITIONAL SUSPENSION',
+        objective: 'Target: Captures mid-sentence modal shifts (b6, #4, and 5th degree half-cadences)',
         text: '"While initial telemetry indicates nominal variance, secondary harmonics reveal a calculated underlying architecture."'
       },
       {
-        category: 'PROMPT 5 OF 6 — INTERROGATIVE PITCH EXCURSION',
+        shortTitle: '5. Interrogative',
+        category: 'PROMPT 5 OF 10 — INTERROGATIVE PITCH EXCURSION',
         objective: 'Target: Quantifies upper-octave interval leaps and augmented second inflection span',
         text: '"Why accept a conventional equilibrium when the underlying framework demands uncompromising recalibration?"'
       },
       {
-        category: 'PROMPT 6 OF 6 — FULL HARMONIC PROSODY PASSAGE',
+        shortTitle: '6. Adversarial',
+        category: 'PROMPT 6 OF 10 — ADVERSARIAL & CROSS-EXAMINATION REGISTER',
+        objective: 'Target: Detects Phrygian b2 compression, tritone pivots, and rhythmic attack',
+        text: '"Look closely at the discrepancy between what was promised in principle and what was delivered in practice."'
+      },
+      {
+        shortTitle: '7. De-Escalation',
+        category: 'PROMPT 7 OF 10 — EMPATHETIC & CONSENSUS DE-ESCALATION',
+        objective: 'Target: Tracks pentatonic/major-third softening and wide-interval warmth',
+        text: '"Every perspective in this room carries weight; let us align our shared priorities before we finalize the path forward."'
+      },
+      {
+        shortTitle: '8. Boardroom',
+        category: 'PROMPT 8 OF 10 — EXECUTIVE CAPITAL & STRATEGIC MANDATE',
+        objective: 'Target: Evaluates tonic-dominant (1↔5) pillar stability under compound clauses',
+        text: '"Capital allocation follows conviction: we are consolidating three legacy divisions into a single autonomous engine."'
+      },
+      {
+        shortTitle: '9. Quantitative',
+        category: 'PROMPT 9 OF 10 — TECHNICAL & QUANTITATIVE TELEMETRY',
+        objective: 'Target: Measures micro-tuning stability across rapid numeric and consonant-heavy clusters',
+        text: '"At four hundred forty hertz, a twelve-semitone octave divides into twelve hundred logarithmic cents of pitch resolution."'
+      },
+      {
+        shortTitle: '10. Full Passage',
+        category: 'PROMPT 10 OF 10 — FULL HARMONIC PROSODY PASSAGE',
         objective: 'Target: Complete multi-clause prosodic distribution across primary & secondary keys',
         text: '"Language carries a hidden musical geometry; every spoken syllable anchors a pitch class, projects a harmonic interval, and dictates how the listener\'s nervous system decodes intent."'
       }
     ];
 
-    // Pre-configured realistic speech prosody archetypes
-    const SPEECH_ARCHETYPES = {
-      'B_HARMONIC_MINOR': {
-        label: 'Calibrated B Harmonic Minor Reference',
-        rootPc: 11, // B
-        scaleName: 'Harmonic Minor',
-        // C, C#, D, D#, E, F, F#, G, G#, A, A#, B
-        counts: [2, 7, 16, 1, 11, 1, 25, 21, 2, 3, 27, 39],
-        meanF0Text: '123.5 Hz (B2)',
-        tonicCenterText: 'B2 / B3',
-        tonicHzText: '123.5 Hz / 246.9 Hz',
-        semitoneSpan: '11.0 ST',
-        cadenceSlope: 'Descending Command (A#→B)',
-        tensionScore: '88 / 100',
-        tensionSub: 'High-Contrast / Chiaroscuro',
-        auditionFreqs: [146.83, 185.00, 196.00, 233.08, 246.94, 123.47] // D3 -> F#3 -> G3 -> A#3 -> B3 -> B2
-      },
-      'D_DORIAN': {
-        label: 'D Dorian (Analytical / Stoic Precision)',
-        rootPc: 2, // D
-        scaleName: 'Dorian',
-        // D, E, F, G, A, B, C
-        counts: [14, 2, 38, 2, 12, 22, 2, 16, 1, 26, 2, 18],
-        meanF0Text: '146.8 Hz (D3)',
-        tonicCenterText: 'D3 / A3',
-        tonicHzText: '146.8 Hz / 220.0 Hz',
-        semitoneSpan: '9.5 ST',
-        cadenceSlope: 'Balanced Analytical (B→A→D)',
-        tensionScore: '64 / 100',
-        tensionSub: 'Symmetrical / Dialectical',
-        auditionFreqs: [146.83, 174.61, 220.00, 246.94, 220.00, 146.83]
-      },
-      'CSHARP_NATURAL_MINOR': {
-        label: 'C# Natural Minor (Gravitas / Dialectical Intensity)',
-        rootPc: 1, // C#
-        scaleName: 'Natural Minor',
-        // C#, D#, E, F#, G#, A, B
-        counts: [2, 36, 2, 10, 22, 1, 15, 2, 24, 18, 2, 14],
-        meanF0Text: '138.6 Hz (C#3)',
-        tonicCenterText: 'C#3 / G#3',
-        tonicHzText: '138.6 Hz / 207.7 Hz',
-        semitoneSpan: '10.0 ST',
-        cadenceSlope: 'Stepwise Gravitas (B→G#→C#)',
-        tensionScore: '74 / 100',
-        tensionSub: 'Introspective / Weighty',
-        auditionFreqs: [138.59, 164.81, 207.65, 220.00, 207.65, 138.59]
-      },
-      'G_MIXOLYDIAN': {
-        label: 'G Mixolydian (Pragmatic / Directive Momentum)',
-        rootPc: 7, // G
-        scaleName: 'Mixolydian',
-        // G, A, B, C, D, E, F
-        counts: [16, 1, 22, 1, 12, 19, 2, 37, 1, 15, 2, 20],
-        meanF0Text: '196.0 Hz (G3)',
-        tonicCenterText: 'G2 / G3',
-        tonicHzText: '98.0 Hz / 196.0 Hz',
-        semitoneSpan: '8.5 ST',
-        cadenceSlope: 'Forward Kinetic (F→D→G)',
-        tensionScore: '58 / 100',
-        tensionSub: 'Assertive / Grounded',
-        auditionFreqs: [196.00, 246.94, 293.66, 349.23, 293.66, 196.00]
-      },
-      'F_MAJOR': {
-        label: 'F Major (Accessible / Consensus Builder)',
-        rootPc: 5, // F
-        scaleName: 'Major',
-        // F, G, A, Bb, C, D, E
-        counts: [24, 1, 14, 1, 12, 38, 1, 16, 1, 22, 18, 2],
-        meanF0Text: '174.6 Hz (F3)',
-        tonicCenterText: 'F3 / C4',
-        tonicHzText: '174.6 Hz / 261.6 Hz',
-        semitoneSpan: '12.0 ST',
-        cadenceSlope: 'Open Consonance (C→A→F)',
-        tensionScore: '38 / 100',
-        tensionSub: 'Warm / High-Trust',
-        auditionFreqs: [174.61, 220.00, 261.63, 220.00, 174.61]
-      },
-      'E_PHRYGIAN': {
-        label: 'E Phrygian (Tactical / Unyielding Edge)',
-        rootPc: 4, // E
-        scaleName: 'Phrygian',
-        // E, F, G, A, B, C, D
-        counts: [16, 1, 12, 1, 39, 28, 1, 18, 1, 14, 1, 22],
-        meanF0Text: '164.8 Hz (E3)',
-        tonicCenterText: 'E3 / F3',
-        tonicHzText: '164.8 Hz / 174.6 Hz',
-        semitoneSpan: '7.5 ST',
-        cadenceSlope: 'Flat-2nd Compression (F→E)',
-        tensionScore: '91 / 100',
-        tensionSub: 'Incisive / Zero-Latency',
-        auditionFreqs: [164.81, 196.00, 246.94, 174.61, 164.81]
-      }
+    // Base Spoken Fundamental Frequencies (F0 in Hz) for the 12 Chromatic Roots in natural adult speaking register (A2–Ab3)
+    const SPOKEN_ROOT_BASE_HZ = {
+      0: { hz: 130.81, note: 'C3', upperNote: 'C4', upperHz: 261.63 },
+      1: { hz: 138.59, note: 'C#3', upperNote: 'C#4', upperHz: 277.18 },
+      2: { hz: 146.83, note: 'D3', upperNote: 'D4', upperHz: 293.66 },
+      3: { hz: 155.56, note: 'Eb3', upperNote: 'Eb4', upperHz: 311.13 },
+      4: { hz: 164.81, note: 'E3', upperNote: 'E4', upperHz: 329.63 },
+      5: { hz: 174.61, note: 'F3', upperNote: 'F4', upperHz: 349.23 },
+      6: { hz: 185.00, note: 'F#3', upperNote: 'F#4', upperHz: 369.99 },
+      7: { hz: 196.00, note: 'G3', upperNote: 'G4', upperHz: 392.00 },
+      8: { hz: 207.65, note: 'Ab3', upperNote: 'Ab4', upperHz: 415.30 },
+      9: { hz: 110.00, note: 'A2', upperNote: 'A3', upperHz: 220.00 },
+      10: { hz: 116.54, note: 'Bb2', upperNote: 'Bb3', upperHz: 233.08 },
+      11: { hz: 123.47, note: 'B2', upperNote: 'B3', upperHz: 246.94 }
     };
 
+    // Analyze interval geometry of any scale structure
+    function analyzeScaleIntervalGeometry(scaleName) {
+      const def = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+      const ints = def.intervals;
+      let semitoneSteps = 0;
+      let augSecondSteps = 0;
+      let wholeSteps = 0;
+      const stepSizes = [];
+
+      for (let i = 0; i < ints.length; i++) {
+        const cur = ints[i];
+        const next = i < ints.length - 1 ? ints[i + 1] : ints[0] + 12;
+        const diff = next - cur;
+        stepSizes.push(diff);
+        if (diff === 1) semitoneSteps++;
+        else if (diff === 2) wholeSteps++;
+        else if (diff >= 3) augSecondSteps++;
+      }
+
+      const hasTritoneFromRoot = ints.includes(6);
+      const hasSharpLeadingTone = ints.includes(11);
+      const hasFlatSecond = ints.includes(1);
+      const hasMinorThird = ints.includes(3);
+      const hasMajorThird = ints.includes(4);
+      const hasMinorSixth = ints.includes(8);
+      const hasMajorSixth = ints.includes(9);
+
+      return {
+        noteCount: ints.length,
+        semitoneSteps,
+        wholeSteps,
+        augSecondSteps,
+        hasTritoneFromRoot,
+        hasSharpLeadingTone,
+        hasFlatSecond,
+        hasMinorThird,
+        hasMajorThird,
+        hasMinorSixth,
+        hasMajorSixth,
+        stepSizes
+      };
+    }
+
+    // Generate realistic spoken syllable pitch-class distribution for any of the 288 (12 Roots x 24 Scales) combinations
+    function generateRealisticCountsForRootAndScale(rootPc, scaleName) {
+      const def = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+      const counts = new Array(12).fill(1); // slight non-zero acoustic floor for natural speech Consonants/glides
+
+      for (let pc = 0; pc < 12; pc++) {
+        const rel = (pc - rootPc + 12) % 12;
+        if (def.intervals.includes(rel)) {
+          if (rel === 0) counts[pc] = 39; // Tonic anchor (highest spoken resting density)
+          else if (rel === 7) counts[pc] = 25; // Dominant pillar
+          else if (rel === 11 && (scaleName === 'Harmonic Minor' || scaleName === 'Double Harmonic' || scaleName === 'Melodic Minor' || scaleName === 'Enigmatic')) {
+            counts[pc] = 27; // Characteristic sharp leading tone
+          } else if (rel === 8 && (scaleName === 'Harmonic Minor' || scaleName === 'Double Harmonic' || scaleName === 'Natural Minor' || scaleName === 'Phrygian Dominant' || scaleName === 'Hirajoshi')) {
+            counts[pc] = 21; // Characteristic flat-6th chiaroscuro degree
+          } else if (rel === 1 && (scaleName === 'Phrygian' || scaleName === 'Phrygian Dominant' || scaleName === 'Double Harmonic' || scaleName === 'Locrian' || scaleName === 'Altered' || scaleName === 'Hirajoshi')) {
+            counts[pc] = 26; // Characteristic Phrygian flat-2nd inflection
+          } else if (rel === 6 && (scaleName === 'Lydian' || scaleName === 'Lydian Dominant' || scaleName === 'Blues' || scaleName === 'Locrian' || scaleName === 'Prometheus' || scaleName === 'Whole Tone')) {
+            counts[pc] = 23; // Characteristic tritone / #4 inflection
+          } else if (rel === 3 || rel === 4) {
+            counts[pc] = 17; // Mediant (3rd) modal quality degree
+          } else if (rel === 9 || rel === 10) {
+            counts[pc] = 15; // 6th / b7th modal degree
+          } else if (rel === 5) {
+            counts[pc] = 12; // Subdominant clause pivot
+          } else if (rel === 2) {
+            counts[pc] = 8;  // Supertonic transition
+          } else {
+            counts[pc] = 10;
+          }
+        } else {
+          // Non-diatonic passing tone
+          counts[pc] = (rel === 10 || rel === 9 || rel === 1) ? 3 : 1;
+        }
+      }
+      return counts;
+    }
+
     function initSpeechProsodyEngine() {
+      renderSpeechPromptPills();
       selectSpeechPrompt(0);
-      simulateSpeechArchetype('B_HARMONIC_MINOR', false);
+      selectSpeechRootAndScale(11, 'Harmonic Minor', false);
+    }
+
+    function renderSpeechPromptPills() {
+      const container = document.getElementById('speechPromptPillsContainer');
+      if (!container) return;
+      container.innerHTML = SPEECH_CALIBRATION_PROMPTS.map((p, idx) => `
+        <button onclick="selectSpeechPrompt(${idx})" id="promptPill-${idx}" class="px-2 py-1 rounded-lg text-[11px] font-mono transition">
+          ${p.shortTitle}
+        </button>
+      `).join('');
     }
 
     function selectSpeechPrompt(index) {
@@ -2621,9 +3157,9 @@
         const pill = document.getElementById(`promptPill-${i}`);
         if (!pill) continue;
         if (i === index) {
-          pill.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-500 text-white shadow transition';
+          pill.className = 'px-2 py-1 rounded-lg text-[11px] font-mono font-bold bg-indigo-500 text-white shadow transition';
         } else {
-          pill.className = 'px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition';
+          pill.className = 'px-2 py-1 rounded-lg text-[11px] font-mono bg-slate-800 text-slate-400 hover:text-white transition';
         }
       }
     }
@@ -2633,14 +3169,169 @@
       selectSpeechPrompt(next);
     }
 
+    function onSpeechMatrixSelectorChange() {
+      const rootPc = Number(document.getElementById('speechMatrixRootSelect').value);
+      const scaleName = document.getElementById('speechMatrixScaleSelect').value;
+      selectSpeechRootAndScale(rootPc, scaleName, false);
+    }
+
+    function selectSpeechRootAndScale(rootPc, scaleName, playAudition = false) {
+      const sp = state.speechProsody;
+      sp.primaryRootPc = Number(rootPc);
+      sp.primaryScaleName = scaleName;
+      sp.isLiveUserVoice = false;
+      sp.pitchClassCounts = generateRealisticCountsForRootAndScale(sp.primaryRootPc, sp.primaryScaleName);
+      sp.totalSyllables = sp.pitchClassCounts.reduce((a, b) => a + b, 0);
+
+      // Sync dropdowns
+      const rootSel = document.getElementById('speechMatrixRootSelect');
+      const scaleSel = document.getElementById('speechMatrixScaleSelect');
+      if (rootSel) rootSel.value = String(sp.primaryRootPc);
+      if (scaleSel) scaleSel.value = sp.primaryScaleName;
+
+      // Update acoustic telemetry counters for this Root x Scale
+      const rootInfo = SPOKEN_ROOT_BASE_HZ[sp.primaryRootPc];
+      const def = SCALE_DEFINITIONS[sp.primaryScaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+      const geom = analyzeScaleIntervalGeometry(sp.primaryScaleName);
+      const rootName = NOTE_NAMES[sp.primaryRootPc];
+
+      document.getElementById('speechProfileSourceLabel').textContent = `Active Profile: ${rootName} ${def.displayName} (${def.archetype})`;
+      document.getElementById('speechActiveFamilyBadge').textContent = def.familyFull;
+      document.getElementById('speechMeanF0').textContent = `${rootInfo.hz.toFixed(1)} Hz (${rootInfo.note})`;
+      document.getElementById('speechTonicCenterKpi').textContent = `${rootInfo.note} / ${rootInfo.upperNote}`;
+      document.getElementById('speechTonicHzSub').textContent = `${rootInfo.hz.toFixed(1)} Hz / ${rootInfo.upperHz.toFixed(1)} Hz`;
+      document.getElementById('speechTensionKpi').textContent = `${def.tensionIndex} / 100`;
+      document.getElementById('speechTensionSub').textContent = def.tensionLabel;
+
+      const maxInterval = def.intervals[def.intervals.length - 1];
+      document.getElementById('speechSemitoneSpan').textContent = `${maxInterval.toFixed(1)} ST`;
+
+      // Cadence slope summary
+      const lastDegNote = NOTE_NAMES[(sp.primaryRootPc + maxInterval) % 12];
+      const secDegNote = NOTE_NAMES[(sp.primaryRootPc + def.intervals[1]) % 12];
+      if (geom.hasSharpLeadingTone) {
+        document.getElementById('speechCadenceSlope').textContent = `Leading-Tone Lock (${lastDegNote}→${rootName})`;
+      } else if (geom.hasFlatSecond) {
+        document.getElementById('speechCadenceSlope').textContent = `Phrygian Compression (${secDegNote}→${rootName})`;
+      } else {
+        document.getElementById('speechCadenceSlope').textContent = `Modal Resolution (${lastDegNote}→${rootName})`;
+      }
+
+      renderSpeechRootPillStrip();
+      renderSpeechTaxonomyAtlasGrid();
+      renderSpeechProsodyAll();
+
+      if (playAudition) {
+        auditionActiveSpeechCadence();
+        showToast(`Loaded "${rootName} ${def.displayName}" (1 of 288 Vocal Architectures)`, 'indigo');
+      }
+    }
+
+    function renderSpeechRootPillStrip() {
+      const strip = document.getElementById('speechRootPillStrip');
+      if (!strip) return;
+      const activeRoot = state.speechProsody.primaryRootPc;
+      strip.innerHTML = NOTE_NAMES.map((name, pc) => {
+        const isActive = pc === activeRoot;
+        return `
+          <button onclick="selectSpeechRootAndScale(${pc}, state.speechProsody.primaryScaleName, false)"
+            class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border transition ${
+              isActive
+                ? 'bg-indigo-500 text-white border-indigo-300 shadow-md shadow-indigo-500/30 scale-105'
+                : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-600 hover:text-white'
+            }">
+            ${name}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setSpeechTaxonomyFamilyFilter(familyKey) {
+      state.speechProsody.taxonomyFamilyFilter = familyKey;
+      const allFilters = ['ALL', 'I. Diatonic', 'II. Harmonic/Melodic', 'III. Pentatonic', 'IV. Hexatonic/Blues', 'V. Symmetrical'];
+      allFilters.forEach(f => {
+        const btn = document.getElementById(`famFilter-${f}`);
+        if (!btn) return;
+        if (f === familyKey) {
+          btn.className = 'px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-500 text-white transition';
+        } else {
+          btn.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition';
+        }
+      });
+      renderSpeechTaxonomyAtlasGrid();
+    }
+
+    function toggleTaxonomyGridDrawer() {
+      state.speechProsody.showTaxonomyAtlas = !state.speechProsody.showTaxonomyAtlas;
+      const grid = document.getElementById('speechTaxonomyGridContainer');
+      const txt = document.getElementById('toggleTaxonomyDrawerText');
+      if (state.speechProsody.showTaxonomyAtlas) {
+        grid.classList.remove('hidden');
+        txt.textContent = 'Hide 24-Structure Atlas';
+      } else {
+        grid.classList.add('hidden');
+        txt.textContent = 'Show 24-Structure Atlas';
+      }
+    }
+
+    function renderSpeechTaxonomyAtlasGrid() {
+      const container = document.getElementById('speechTaxonomyGridContainer');
+      if (!container) return;
+
+      const sp = state.speechProsody;
+      const rootName = NOTE_NAMES[sp.primaryRootPc];
+      const filter = sp.taxonomyFamilyFilter;
+
+      const entries = Object.entries(SCALE_DEFINITIONS).filter(([key, def]) => {
+        if (filter === 'ALL') return true;
+        return def.family === filter;
+      });
+
+      container.innerHTML = entries.map(([scaleKey, def]) => {
+        const isSelected = scaleKey === sp.primaryScaleName;
+        const geom = analyzeScaleIntervalGeometry(scaleKey);
+        const tensionColor = def.tensionIndex >= 85
+          ? 'text-rose-400 bg-rose-500/15 border-rose-500/30'
+          : (def.tensionIndex >= 60 ? 'text-amber-300 bg-amber-500/15 border-amber-500/30' : 'text-emerald-300 bg-emerald-500/15 border-emerald-500/30');
+
+        return `
+          <div onclick="selectSpeechRootAndScale(state.speechProsody.primaryRootPc, '${scaleKey}', false)"
+            class="cursor-pointer rounded-xl p-3 border transition-all duration-150 flex flex-col justify-between gap-2 ${
+              isSelected
+                ? 'bg-indigo-950/70 border-indigo-400 ring-1 ring-indigo-400/50 shadow-lg shadow-indigo-500/15'
+                : 'bg-slate-950/80 border-slate-800/90 hover:border-slate-600 hover:bg-slate-900/80'
+            }">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between gap-1">
+                <span class="text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">
+                  #${def.code} • ${def.family}
+                </span>
+                <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${tensionColor}">
+                  Tension: ${def.tensionIndex}
+                </span>
+              </div>
+              <div class="font-display font-bold text-xs sm:text-sm text-white truncate">
+                ${rootName} ${def.displayName}
+              </div>
+              <div class="text-[11px] font-sans text-indigo-300 font-medium truncate">
+                ${def.archetype}
+              </div>
+            </div>
+            <div class="pt-1.5 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
+              <span class="truncate" title="${def.formula}">${def.formula}</span>
+              <span class="shrink-0 ml-1 text-slate-500">${geom.noteCount}n</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     async function toggleSpeechProsodyCapture() {
       if (!state.speechProsody.isCapturingSpeech) {
-        // Start microphone if not already running
         if (!state.isMicRunning) {
           await toggleMicrophone();
         }
         if (state.isMicRunning) {
-          // If transitioning from a preset archetype to live voice for the first time, clear preset counts so user sees their pure voice
           if (!state.speechProsody.isLiveUserVoice) {
             state.speechProsody.pitchClassCounts.fill(0);
             state.speechProsody.totalSyllables = 0;
@@ -2650,12 +3341,12 @@
           }
           state.speechProsody.isCapturingSpeech = true;
           updateSpeechCaptureUI();
-          showToast('Speech Prosody Capture Active (55ms Syllable Gate) — Read the prompt aloud!', 'indigo');
+          showToast('Speech Prosody Capture Active (Evaluating all 288 Root × Scale Architectures) — Speak aloud!', 'indigo');
         }
       } else {
         state.speechProsody.isCapturingSpeech = false;
         updateSpeechCaptureUI();
-        showToast('Speech Prosody Capture Paused — Inspect your vocal key breakdown below.', 'amber');
+        showToast('Speech Prosody Capture Paused — Inspect your 288-key breakdown below.', 'amber');
       }
     }
 
@@ -2669,7 +3360,7 @@
         btn.className = 'px-3.5 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-rose-500 hover:bg-rose-400 text-white shadow-lg shadow-rose-500/25 transition flex items-center gap-2 animate-pulse';
         icon.className = 'fa-solid fa-stop';
         text.textContent = 'Stop Speech Capture';
-        badge.textContent = '● LIVE SPEECH CAPTURE (55ms Gate Active)';
+        badge.textContent = '● LIVE SPEECH CAPTURE (288-Key Classifier Active)';
         badge.className = 'px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono uppercase tracking-wider font-bold';
       } else {
         btn.className = 'px-3.5 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition flex items-center gap-2';
@@ -2683,7 +3374,6 @@
     // Fast 55ms syllable nucleus detector for spoken prosody
     function processLiveSpeechProsodyFrame(pitchData, now) {
       const sp = state.speechProsody;
-      // Allow live speech prosody tracking whenever Speech Capture is enabled OR when mic is active and user is in live voice mode
       if (!sp.isCapturingSpeech) return;
 
       // Focus on human spoken fundamental + harmonic inflection range (65 Hz to 580 Hz)
@@ -2703,6 +3393,8 @@
           }
 
           recalculateSpeechProsodyModel();
+          renderSpeechRootPillStrip();
+          renderSpeechTaxonomyAtlasGrid();
           renderSpeechProsodyAll();
         }
       } else {
@@ -2711,98 +3403,107 @@
       }
     }
 
-    function recalculateSpeechProsodyModel() {
+    // Evaluate all 288 (12 roots x 24 scales) against the current spoken pitch-class histogram
+    function rankAll288SpeechArchitectures() {
       const sp = state.speechProsody;
       const counts = sp.pitchClassCounts;
-      const total = counts.reduce((a, b) => a + b, 0);
-      sp.totalSyllables = total;
-      if (total === 0) return;
+      const total = Math.max(1, counts.reduce((a, b) => a + b, 0));
 
-      // Score all 12 roots x candidate speech scales (Harmonic Minor, Natural Minor, Dorian, Mixolydian, Phrygian, Phrygian Dominant, Major)
-      const candidateScales = ['Harmonic Minor', 'Natural Minor', 'Dorian', 'Mixolydian', 'Phrygian', 'Phrygian Dominant', 'Major'];
-      let bestRoot = 11;
-      let bestScale = 'Harmonic Minor';
-      let bestScore = -Infinity;
-
-      // Find most frequent pitch class as tonic gravity anchor
       let maxCountPc = 0;
       for (let pc = 0; pc < 12; pc++) {
         if (counts[pc] > counts[maxCountPc]) maxCountPc = pc;
       }
 
+      const results = [];
       for (let root = 0; root < 12; root++) {
-        for (const scaleName of candidateScales) {
-          const def = SCALE_DEFINITIONS[scaleName];
-          if (!def) continue;
+        for (const [scaleName, def] of Object.entries(SCALE_DEFINITIONS)) {
           let score = 0;
+          let inScaleCount = 0;
+
           for (let pc = 0; pc < 12; pc++) {
             const w = counts[pc];
             if (w === 0) continue;
             const rel = (pc - root + 12) % 12;
             if (def.intervals.includes(rel)) {
-              // Weight tonic (0), 5th (7), leading tone (11) or flat-2nd (1), and 3rd (3/4)
+              inScaleCount += w;
               let mult = 1.0;
-              if (rel === 0) mult = 1.85;
+              if (rel === 0) mult = 1.9;
               else if (rel === 7) mult = 1.35;
-              else if (scaleName === 'Harmonic Minor' && (rel === 11 || rel === 8)) mult = 1.45;
+              else if ((rel === 11 || rel === 8) && (scaleName === 'Harmonic Minor' || scaleName === 'Double Harmonic')) mult = 1.5;
+              else if (rel === 1 && (scaleName === 'Phrygian' || scaleName === 'Phrygian Dominant' || scaleName === 'Hirajoshi')) mult = 1.45;
+              else if (rel === 6 && (scaleName === 'Lydian' || scaleName === 'Lydian Dominant' || scaleName === 'Blues' || scaleName === 'Prometheus')) mult = 1.4;
               score += w * mult;
             } else {
-              score -= w * 1.3;
+              score -= w * 1.35;
             }
           }
+
+          // Normalize against scale size so 12-note Chromatic Cluster doesn't artificially win unless all 12 notes are evenly spoken
+          const sizePenalty = def.intervals.length > 7 ? (def.intervals.length - 7) * (total * 0.09) : 0;
+          score -= sizePenalty;
+
           if (root === maxCountPc) {
-            score += total * 0.25;
+            score += total * 0.28;
           }
-          if (score > bestScore) {
-            bestScore = score;
-            bestRoot = root;
-            bestScale = scaleName;
-          }
+
+          results.push({
+            rootPc: root,
+            rootName: NOTE_NAMES[root],
+            scaleName,
+            displayName: def.displayName,
+            fullName: `${NOTE_NAMES[root]} ${def.displayName}`,
+            family: def.family,
+            archetype: def.archetype,
+            score: Math.max(1, score),
+            inScalePct: (inScaleCount / total) * 100
+          });
         }
       }
 
-      sp.primaryRootPc = bestRoot;
-      sp.primaryScaleName = bestScale;
+      results.sort((a, b) => b.score - a.score);
+      return results;
     }
 
-    function simulateSpeechArchetype(archetypeId, playAudition = false) {
-      const preset = SPEECH_ARCHETYPES[archetypeId] || SPEECH_ARCHETYPES['B_HARMONIC_MINOR'];
+    function recalculateSpeechProsodyModel() {
       const sp = state.speechProsody;
-      sp.activeArchetypeId = archetypeId;
-      sp.isLiveUserVoice = false;
-      sp.pitchClassCounts = [...preset.counts];
-      sp.totalSyllables = sp.pitchClassCounts.reduce((a, b) => a + b, 0);
-      sp.primaryRootPc = preset.rootPc;
-      sp.primaryScaleName = preset.scaleName;
+      const total = sp.pitchClassCounts.reduce((a, b) => a + b, 0);
+      sp.totalSyllables = total;
+      if (total === 0) return;
 
-      const selectEl = document.getElementById('speechArchetypeSelect');
-      if (selectEl) selectEl.value = archetypeId;
+      const ranked = rankAll288SpeechArchitectures();
+      if (ranked.length > 0) {
+        sp.primaryRootPc = ranked[0].rootPc;
+        sp.primaryScaleName = ranked[0].scaleName;
 
-      document.getElementById('speechProfileSourceLabel').textContent = `Active Profile: ${preset.label}`;
-      document.getElementById('speechMeanF0').textContent = preset.meanF0Text;
-      document.getElementById('speechSemitoneSpan').textContent = preset.semitoneSpan;
-      document.getElementById('speechCadenceSlope').textContent = preset.cadenceSlope;
-      document.getElementById('speechTensionKpi').textContent = preset.tensionScore;
-      document.getElementById('speechTensionSub').textContent = preset.tensionSub;
-      document.getElementById('speechTonicCenterKpi').textContent = preset.tonicCenterText;
-      document.getElementById('speechTonicHzSub').textContent = preset.tonicHzText;
-
-      renderSpeechProsodyAll();
-
-      if (playAudition) {
-        auditionActiveSpeechCadence();
-        showToast(`Loaded "${NOTE_NAMES[preset.rootPc]} ${preset.scaleName}" Speech Profile & Perceptual Analysis`, 'indigo');
+        const rootSel = document.getElementById('speechMatrixRootSelect');
+        const scaleSel = document.getElementById('speechMatrixScaleSelect');
+        if (rootSel) rootSel.value = String(sp.primaryRootPc);
+        if (scaleSel) scaleSel.value = sp.primaryScaleName;
       }
     }
 
     async function auditionActiveSpeechCadence() {
       const sp = state.speechProsody;
-      const preset = SPEECH_ARCHETYPES[sp.activeArchetypeId] || SPEECH_ARCHETYPES['B_HARMONIC_MINOR'];
-      const freqs = preset.auditionFreqs || [146.83, 185.00, 196.00, 233.08, 246.94, 123.47];
-      showToast(`Auditioning Spoken Cadence Contour: ${NOTE_NAMES[sp.primaryRootPc]} ${sp.primaryScaleName}`, 'indigo');
-      for (let i = 0; i < freqs.length; i++) {
-        await playTestNote(freqs[i], 240);
-        await new Promise(r => setTimeout(r, 270));
+      const rootInfo = SPOKEN_ROOT_BASE_HZ[sp.primaryRootPc] || SPOKEN_ROOT_BASE_HZ[11];
+      const baseHz = rootInfo.hz;
+      const def = SCALE_DEFINITIONS[sp.primaryScaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+      const ints = def.intervals;
+
+      // Construct a natural spoken prosodic contour through the characteristic degrees of the active scale, ending on the tonic drop
+      const contourSemitones = [
+        ints[Math.min(1, ints.length - 1)],
+        ints[Math.min(3, ints.length - 1)],
+        ints[Math.min(4, ints.length - 1)],
+        ints[ints.length - 1],
+        12, // Upper octave tonic inflection
+        0   // Terminal declarative cadence on root F0
+      ];
+
+      showToast(`Auditioning Spoken Cadence Contour: ${NOTE_NAMES[sp.primaryRootPc]} ${def.displayName}`, 'indigo');
+      for (let i = 0; i < contourSemitones.length; i++) {
+        const freq = baseHz * Math.pow(2, contourSemitones[i] / 12);
+        await playTestNote(freq, 230);
+        await new Promise(r => setTimeout(r, 260));
       }
     }
 
@@ -2834,16 +3535,16 @@
     function getSpeechFunctionalRole(pc, rootPc, scaleName) {
       const rel = (pc - rootPc + 12) % 12;
       const roleMap = {
-        0: { role: 'Tonic Root (1) — Primary Anchor', badge: 'bg-indigo-500/25 text-indigo-200 border-indigo-400/50' },
-        1: { role: 'Flat 2nd (b2) — Phrygian Edge', badge: 'bg-rose-500/20 text-rose-200 border-rose-400/40' },
+        0: { role: 'Tonic Root (1) — Primary F0 Anchor', badge: 'bg-indigo-500/25 text-indigo-200 border-indigo-400/50' },
+        1: { role: 'Flat 2nd (b2) — Phrygian Half-Step Edge', badge: 'bg-rose-500/20 text-rose-200 border-rose-400/40' },
         2: { role: 'Supertonic (2) — Clause Transition', badge: 'bg-slate-800 text-slate-300 border-slate-700' },
         3: { role: 'Minor 3rd (b3) — Minor Gravity', badge: 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40' },
         4: { role: 'Major 3rd (3) — Bright Assertive', badge: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40' },
         5: { role: 'Subdominant (4) — Mid-Phrase Pivot', badge: 'bg-slate-800 text-slate-300 border-slate-700' },
-        6: { role: 'Tritone (b5/#4) — Dialectical Tension', badge: 'bg-rose-500/25 text-rose-200 border-rose-400/50' },
+        6: { role: 'Tritone (#4/b5) — Dialectical Tension', badge: 'bg-rose-500/25 text-rose-200 border-rose-400/50' },
         7: { role: 'Dominant (5) — Structural Pillar', badge: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40' },
         8: { role: 'Submediant (b6) — Chiaroscuro Susp.', badge: 'bg-purple-500/20 text-purple-200 border-purple-400/40' },
-        9: { role: 'Major 6th (6) — Dorian Analytical', badge: 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40' },
+        9: { role: 'Major 6th (6) — Dorian Analytical Lift', badge: 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40' },
         10: { role: 'Subtonic (b7) — Modal Momentum', badge: 'bg-slate-800 text-slate-300 border-slate-700' },
         11: { role: 'Sharp Leading Tone (7) — Finality Lock', badge: 'bg-amber-500/25 text-amber-200 border-amber-400/50' }
       };
@@ -2856,111 +3557,162 @@
       };
     }
 
-    // Compute Multi-Key Composition percentages from current pitch-class distribution
+    // Compute Top 5 Multi-Key Composition percentages across all 288 architectures
     function computeMultiKeyComposition() {
       const sp = state.speechProsody;
       const rootPc = sp.primaryRootPc;
       const scaleName = sp.primaryScaleName;
+      const def = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
       const rootName = NOTE_NAMES[rootPc];
       const domPc = (rootPc + 7) % 12;
-      const relMajPc = (rootPc + 3) % 12;
+      const relMedPc = (rootPc + (def.intervals.includes(3) ? 3 : 4)) % 12;
       const subDomPc = (rootPc + 5) % 12;
 
-      // Calculate how strongly the current histogram fits the primary key vs secondary modal regions
       const total = Math.max(1, sp.totalSyllables);
-      const scaleDef = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
       let inPrimaryCount = 0;
       for (let pc = 0; pc < 12; pc++) {
         const rel = (pc - rootPc + 12) % 12;
-        if (scaleDef.intervals.includes(rel)) inPrimaryCount += sp.pitchClassCounts[pc];
+        if (def.intervals.includes(rel)) inPrimaryCount += sp.pitchClassCounts[pc];
       }
 
-      // Express realistic multi-key shares that sum to 100%
-      const primaryShare = Number(Math.min(72.0, Math.max(46.0, (inPrimaryCount / total) * 64.5)).toFixed(1));
-      const secondaryShare = Number(((100 - primaryShare) * 0.46).toFixed(1));
-      const tertiaryShare = Number(((100 - primaryShare) * 0.33).toFixed(1));
-      const quaternaryShare = Number((100 - primaryShare - secondaryShare - tertiaryShare).toFixed(1));
+      // 5 modal centers that sum to 100.0%
+      const s1 = Number(Math.min(64.0, Math.max(42.0, (inPrimaryCount / total) * 58.4)).toFixed(1));
+      const rem = 100 - s1;
+      const s2 = Number((rem * 0.39).toFixed(1));
+      const s3 = Number((rem * 0.27).toFixed(1));
+      const s4 = Number((rem * 0.20).toFixed(1));
+      const s5 = Number((100 - s1 - s2 - s3 - s4).toFixed(1));
 
       if (scaleName === 'Harmonic Minor') {
         return [
           {
+            rootPc,
+            scaleName: 'Harmonic Minor',
             keyName: `${rootName} Harmonic Minor`,
-            sharePct: primaryShare,
+            sharePct: s1,
             colorClass: 'bg-indigo-500',
             badgeClass: 'text-indigo-300 border-indigo-500/40 bg-indigo-500/15',
-            context: `Primary declarative & directive anchor (${rootName}–${NOTE_NAMES[(rootPc+3)%12]}–${NOTE_NAMES[domPc]}–${NOTE_NAMES[(rootPc+11)%12]})`
+            context: `Primary declarative & command anchor (${rootName}–${NOTE_NAMES[(rootPc+3)%12]}–${NOTE_NAMES[domPc]}–${NOTE_NAMES[(rootPc+11)%12]})`
           },
           {
+            rootPc: domPc,
+            scaleName: 'Phrygian Dominant',
             keyName: `${NOTE_NAMES[domPc]} Phrygian Dominant`,
-            sharePct: secondaryShare,
+            sharePct: s2,
             colorClass: 'bg-amber-500',
             badgeClass: 'text-amber-300 border-amber-500/40 bg-amber-500/15',
-            context: `Mid-sentence analytical suspension & 5th-mode half-cadences on ${NOTE_NAMES[domPc]} and ${NOTE_NAMES[(rootPc+8)%12]}`
+            context: `5th-mode analytical suspension & half-cadences on ${NOTE_NAMES[domPc]} and ${NOTE_NAMES[(rootPc+8)%12]}`
           },
           {
-            keyName: `${rootName} Natural Minor (Aeolian)`,
-            sharePct: tertiaryShare,
+            rootPc,
+            scaleName: 'Natural Minor',
+            keyName: `${rootName} Aeolian (Natural Minor)`,
+            sharePct: s3,
             colorClass: 'bg-cyan-500',
             badgeClass: 'text-cyan-300 border-cyan-500/40 bg-cyan-500/15',
-            context: `Reflective clauses when the 7th degree relaxes to ${NOTE_NAMES[(rootPc+10)%12]} natural`
+            context: `Reflective clauses when the 7th degree relaxes 100¢ to ${NOTE_NAMES[(rootPc+10)%12]} natural`
           },
           {
-            keyName: `${NOTE_NAMES[relMajPc]} Major / Augmented III+`,
-            sharePct: quaternaryShare,
+            rootPc,
+            scaleName: 'Dorian',
+            keyName: `${rootName} Dorian`,
+            sharePct: s4,
             colorClass: 'bg-emerald-500',
             badgeClass: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/15',
+            context: `Collaborative & problem-solving clauses raising b6 to ${NOTE_NAMES[(rootPc+9)%12]}`
+          },
+          {
+            rootPc: relMedPc,
+            scaleName: 'Major',
+            keyName: `${NOTE_NAMES[relMedPc]} Ionian / Augmented III+`,
+            sharePct: s5,
+            colorClass: 'bg-purple-500',
+            badgeClass: 'text-purple-300 border-purple-500/40 bg-purple-500/15',
             context: `Relative mediant pitch excursions during interrogative or contrast emphasis`
           }
         ];
       }
 
-      // Generic multi-key breakdown for any other scale mode
+      // Dynamic 5-key breakdown for any of the other 23 structures
+      const ranked = rankAll288SpeechArchitectures().filter(
+        r => !(r.rootPc === rootPc && r.scaleName === scaleName)
+      );
+
       return [
         {
-          keyName: `${rootName} ${scaleName}`,
-          sharePct: primaryShare,
+          rootPc,
+          scaleName,
+          keyName: `${rootName} ${def.displayName}`,
+          sharePct: s1,
           colorClass: 'bg-indigo-500',
           badgeClass: 'text-indigo-300 border-indigo-500/40 bg-indigo-500/15',
-          context: `Primary tonic anchor governing declarative statements & terminal cadences`
+          context: `Primary tonic anchor governing declarative statements & terminal cadences (${def.formula})`
         },
         {
-          keyName: `${NOTE_NAMES[domPc]} Dominant Modal Axis`,
-          sharePct: secondaryShare,
+          rootPc: domPc,
+          scaleName: ranked[0]?.scaleName || 'Mixolydian',
+          keyName: `${NOTE_NAMES[domPc]} ${(SCALE_DEFINITIONS[ranked[0]?.scaleName || 'Mixolydian']).displayName}`,
+          sharePct: s2,
           colorClass: 'bg-amber-500',
           badgeClass: 'text-amber-300 border-amber-500/40 bg-amber-500/15',
-          context: `Secondary dominant inflection used to sustain listener attention mid-sentence`
+          context: `Dominant 5th modal axis sustaining listener attention during compound clauses`
         },
         {
-          keyName: `${NOTE_NAMES[subDomPc]} Subdominant Pivot`,
-          sharePct: tertiaryShare,
+          rootPc,
+          scaleName: scaleName === 'Dorian' ? 'Harmonic Minor' : 'Dorian',
+          keyName: `${rootName} ${scaleName === 'Dorian' ? 'Harmonic Minor' : 'Dorian'}`,
+          sharePct: s3,
           colorClass: 'bg-cyan-500',
           badgeClass: 'text-cyan-300 border-cyan-500/40 bg-cyan-500/15',
-          context: `Contextual framing and conditional ("if/then") prepositional clauses`
+          context: `Parallel tonic modal shift engaged during analytical or directive emphasis`
         },
         {
-          keyName: `${NOTE_NAMES[relMajPc]} Relative Modal Center`,
-          sharePct: quaternaryShare,
+          rootPc: subDomPc,
+          scaleName: 'Lydian Dominant',
+          keyName: `${NOTE_NAMES[subDomPc]} Lydian Dominant`,
+          sharePct: s4,
           colorClass: 'bg-emerald-500',
           badgeClass: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/15',
-          context: `Contrastive emphasis and upper-register prosodic resets`
+          context: `Subdominant framing & conditional ("if/then") prepositional clauses`
+        },
+        {
+          rootPc: relMedPc,
+          scaleName: 'Major Pentatonic',
+          keyName: `${NOTE_NAMES[relMedPc]} Major Pentatonic`,
+          sharePct: s5,
+          colorClass: 'bg-purple-500',
+          badgeClass: 'text-purple-300 border-purple-500/40 bg-purple-500/15',
+          context: `Mediant anhemitonic release used for rapport and upper-register resets`
         }
       ];
     }
 
-    // Generate the 6 deep psychoacoustic perceptual framework cards dynamically for the active key
+    // Generate the 6 deep psychoacoustic perceptual framework cards dynamically for ANY of the 288 Root × Scale combinations
     function buildPerceptualFrameworkCards(rootPc, scaleName) {
+      const def = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+      const geom = analyzeScaleIntervalGeometry(scaleName);
+      const rootInfo = SPOKEN_ROOT_BASE_HZ[rootPc] || SPOKEN_ROOT_BASE_HZ[11];
+
       const root = NOTE_NAMES[rootPc];
+      const flat2 = NOTE_NAMES[(rootPc + 1) % 12];
       const deg2 = NOTE_NAMES[(rootPc + 2) % 12];
       const min3 = NOTE_NAMES[(rootPc + 3) % 12];
       const maj3 = NOTE_NAMES[(rootPc + 4) % 12];
       const deg4 = NOTE_NAMES[(rootPc + 5) % 12];
+      const tritone = NOTE_NAMES[(rootPc + 6) % 12];
       const dom5 = NOTE_NAMES[(rootPc + 7) % 12];
       const flat6 = NOTE_NAMES[(rootPc + 8) % 12];
       const maj6 = NOTE_NAMES[(rootPc + 9) % 12];
       const flat7 = NOTE_NAMES[(rootPc + 10) % 12];
       const sharp7 = NOTE_NAMES[(rootPc + 11) % 12];
-      const flat2 = NOTE_NAMES[(rootPc + 1) % 12];
 
+      // Update header geometry badge
+      const geomBadge = document.getElementById('dossierIntervalGeometryBadge');
+      if (geomBadge) {
+        geomBadge.textContent = `• ${geom.noteCount} Notes • ${geom.semitoneSteps} Semitones (100¢) • ${geom.augSecondSteps} Aug-2nds (300¢+) • ${geom.hasTritoneFromRoot ? 'Tritone Active' : 'Perfect 5th Axis'}`;
+      }
+
+      // Dedicated flagship profile for Harmonic Minor (including B Harmonic Minor)
       if (scaleName === 'Harmonic Minor') {
         return [
           {
@@ -2968,8 +3720,8 @@
             icon: 'fa-scale-balanced',
             accent: 'indigo',
             title: 'Acoustic & Semantic Alignment',
-            subtitle: 'High-Contrast Chiaroscuro & Architectural Gravity',
-            body: `Listeners will perceive your output through a prism of high contrast—contrasting expectations of neutrality with a structural framework defined by severe tension and dramatic resolution. Because your spoken fundamental frequency (F0) anchors on <span class="text-white font-mono font-bold">${root}</span> while frequently engaging the minor third (<span class="text-indigo-300 font-mono font-bold">${min3}</span>) and flat sixth (<span class="text-amber-300 font-mono font-bold">${flat6}</span>), even routine operational statements acquire an unmistakable architectural gravity. Casual small-talk is automatically elevated by the listener's auditory cortex into a high-stakes briefing.`
+            subtitle: `High-Contrast Chiaroscuro & ${root} (${rootInfo.hz.toFixed(1)} Hz) Gravity`,
+            body: `Listeners will perceive your output through a prism of high contrast—contrasting expectations of neutrality with a structural framework defined by severe tension and dramatic resolution. Anchoring your spoken fundamental frequency (F0) on <span class="text-white font-mono font-bold">${root} (${rootInfo.note} ≈ ${rootInfo.hz.toFixed(1)} Hz)</span> while framing clauses through the minor third (<span class="text-indigo-300 font-mono font-bold">${min3}</span>) and minor sixth (<span class="text-amber-300 font-mono font-bold">${flat6}</span>) imbues even routine operational statements with architectural weight. Casual remarks are automatically parsed by the listener's auditory cortex as high-stakes briefings.`
           },
           {
             num: '02',
@@ -2977,23 +3729,23 @@
             accent: 'amber',
             title: 'Cognitive Impact & Neuro-Linguistic Processing',
             subtitle: `Sharp Leading Tone (${sharp7}) & Augmented 2nd (${flat6} → ${sharp7})`,
-            body: `Because the underlying scale structure relies on a sharp leading tone (<span class="text-amber-300 font-mono font-bold">${sharp7}</span>) and an augmented second interval (<span class="text-amber-300 font-mono font-bold">${flat6} → ${sharp7}</span>, spanning 3 semitones), statements will be interpreted as uncompromising, highly deliberate, and weighted with finality. In auditory neuroscience, this 3-semitone jump coupled with a 100-cent semitone lock (<span class="text-emerald-300 font-mono font-bold">${sharp7} → ${root}</span>) triggers heightened cortical alertness in the listener, suppressing passive daydreaming and forcing binary cognitive evaluation of your propositions.`
+            body: `Because the underlying scale structure relies on a sharp leading tone (<span class="text-amber-300 font-mono font-bold">${sharp7}</span>) and an augmented second interval (<span class="text-amber-300 font-mono font-bold">${flat6} → ${sharp7}</span>, spanning 300 cents / 3 semitones), statements will be interpreted as uncompromising, highly deliberate, and weighted with finality. In auditory neuroscience, this 300-cent leap followed by a 100-cent semitone lock (<span class="text-emerald-300 font-mono font-bold">${sharp7} → ${root}</span>) triggers an immediate orienting response in Heschl's gyrus, suppressing passive listener drift and forcing binary cognitive evaluation.`
           },
           {
             num: '03',
             icon: 'fa-heart-pulse',
             accent: 'rose',
             title: 'Emotional Resonance & Subliminal Affect',
-            subtitle: 'Calculated Intensity & Disciplined Containment',
-            body: `Rather than neutral or conversational, your delivery will register as calculated, intense, and architecturally rigid. Ambiguity will be parsed not as uncertainty, but as deliberate withholding. Listeners subconsciously sense that your emotional expression is governed by strict internal discipline; approval or warmth expressed within <span class="text-white font-mono font-bold">${root} Harmonic Minor</span> is perceived as selective, scarce, and earned rather than default social lubricant.`
+            subtitle: 'Calculated Intensity & Deliberate Withholding',
+            body: `Rather than neutral or conversational, your delivery will register as calculated, intense, and architecturally rigid. Ambiguity will be parsed not as uncertainty, but as deliberate withholding. Listeners subconsciously sense that your emotional expression is governed by strict internal containment; warmth or praise delivered inside <span class="text-white font-mono font-bold">${root} Harmonic Minor</span> registers as rare, earned, and high-value rather than routine social politeness.`
           },
           {
             num: '04',
             icon: 'fa-chess-king',
             accent: 'emerald',
             title: 'Authority, Power Dynamics & Negotiation Leverage',
-            subtitle: `Asymmetrical Command via V–i (${dom5} → ${root}m) Cadences`,
-            body: `The implied <span class="text-emerald-300 font-mono font-bold">${dom5}7 → ${root}m</span> (V7–i) and <span class="text-emerald-300 font-mono font-bold">${sharp7}°7 → ${root}m</span> (vii°7–i) vocal cadences project asymmetrical command. In executive or negotiation settings, downward terminal inflections landing on <span class="text-white font-mono font-bold">${root}</span> after an <span class="text-amber-300 font-mono font-bold">${sharp7}</span> inflection signal zero tolerance for dilution. Counterparties subconsciously interpret deadlines, prices, and boundaries stated in this key as non-negotiable structural constraints rather than opening bids.`
+            subtitle: `Asymmetrical Command via V7–i (${dom5}7 → ${root}m) Cadences`,
+            body: `The implied <span class="text-emerald-300 font-mono font-bold">${dom5}7 → ${root}m</span> (V7–i) and <span class="text-emerald-300 font-mono font-bold">${sharp7}°7 → ${root}m</span> (vii°7–i) vocal cadences project asymmetrical command. In executive or negotiation settings, downward terminal inflections landing on <span class="text-white font-mono font-bold">${root}</span> after a sharp <span class="text-amber-300 font-mono font-bold">${sharp7}</span> inflection signal zero tolerance for dilution. Counterparties subconsciously interpret deadlines, pricing, and boundaries stated in this key as non-negotiable structural constraints.`
           },
           {
             num: '05',
@@ -3001,22 +3753,208 @@
             accent: 'cyan',
             title: 'Interpersonal Friction & Misinterpretation Vectors',
             subtitle: 'Acoustic Vacuum & Perceived Cross-Examination',
-            body: `In low-stakes or emotionally fragile environments, the inherent harmonic tension between <span class="text-cyan-300 font-mono font-bold">${flat6}</span> and <span class="text-cyan-300 font-mono font-bold">${sharp7}</span> can induce defensive compliance. Listeners accustomed to Major or Pentatonic prosody may misinterpret neutral exploratory questions as cross-examination or covert critique. Furthermore, silence immediately following your <span class="text-white font-mono font-bold">${sharp7} → ${root}</span> cadence feels acoustically heavy, often compelling interlocutors to over-explain or concede prematurely to fill the vacuum.`
+            body: `In low-stakes or emotionally fragile environments, the 300-cent tension between <span class="text-cyan-300 font-mono font-bold">${flat6}</span> and <span class="text-cyan-300 font-mono font-bold">${sharp7}</span> can induce defensive compliance. Listeners accustomed to Major or Pentatonic prosody may misinterpret neutral exploratory questions as cross-examination or covert critique. Furthermore, silence immediately following your <span class="text-white font-mono font-bold">${sharp7} → ${root}</span> cadence creates a heavy acoustic vacuum that compels others to over-explain or concede prematurely.`
           },
           {
             num: '06',
             icon: 'fa-sliders',
             accent: 'purple',
             title: 'Tactical Prosodic Modulation Protocol',
-            subtitle: 'Precision Degree Shifts to Control Listener Response',
-            body: `To modulate how others receive you without losing authority: <br/>• <span class="text-white font-semibold">Soften Severity into Gravitas:</span> Lower your 7th degree by 100 cents (<span class="text-indigo-300 font-mono font-bold">${sharp7} → ${flat7}</span>, shifting to <em>${root} Natural Minor</em>) during empathetic 1-on-1s.<br/>• <span class="text-white font-semibold">Pivot to Collaborative Strategy:</span> Raise your 6th degree (<span class="text-emerald-300 font-mono font-bold">${flat6} → ${maj6}</span>, shifting to <em>${root} Dorian</em>) during brainstorming.<br/>• <span class="text-white font-semibold">De-escalate Threat:</span> Anchor clauses on your relative major root (<span class="text-amber-300 font-mono font-bold">${min3} Major</span>) when onboarding allies.`
+            subtitle: 'Precision Semitone Pivots to Control Listener Reception',
+            body: `To modulate how others receive you on demand:<br/>• <span class="text-white font-semibold">Soften Severity into Gravitas:</span> Flatten your 7th degree by 100¢ (<span class="text-indigo-300 font-mono font-bold">${sharp7} → ${flat7}</span>, shifting to <em>${root} Aeolian</em>) during 1-on-1 coaching.<br/>• <span class="text-white font-semibold">Pivot to Analytical Strategy:</span> Raise your 6th degree by 100¢ (<span class="text-emerald-300 font-mono font-bold">${flat6} → ${maj6}</span>, shifting to <em>${root} Melodic Minor / Dorian</em>) during collaborative problem-solving.<br/>• <span class="text-white font-semibold">Escalate Imperative Command:</span> Anchor on the 5th (<span class="text-amber-300 font-mono font-bold">${dom5} Phrygian Dominant</span>) for urgent directives.`
           }
         ];
       }
 
-      // Dynamic deep psychoacoustic profiles for Dorian, Natural Minor, Mixolydian, Major, Phrygian, etc.
-      const isMinorFamily = ['Natural Minor', 'Dorian', 'Phrygian', 'Minor Pentatonic', 'Blues'].includes(scaleName);
-      const thirdNote = isMinorFamily ? min3 : maj3;
+      // Tailored deep 6-Vector profiles for all 24 Scale Structures across all 5 Families
+      const scaleNarratives = {
+        'Major': {
+          align: `Listeners perceive your vocal stream through a framework of structural transparency, institutional stability, and open consonance. Anchoring on <span class="text-white font-mono font-bold">${root} (${rootInfo.hz.toFixed(1)} Hz)</span> with prominent major thirds (<span class="text-emerald-300 font-mono font-bold">${maj3}</span>) and perfect fifths (<span class="text-indigo-300 font-mono font-bold">${dom5}</span>) aligns your semantic message with clarity, inevitability, and above-board intent.`,
+          cog: `Because the Ionian structure (<span class="text-amber-300 font-mono font-bold">${def.formula}</span>) resolves both of its half-steps (<span class="text-amber-300 font-mono font-bold">${deg4}→${maj3}</span> and <span class="text-emerald-300 font-mono font-bold">${sharp7}→${root}</span>) into stable triad tones, the listener's auditory cortex expends minimal predictive energy decoding your pitch contour—maximizing working-memory retention for complex data.`,
+          emo: `Your delivery registers as composed, integrative, and psychologically secure. Listeners do not detect hidden subtext or defensive guarding; statements are received at face value with high baseline trust.`,
+          auth: `Projects legitimate institutional authority via classic <span class="text-emerald-300 font-mono font-bold">${dom5} → ${root}</span> (V–I) cadences. Ideal for town halls, board alignments, and coalition building where buy-in is paramount.`,
+          fric: `In adversarial negotiations or crisis turnarounds, pure Ionian consonance (<span class="text-cyan-300 font-mono font-bold">${root}–${maj3}–${dom5}</span>) can be misread by aggressive counterparties as overly accommodating or lacking a punitive edge.`,
+          mod: `• <span class="text-white font-semibold">Inject Urgency:</span> Flatten your 7th (<span class="text-amber-300 font-mono font-bold">${sharp7} → ${flat7}</span>, shifting to <em>${root} Mixolydian</em>) to drive action.<br/>• <span class="text-white font-semibold">Project Visionary Innovation:</span> Raise your 4th by 100¢ (<span class="text-indigo-300 font-mono font-bold">${deg4} → ${tritone}</span>, shifting to <em>${root} Lydian</em>).<br/>• <span class="text-white font-semibold">Command Finality:</span> Flatten 3rd and 6th (<span class="text-rose-300 font-mono font-bold">${min3}, ${flat6}</span>) into <em>${root} Harmonic Minor</em>.`
+        },
+        'Dorian': {
+          align: `Listeners decode your speech through a lens of stoic objectivity, dialectical balance, and clinical precision. By combining a grounded minor third (<span class="text-indigo-300 font-mono font-bold">${min3}</span>) over <span class="text-white font-mono font-bold">${root} (${rootInfo.hz.toFixed(1)} Hz)</span> with a raised major sixth (<span class="text-emerald-300 font-mono font-bold">${maj6}</span>), you project unsentimental realism without pessimism.`,
+          cog: `The palidromic symmetry of the Dorian mode (<span class="text-amber-300 font-mono font-bold">W-H-W-W-W-H-W</span>) eliminates the downward pull of a flat-6th while avoiding the bright finality of a sharp-7th. The listener's brain enters an analytical, problem-solving state where trade-offs and technical nuances are weighed objectively.`,
+          emo: `Registers as emotionally self-regulated, equanimous, and intellectually autonomous. Listeners perceive you as immune to hype or panic—an anchor of composed competence under pressure.`,
+          auth: `Establishes epistemic and technical authority through <span class="text-emerald-300 font-mono font-bold">${root}m ↔ ${deg4}</span> (i–IV) modal oscillation. Counterparties defer to your assessment because your prosody signals zero emotional bias.`,
+          fric: `When interlocutors seek overt emotional validation or celebratory enthusiasm, the cool equilibrium of <span class="text-cyan-300 font-mono font-bold">${root}–${min3}–${maj6}</span> can register as clinical detachment.`,
+          mod: `• <span class="text-white font-semibold">Lock Down Finality:</span> Raise the 7th (<span class="text-amber-300 font-mono font-bold">${flat7} → ${sharp7}</span>, shifting to <em>${root} Melodic Minor</em>) when closing a deal.<br/>• <span class="text-white font-semibold">Increase Gravitas:</span> Lower the 6th (<span class="text-indigo-300 font-mono font-bold">${maj6} → ${flat6}</span>, shifting to <em>${root} Aeolian</em>).`
+        },
+        'Phrygian': {
+          align: `Listeners experience your voice as incisive, tactical, and zero-latency. The signature 100-cent half-step directly above your tonic (<span class="text-rose-400 font-mono font-bold">${root} ↔ ${flat2}</span>) strips away conversational padding and frames every sentence as a high-consequence truth.`,
+          cog: `The immediate proximity of the flat second (<span class="text-amber-300 font-mono font-bold">${flat2}</span>) to the root (<span class="text-white font-mono font-bold">${root}</span>) creates acute upper-leading-tone compression. As soon as you inflect onto <span class="text-amber-300 font-mono font-bold">${flat2}</span> and drop 100¢ onto <span class="text-emerald-300 font-mono font-bold">${root}</span>, the listener's amygdala registers irreversible finality.`,
+          emo: `Projects guarded intensity, fearlessness, and ascetic discipline. Listeners sense that you operate with zero tolerance for platitudes, excuses, or superficial rapport.`,
+          auth: `Dominates adversarial exchanges via downward <span class="text-emerald-300 font-mono font-bold">${flat2} → ${root}</span> (bII–i) Phrygian cadences. Extremely effective for crisis command, legal cross-examination, and hard boundary enforcement.`,
+          fric: `In collaborative or psychologically sensitive settings, the relentless <span class="text-cyan-300 font-mono font-bold">${flat2} → ${root}</span> semitone friction can trigger threat-detection responses, causing peers to withhold tentative ideas.`,
+          mod: `• <span class="text-white font-semibold">Convert Edge to Sovereign Command:</span> Raise your 3rd (<span class="text-amber-300 font-mono font-bold">${min3} → ${maj3}</span>, shifting to <em>${root} Phrygian Dominant</em>).<br/>• <span class="text-white font-semibold">De-escalate Friction:</span> Raise your 2nd by 100¢ (<span class="text-emerald-300 font-mono font-bold">${flat2} → ${deg2}</span>, shifting to <em>${root} Aeolian</em>).`
+        },
+        'Lydian': {
+          align: `Listeners perceive your speech as visionary, conceptually elevated, and forward-looking. By replacing the standard subdominant with the raised fourth (<span class="text-amber-300 font-mono font-bold">${tritone}</span>) over a major tonic (<span class="text-white font-mono font-bold">${root}–${maj3}–${dom5}</span>), your voice projects intellectual horizon-scanning.`,
+          cog: `The 600-cent tritone interval from the root (<span class="text-amber-300 font-mono font-bold">${root} → ${tritone}</span>) resolves upward by 100¢ into the dominant (<span class="text-emerald-300 font-mono font-bold">${dom5}</span>). This upward gravitational vector stimulates curiosity, abstract pattern recognition, and paradigm-shifting receptivity in the listener.`,
+          emo: `Registers as luminous, inspired, and intellectually liberated—free of heavy gravitational drag or bureaucratic fatigue.`,
+          auth: `Commands charismatic thought-leadership via <span class="text-emerald-300 font-mono font-bold">${deg2} → ${root}</span> (II–I) cadences. Listeners follow you because your prosody frames the future as expansive and solvable.`,
+          fric: `During granular operational audits or cost-cutting briefings, excessive emphasis on the <span class="text-cyan-300 font-mono font-bold">${tritone}</span> degree can sound overly idealistic or detached from immediate floor constraints.`,
+          mod: `• <span class="text-white font-semibold">Ground into Pragmatic Action:</span> Flatten the 7th (<span class="text-amber-300 font-mono font-bold">${sharp7} → ${flat7}</span>, shifting to <em>${root} Lydian Dominant</em>).<br/>• <span class="text-white font-semibold">Lock Operational Certainty:</span> Lower #4 by 100¢ (<span class="text-emerald-300 font-mono font-bold">${tritone} → ${deg4}</span>, shifting to <em>${root} Ionian</em>).`
+        },
+        'Mixolydian': {
+          align: `Listeners decode your delivery as pragmatic, action-oriented, and kinetically grounded. Combining a major triad (<span class="text-white font-mono font-bold">${root}–${maj3}–${dom5}</span>) with a lowered seventh (<span class="text-amber-300 font-mono font-bold">${flat7}</span>) projects confident operational momentum without academic pretension.`,
+          cog: `Replacing the tense 100-cent leading tone with a 200-cent whole-step subtonic (<span class="text-amber-300 font-mono font-bold">${flat7} → ${root}</span>) creates a rolling, forward-propelling cadence that keeps listeners engaged across long tactical sequences.`,
+          emo: `Registers as assured, candid, and results-driven. Listeners perceive you as a battle-tested operator who speaks from direct field experience.`,
+          auth: `Projects natural field-commander authority via <span class="text-emerald-300 font-mono font-bold">${flat7} → ${deg4} → ${root}</span> (bVII–IV–I) movement. Mobilizes teams rapidly without triggering resentment.`,
+          fric: `When delivering formal judicial verdicts or uncompromising ultimatums, the whole-step <span class="text-cyan-300 font-mono font-bold">${flat7} → ${root}</span> cadence lacks the razor-sharp finality of a half-step leading tone (<span class="text-cyan-300 font-mono font-bold">${sharp7}</span>).`,
+          mod: `• <span class="text-white font-semibold">Sharpen Finality:</span> Raise the 7th by 100¢ (<span class="text-amber-300 font-mono font-bold">${flat7} → ${sharp7}</span>, shifting to <em>${root} Ionian</em>).<br/>• <span class="text-white font-semibold">Add Analytical Edge:</span> Raise the 4th (<span class="text-indigo-300 font-mono font-bold">${deg4} → ${tritone}</span>, shifting to <em>${root} Lydian Dominant</em>).`
+        },
+        'Natural Minor': {
+          align: `Listeners perceive your vocal signature through a framework of sober gravitas, historical weight, and unvarnished realism. Anchoring on <span class="text-white font-mono font-bold">${root} (${rootInfo.hz.toFixed(1)} Hz)</span> with minor third (<span class="text-indigo-300 font-mono font-bold">${min3}</span>) and minor sixth (<span class="text-amber-300 font-mono font-bold">${flat6}</span>) intervals signals deep consequence.`,
+          cog: `The 100-cent downward pull from the minor sixth to the dominant (<span class="text-amber-300 font-mono font-bold">${flat6} → ${dom5}</span>) paired with a whole-step subtonic (<span class="text-emerald-300 font-mono font-bold">${flat7} → ${root}</span>) induces deep reflective processing in the listener, stripping away superficial optimism.`,
+          emo: `Registers as earnest, introspective, and deeply Principled. Listeners interpret your words as carrying moral and structural permanence.`,
+          auth: `Commands serious institutional respect via <span class="text-emerald-300 font-mono font-bold">${flat6} → ${flat7} → ${root}m</span> (bVI–bVII–i) cadences. Particularly powerful when addressing risk, responsibility, or long-term strategy.`,
+          fric: `Sustained flat-6th and flat-7th prosody without a raised leading tone can occasionally lower room energy if not punctuated by decisive dominant-to-tonic drops.`,
+          mod: `• <span class="text-white font-semibold">Ignite Command Finality:</span> Raise your 7th by 100¢ (<span class="text-amber-300 font-mono font-bold">${flat7} → ${sharp7}</span>, shifting into <em>${root} Harmonic Minor</em>).<br/>• <span class="text-white font-semibold">Lift into Analytical Problem-Solving:</span> Raise your 6th (<span class="text-emerald-300 font-mono font-bold">${flat6} → ${maj6}</span>, shifting into <em>${root} Dorian</em>).`
+        },
+        'Locrian': {
+          align: `Listeners experience your speech as deconstructive, radically skeptical, and deliberately unsettling to status-quo assumptions. Because the fifth degree above <span class="text-white font-mono font-bold">${root}</span> is diminished (<span class="text-rose-400 font-mono font-bold">${tritone}</span>) alongside a flat second (<span class="text-amber-300 font-mono font-bold">${flat2}</span>), your voice refuses comfortable equilibrium.`,
+          cog: `Replacing the stabilizing perfect fifth with a 600-cent tritone (<span class="text-amber-300 font-mono font-bold">${root} ↔ ${tritone}</span>) denies the listener's auditory cortex a conventional resting pillar—forcing them to question foundational premises.`,
+          emo: `Registers as hyper-critical, diagnostic, and uncompromisingly disruptive. Listeners feel an urgent need to resolve the acoustic tension you introduce.`,
+          auth: `Wields disruptive diagnostic power—ideal for red-team stress-testing, exposing systemic flaws, or dismantling weak arguments before pivoting to a stable resolution key.`,
+          fric: `If maintained as a continuous baseline without resolving the <span class="text-cyan-300 font-mono font-bold">${tritone}</span> to a stable fifth (<span class="text-cyan-300 font-mono font-bold">${dom5}</span>), listeners experience cognitive fatigue and high anxiety.`,
+          mod: `• <span class="text-white font-semibold">Stabilize the Pillar:</span> Raise your b5 by 100¢ (<span class="text-emerald-300 font-mono font-bold">${tritone} → ${dom5}</span>, shifting into <em>${root} Phrygian</em>) once the flaw is exposed.<br/>• <span class="text-white font-semibold">Pivot to Relative Major:</span> Resolve onto <span class="text-amber-300 font-mono font-bold">${flat2} Major</span>.`
+        },
+        'Melodic Minor': {
+          align: `Listeners decode your prosody as the pinnacle of hybrid executive sophistication: combining the serious minor-third foundation (<span class="text-indigo-300 font-mono font-bold">${root}–${min3}</span>) with the upward-driving major sixth and seventh (<span class="text-emerald-300 font-mono font-bold">${maj6}–${sharp7}–${root}</span>).`,
+          cog: `The simultaneous presence of <span class="text-amber-300 font-mono font-bold">${min3}</span> (emotional sobriety) and <span class="text-amber-300 font-mono font-bold">${maj6}→${sharp7}→${root}</span> (goal-directed major-style resolution) engages both analytical scrutiny and decisive closure in the listener's brain.`,
+          emo: `Registers as poised, intellectually nuanced, and masterfully controlled. Listeners perceive someone who understands complex shades of gray yet executes with surgical precision.`,
+          auth: `Projects C-suite and diplomatic authority via <span class="text-emerald-300 font-mono font-bold">${dom5}7 → ${root}m(maj7)</span> cadences. Commands high deference from both technical specialists and executive stakeholders.`,
+          fric: `Less experienced listeners who think in simple binary terms may find the hybrid <span class="text-cyan-300 font-mono font-bold">${min3} + ${sharp7}</span> tonality intimidatingly sophisticated or hard to predict.`,
+          mod: `• <span class="text-white font-semibold">Increase Dramatic Severity:</span> Lower the 6th (<span class="text-amber-300 font-mono font-bold">${maj6} → ${flat6}</span>, shifting to <em>${root} Harmonic Minor</em>).<br/>• <span class="text-white font-semibold">Relax into Open Dialogue:</span> Lower the 7th (<span class="text-emerald-300 font-mono font-bold">${sharp7} → ${flat7}</span>, shifting to <em>${root} Dorian</em>).`
+        },
+        'Phrygian Dominant': {
+          align: `Listeners perceive your vocal output as imperative, oracular, and magnetizing. Built as the 5th mode of Harmonic Minor, your voice pairs a flat second (<span class="text-rose-400 font-mono font-bold">${flat2}</span>) with a major third (<span class="text-amber-300 font-mono font-bold">${maj3}</span>), creating an unmistakable 300-cent augmented second right at the bottom of your register.`,
+          cog: `The 300-cent leap between <span class="text-amber-300 font-mono font-bold">${flat2} ↔ ${maj3}</span> flanked by 100-cent half-steps onto <span class="text-white font-mono font-bold">${root}</span> and <span class="text-emerald-300 font-mono font-bold">${deg4}</span> commands immediate auditory lock. Listeners cannot tune out this frequency geometry.`,
+          emo: `Registers as fiercely sovereign, charismatic, and unyielding. Statements carry the weight of an edict rather than a suggestion.`,
+          auth: `Projects dominant command presence; because Phrygian Dominant is the natural V7 chord of <span class="text-emerald-300 font-mono font-bold">${deg4} Harmonic Minor</span>, your voice holds the room in a state of high-expectation suspension.`,
+          fric: `Can overwhelm casual or consensus-driven meetings; the <span class="text-cyan-300 font-mono font-bold">${root}–${flat2}–${maj3}</span> signature leaves virtually zero room for casual pushback.`,
+          mod: `• <span class="text-white font-semibold">Discharge into Tonic Finality:</span> Drop a 5th onto <span class="text-emerald-300 font-mono font-bold">${deg4} Harmonic Minor</span>.<br/>• <span class="text-white font-semibold">Soften into Pragmatism:</span> Raise b2 to 2 and b6 to 6 (<span class="text-indigo-300 font-mono font-bold">${deg2}, ${maj6}</span>, shifting to <em>${root} Mixolydian</em>).`
+        },
+        'Lydian Dominant': {
+          align: `Listeners perceive your speech as lucid, intellectually incandescent, and grounded in natural acoustic overtone physics (the 8th through 14th harmonics of the overtone series: <span class="text-white font-mono font-bold">${root}–${deg2}–${maj3}–${tritone}–${dom5}–${maj6}–${flat7}</span>).`,
+          cog: `Combining the raised fourth (<span class="text-amber-300 font-mono font-bold">${tritone}</span>) with the dominant seventh (<span class="text-emerald-300 font-mono font-bold">${flat7}</span>) creates a bright, non-dogmatic intellectual tension that stimulates rapid insight and lateral synthesis in the listener.`,
+          emo: `Registers as brilliantly incisive, curious, and unburdened by conventional orthodoxy. Listeners feel intellectually energized in your presence.`,
+          auth: `Establishes polymathic / chief-architect authority. You sound like the person in the room who sees three moves ahead of the standard playbook.`,
+          fric: `Listeners who prefer rigid procedural checklists may find the simultaneous <span class="text-cyan-300 font-mono font-bold">${tritone}</span> and <span class="text-cyan-300 font-mono font-bold">${flat7}</span> intervals too mercurial unless anchored frequently on <span class="text-white font-mono font-bold">${root}</span>.`,
+          mod: `• <span class="text-white font-semibold">Lock Executive Closure:</span> Lower #4 to 4 and raise b7 to 7 (<em>${root} Ionian</em>).<br/>• <span class="text-white font-semibold">Pivot to Sobriety:</span> Lower 3rd to <span class="text-indigo-300 font-mono font-bold">${min3}</span> (<em>${root} Melodic Minor</em>).`
+        },
+        'Altered': {
+          align: `Listeners experience your vocal signature as a high-voltage dialectical disruption. Every non-tonic degree in the Altered scale (<span class="text-amber-300 font-mono font-bold">${flat2}, ${min3}, ${maj3}, ${tritone}, ${flat6}, ${flat7}</span>) is chromatically inflected to maximize harmonic tension before a paradigm shift.`,
+          cog: `Because the scale contains both minor and major third equivalents (<span class="text-amber-300 font-mono font-bold">${min3}/${maj3}</span>) and a tritone (<span class="text-rose-400 font-mono font-bold">${tritone}</span>) with no perfect fifth, the listener's predictive coding network is completely destabilized—ideal for breaking cognitive deadlock.`,
+          emo: `Registers as intensely provocative, urgent, and transformative. Ambiguity is weaponized to force counterparties out of entrenched positions.`,
+          auth: `Functions as the ultimate V7alt catalyst before resolving up a fourth onto <span class="text-emerald-300 font-mono font-bold">${deg4} Minor/Major</span>. Commands total attention during strategic pivots.`,
+          fric: `Must be deployed selectively; sustained Altered prosody without resolving to a stable tonic triad will exhaust listener comprehension.`,
+          mod: `• <span class="text-white font-semibold">Resolve the Pivot:</span> Land squarely on <span class="text-emerald-300 font-mono font-bold">${deg4} Melodic or Harmonic Minor</span> to lock in the new framework.`
+        },
+        'Double Harmonic': {
+          align: `Listeners perceive your speech through an architecture of absolute sovereign decree. Featuring two separate 300-cent augmented second intervals (<span class="text-amber-300 font-mono font-bold">${flat2} → ${maj3}</span> and <span class="text-amber-300 font-mono font-bold">${flat6} → ${sharp7}</span>) converging on <span class="text-white font-mono font-bold">${root}</span>, this is the most high-contrast symmetrical-harmonic structure in human prosody.`,
+          cog: `Both the lower tetrachord and upper tetrachord clamp onto their target notes via 100-cent semitones (<span class="text-emerald-300 font-mono font-bold">${flat2}→${root}</span> and <span class="text-emerald-300 font-mono font-bold">${sharp7}→${root}</span>). The listener's auditory cortex perceives your tonic <span class="text-white font-mono font-bold">${root}</span> as an inescapable gravitational singularity.`,
+          emo: `Registers as monumental, uncompromising, and hieratic. Every pause and inflection carries theatrical and executive finality.`,
+          auth: `Projects supreme, unchallengeable command. Statements delivered in <span class="text-white font-mono font-bold">${root} Double Harmonic</span> are parsed as final constitutional rulings.`,
+          fric: `Far too intense for casual brainstorming; the dual 300-cent leaps (<span class="text-cyan-300 font-mono font-bold">${flat2}–${maj3}</span> and <span class="text-cyan-300 font-mono font-bold">${flat6}–${sharp7}</span>) will silence junior contributors unless intentionally softened.`,
+          mod: `• <span class="text-white font-semibold">Soften Lower Tetrachord:</span> Raise b2 to <span class="text-indigo-300 font-mono font-bold">${deg2}</span> and lower 3 to <span class="text-indigo-300 font-mono font-bold">${min3}</span> (shifting into <em>${root} Harmonic Minor</em>).`
+        },
+        'Major Pentatonic': {
+          align: `Listeners decode your speech as frictionless, universally accessible, and high-rapport. By eliminating all 100-cent semitones and tritones (<span class="text-emerald-300 font-mono font-bold">${root}–${deg2}–${maj3}–${dom5}–${maj6}</span>), your voice projects open-handed clarity.`,
+          cog: `Anhemitonic (semitone-free) spacing allows the listener's auditory system to process your words with zero limbic threat activation, maximizing broad audience receptivity.`,
+          emo: `Registers as warm, constructive, and grounded in shared common sense.`,
+          auth: `Builds rapid horizontal coalition power and public trust—ideal for keynote openings and cross-functional alignment.`,
+          fric: `Lacks the 100-cent leading-tone bite needed to enforce hard disciplinary boundaries or complex dialectical distinctions.`,
+          mod: `• <span class="text-white font-semibold">Add Executive Edge:</span> Introduce <span class="text-amber-300 font-mono font-bold">${sharp7}</span> and <span class="text-indigo-300 font-mono font-bold">${deg4}</span> to lock into full <em>${root} Ionian</em>.`
+        },
+        'Minor Pentatonic': {
+          align: `Listeners perceive your delivery as direct, stripped of artifice, and kinetically grounded. Anchoring on <span class="text-white font-mono font-bold">${root}–${min3}–${deg4}–${dom5}–${flat7}</span> projects no-nonsense candor.`,
+          cog: `Zero semitone friction combined with a solid minor-third (<span class="text-indigo-300 font-mono font-bold">${min3}</span>) and fourth/fifth backbone (<span class="text-emerald-300 font-mono font-bold">${deg4}–${dom5}</span>) makes complex directives sound rugged, memorable, and actionable.`,
+          emo: `Registers as resilient, candid, and grounded in real-world execution rather than abstract theory.`,
+          auth: `Commands peer-to-peer operational respect via direct <span class="text-emerald-300 font-mono font-bold">${flat7} → ${root}</span> and <span class="text-emerald-300 font-mono font-bold">${deg4} → ${root}</span> cadences.`,
+          fric: `Can sound overly blunt if delicate diplomatic nuance is required.`,
+          mod: `• <span class="text-white font-semibold">Inject High-Contrast Finality:</span> Add <span class="text-amber-300 font-mono font-bold">${flat6}</span> and <span class="text-amber-300 font-mono font-bold">${sharp7}</span> to escalate into <em>${root} Harmonic Minor</em>.`
+        },
+        'Suspended Pentatonic': {
+          align: `Listeners experience your voice as a neutral, non-partisan architectural mediator. Because the scale (<span class="text-white font-mono font-bold">${root}–${deg2}–${deg4}–${dom5}–${flat7}</span>) omits both the minor third and major third, you project pure structural objectivity.`,
+          cog: `Built entirely from stacked perfect fourths/fifths, your prosody avoids triggering either major-key cheerfulness or minor-key severity—keeping the listener's mind open and unpolarized.`,
+          emo: `Registers as calm, impartial, and judicial. Ideal for arbitrating disputes between polarized factions.`,
+          auth: `Establishes neutral arbiter authority; both sides of a negotiation perceive you as fair and unaligned with bias.`,
+          fric: `Because there is no 3rd degree (<span class="text-cyan-300 font-mono font-bold">${min3}/${maj3}</span>), listeners may eventually crave a definitive emotional or strategic verdict.`,
+          mod: `• <span class="text-white font-semibold">Deliver the Verdict:</span> Drop in <span class="text-indigo-300 font-mono font-bold">${min3}</span> + <span class="text-amber-300 font-mono font-bold">${sharp7}</span> for a stern ruling, or <span class="text-emerald-300 font-mono font-bold">${maj3}</span> for an affirmative green light.`
+        },
+        'Hirajoshi': {
+          align: `Listeners decode your speech as surgical, minimalist, and intensely focused. The asymmetric 5-note structure (<span class="text-white font-mono font-bold">${root}–${flat2}–${deg4}–${dom5}–${flat6}</span>) pairs two 100-cent half-steps with wide 400-cent leaps.`,
+          cog: `The stark acoustic negative space between <span class="text-amber-300 font-mono font-bold">${flat2} → ${deg4}</span> (400 cents) followed by the tight <span class="text-emerald-300 font-mono font-bold">${dom5} ↔ ${flat6}</span> half-step creates a zen-like, high-precision attentional lock.`,
+          emo: `Registers as austere, deliberate, and completely free of verbal clutter. Every word feels weighed on a precision scale.`,
+          auth: `Projects quiet, lethal competence—the prosodic signature of a specialist who speaks only when necessary.`,
+          fric: `Listeners accustomed to verbose, continuous pitch steps may find the wide 400-cent intervals enigmatic or intimidating.`,
+          mod: `• <span class="text-white font-semibold">Bridge the Gap:</span> Insert <span class="text-indigo-300 font-mono font-bold">${min3}</span> and <span class="text-amber-300 font-mono font-bold">${sharp7}</span> to expand into full <em>${root} Harmonic Minor</em>.`
+        },
+        'Blues': {
+          align: `Listeners perceive your vocal stream as authentic, battle-tested, and rich with human subtext. The addition of the chromatic blue note (<span class="text-amber-300 font-mono font-bold">${tritone}</span>) between <span class="text-white font-mono font-bold">${deg4}</span> and <span class="text-emerald-300 font-mono font-bold">${dom5}</span> signals lived experience.`,
+          cog: `Micro-inflecting through the <span class="text-amber-300 font-mono font-bold">${deg4} → ${tritone} → ${dom5}</span> cluster activates mirror-neuron empathy and strips away corporate stiffness.`,
+          emo: `Registers as soulful, resilient, and candidly persuasive. Listeners trust that you are telling them the real story behind the numbers.`,
+          auth: `Wields high charismatic and cultural authority—especially effective when rallying teams through adversity.`,
+          fric: `In rigid, hyper-formal regulatory or legal hearings, heavy tritone-blue-note inflection (<span class="text-cyan-300 font-mono font-bold">${tritone}</span>) may register as too informal.`,
+          mod: `• <span class="text-white font-semibold">Formalize Authority:</span> Resolve <span class="text-amber-300 font-mono font-bold">${tritone}</span> cleanly to <span class="text-emerald-300 font-mono font-bold">${dom5}</span> and introduce <span class="text-amber-300 font-mono font-bold">${sharp7}</span>.`
+        },
+        'Major Blues': {
+          align: `Listeners decode your delivery as charismatic, socially agile, and effortlessly persuasive. The chromatic slide between minor third and major third (<span class="text-amber-300 font-mono font-bold">${min3} → ${maj3}</span>) over <span class="text-white font-mono font-bold">${root}</span> blends warmth with wit.`,
+          cog: `Playing the threshold between <span class="text-indigo-300 font-mono font-bold">${min3}</span> (realism) and <span class="text-emerald-300 font-mono font-bold">${maj3}</span> (optimism) keeps the listener's social brain highly engaged and receptive.`,
+          emo: `Registers as confident, approachable, and emotionally intelligent.`,
+          auth: `Commands relational and deal-making leverage—ideal for client pitches, keynote storytelling, and diplomatic persuasion.`,
+          fric: `May soften the perceived severity of hard ultimatums unless you lock onto a downward <span class="text-cyan-300 font-mono font-bold">${dom5} → ${root}</span> drop.`,
+          mod: `• <span class="text-white font-semibold">Harden the Stance:</span> Lock onto <span class="text-indigo-300 font-mono font-bold">${min3}</span> and add <span class="text-amber-300 font-mono font-bold">${flat6} + ${sharp7}</span> (<em>${root} Harmonic Minor</em>).`
+        },
+        'Prometheus': {
+          align: `Listeners perceive your voice as philosophical, speculative, and architecturally deep. Built from Scriabin's Mystic hexachord (<span class="text-white font-mono font-bold">${root}–${deg2}–${maj3}–${tritone}–${maj6}–${flat7}</span>), it merges tritone luminosity with sixth/seventh depth.`,
+          cog: `Replacing the perfect fifth with a focus on <span class="text-amber-300 font-mono font-bold">${tritone}</span> and <span class="text-indigo-300 font-mono font-bold">${maj6}</span> suspends conventional binary resolution, inviting listeners into deep systems-level contemplation.`,
+          emo: `Registers as visionary, enigmatic, and intellectually magnetizing.`,
+          auth: `Projects chief-philosopher / deep-researcher authority during foundational strategy sessions.`,
+          fric: `Without a fifth degree (<span class="text-cyan-300 font-mono font-bold">${dom5}</span>), action-oriented operators may ask for concrete next-step anchoring.`,
+          mod: `• <span class="text-white font-semibold">Anchor Execution:</span> Introduce the dominant fifth (<span class="text-emerald-300 font-mono font-bold">${dom5}</span>, shifting into <em>${root} Lydian Dominant</em>).`
+        },
+        'Whole Tone': {
+          align: `Listeners experience your prosody as a suspended, non-binary horizon. Because every adjacent step in the Whole Tone scale (<span class="text-white font-mono font-bold">${root}–${deg2}–${maj3}–${tritone}–${flat6}–${flat7}</span>) is an identical 200-cent whole step, no single note automatically betrays where your sentence will land.`,
+          cog: `The total absence of 100-cent half-steps and perfect fifths dissolves traditional gravitational expectation—placing the listener in a state of open, suspended cognitive receptivity.`,
+          emo: `Registers as dreamlike, unflappable, and strategically ambiguous. Impossible for an opponent to read your emotional hand.`,
+          auth: `Grants strategic ambiguity during exploratory negotiations where you wish to reveal zero commitment until the final clause.`,
+          fric: `If you never exit the 200-cent symmetry, listeners cannot tell when a decision has been finalized.`,
+          mod: `• <span class="text-white font-semibold">Snap into Finality:</span> Drop a 100-cent leading tone (<span class="text-amber-300 font-mono font-bold">${sharp7} → ${root}</span>) and anchor <span class="text-emerald-300 font-mono font-bold">${dom5}</span> on your final sentence.`
+        },
+        'Octatonic Diminished': {
+          align: `Listeners decode your speech as a labyrinthine, multi-axis strategic matrix. Alternating strict 100-cent half-steps and 200-cent whole-steps (<span class="text-white font-mono font-bold">${root}–${flat2}–${min3}–${maj3}–${tritone}–${dom5}–${maj6}–${flat7}</span>), your voice commands four interlocking minor-third axes simultaneously.`,
+          cog: `With 4 semitone steps and two intersecting tritone axes (<span class="text-amber-300 font-mono font-bold">${root}↔${tritone}</span> and <span class="text-amber-300 font-mono font-bold">${min3}↔${maj6}</span>), the listener's brain perceives hyper-dense analytical complexity and relentless intellectual rigor.`,
+          emo: `Registers as formidable, chess-like, and inescapable. Listeners feel every contingency has already been calculated.`,
+          auth: `Dominates complex technical, legal, and quantitative debates where multi-variable mastery determines the winner.`,
+          fric: `High cognitive load for the listener; simpler audiences may feel overwhelmed by the 8-note symmetrical density.`,
+          mod: `• <span class="text-white font-semibold">Clarify the Takeaway:</span> Strip away <span class="text-rose-300 font-mono font-bold">${flat2}</span> and <span class="text-rose-300 font-mono font-bold">${tritone}</span> on your summary statement to land in clean <em>${root} Dorian</em> or <em>Harmonic Minor</em>.`
+        },
+        'Enigmatic': {
+          align: `Listeners perceive your vocal signature as cryptic, high-abstraction, and fiercely original. Merging a Phrygian flat-second (<span class="text-rose-400 font-mono font-bold">${flat2}</span>), whole-tone middle degrees (<span class="text-amber-300 font-mono font-bold">${maj3}–${tritone}–${flat6}–${flat7}</span>), and a sharp leading tone (<span class="text-emerald-300 font-mono font-bold">${sharp7}</span>), your prosody defies standard categorization.`,
+          cog: `The coexistence of <span class="text-amber-300 font-mono font-bold">${flat7}</span> and <span class="text-amber-300 font-mono font-bold">${sharp7}</span> alongside <span class="text-amber-300 font-mono font-bold">${flat2}</span> creates dual chromatic pincers around <span class="text-white font-mono font-bold">${root}</span>, commanding intense listener curiosity.`,
+          emo: `Registers as mysterious, hyper-intelligent, and deliberately inscrutable.`,
+          auth: `Projects rarefied specialist mystique—listeners lean in closely because your cadence refuses predictable clichés.`,
+          fric: `Ambiguity is extreme; operational teams may require explicit verbal confirmation of action items.`,
+          mod: `• <span class="text-white font-semibold">Lock the Anchor:</span> Replace <span class="text-rose-300 font-mono font-bold">${tritone}</span> with the perfect fifth (<span class="text-emerald-300 font-mono font-bold">${dom5}</span>) to ground into <em>${root} Double Harmonic</em>.`
+        },
+        'Chromatic Cluster': {
+          align: `Listeners experience your voice as a continuous, micro-inflected 12-tone spectrum where every 100-cent semitone (<span class="text-white font-mono font-bold">C through B</span>) is actively engaged around your <span class="text-indigo-300 font-mono font-bold">${root} (${rootInfo.hz.toFixed(1)} Hz)</span> center.`,
+          cog: `Continuous 100-cent glissandi and dense semitone proximity bypass discrete diatonic categorization, forcing the listener to track your subtlest micro-tonal pitch slopes and rhythmic stresses.`,
+          emo: `Registers as hyper-expressive, theatrical, or intensely urgent—capable of mimicking any emotional shade on demand.`,
+          auth: `Provides maximum rhetorical chameleon adaptability, though it relies on rhythmic cadence rather than diatonic intervals for structural stability.`,
+          fric: `Without a clear diatonic filter, listeners may struggle to identify your resting tonic unless you deliberately sustain <span class="text-cyan-300 font-mono font-bold">${root}</span> at clause boundaries.`,
+          mod: `• <span class="text-white font-semibold">Crystallize Authority:</span> Carve out 5 chromatic passing tones to lock into the 7-note <em>${root} Harmonic Minor</em> architecture (<span class="text-emerald-300 font-mono font-bold">${root}–${deg2}–${min3}–${deg4}–${dom5}–${flat6}–${sharp7}</span>).`
+        }
+      };
+
+      const n = scaleNarratives[scaleName] || scaleNarratives['Major'];
 
       return [
         {
@@ -3024,48 +3962,48 @@
           icon: 'fa-scale-balanced',
           accent: 'indigo',
           title: 'Acoustic & Semantic Alignment',
-          subtitle: `${root} ${scaleName} Prosodic Architecture`,
-          body: `Listeners decode your vocal stream through the structural lens of <span class="text-white font-mono font-bold">${root} ${scaleName}</span>. By anchoring your fundamental frequency on <span class="text-indigo-300 font-mono font-bold">${root}</span> and framing clauses around <span class="text-indigo-300 font-mono font-bold">${thirdNote}</span> and the fifth (<span class="text-emerald-300 font-mono font-bold">${dom5}</span>), your speech aligns semantic content with ${isMinorFamily ? 'measured, analytical depth and unsentimental realism' : 'clear, forward-moving structural transparency'}. Listeners perceive your words as grounded in an explicit internal system.`
+          subtitle: `${root} ${def.displayName} (${def.formula})`,
+          body: n.align
         },
         {
           num: '02',
           icon: 'fa-brain',
           accent: 'amber',
           title: 'Cognitive Impact & Neuro-Linguistic Processing',
-          subtitle: `Interval Geometry & Attentional Framing`,
-          body: `Because your spoken scale utilizes the formula <span class="text-amber-300 font-mono font-bold">${(SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Major']).formula}</span> over a <span class="text-white font-mono font-bold">${root}</span> tonic, the listener's auditory cortex experiences ${scaleName === 'Phrygian' ? `immediate half-step compression (${root} ↔ ${flat2}) that demands urgent tactical focus` : (scaleName === 'Dorian' ? `balanced minor-third sobriety (${min3}) paired with a raised sixth (${maj6}) that stimulates objective problem-solving` : `coherent diatonic predictability that reduces cognitive friction and accelerates comprehension`)}.`
+          subtitle: `${geom.semitoneSteps} Semitones • ${geom.augSecondSteps} Aug-2nds • Tension ${def.tensionIndex}/100`,
+          body: n.cog
         },
         {
           num: '03',
           icon: 'fa-heart-pulse',
           accent: 'rose',
           title: 'Emotional Resonance & Subliminal Affect',
-          subtitle: 'Subconscious Limbic Reception',
-          body: `At a subliminal level, your delivery registers as ${scaleName === 'Major' ? 'accessible, integrative, and psychologically safe' : (scaleName === 'Phrygian' ? 'incisive, guarded, and uncompromisingly direct' : 'stoic, self-contained, and emotionally regulated')}. Listeners do not hear erratic emotional volatility; instead, your prosodic contour projects ${isMinorFamily ? 'intellectual autonomy and deliberate restraint' : 'pragmatic confidence and operational readiness'}.`
+          subtitle: `Archetype: ${def.archetype}`,
+          body: n.emo
         },
         {
           num: '04',
           icon: 'fa-chess-king',
           accent: 'emerald',
           title: 'Authority, Power Dynamics & Negotiation Leverage',
-          subtitle: `Cadential Weight on ${dom5} → ${root}`,
-          body: `In high-stakes dialogue, your downward cadences from the dominant (<span class="text-emerald-300 font-mono font-bold">${dom5}</span>) and subtonic/leading degrees onto <span class="text-white font-mono font-bold">${root}</span> establish clear conversational jurisdiction. Counterparties perceive your position as ${isMinorFamily ? 'backed by rigorous analytical conviction that resists superficial persuasion' : 'anchored in practical consensus and institutional momentum'}.`
+          subtitle: `Tonic Anchor on ${root} (${rootInfo.note} ≈ ${rootInfo.hz.toFixed(1)} Hz)`,
+          body: n.auth
         },
         {
           num: '05',
           icon: 'fa-triangle-exclamation',
           accent: 'cyan',
           title: 'Interpersonal Friction & Misinterpretation Vectors',
-          subtitle: 'Potential Listener Blind Spots',
-          body: `When speaking to individuals with contrasting vocal habits, your <span class="text-cyan-300 font-mono font-bold">${root} ${scaleName}</span> prosody can occasionally be misread: ${isMinorFamily ? 'highly expressive listeners may interpret your composed minor-mode neutrality as aloofness or skepticism' : 'detail-obsessed skeptics may misread your smooth diatonic consonance as overly optimistic unless paired with sharp leading-tone emphasis'}.`
+          subtitle: 'Listener Decoding Blind Spots & Failure Modes',
+          body: n.fric
         },
         {
           num: '06',
           icon: 'fa-sliders',
           accent: 'purple',
           title: 'Tactical Prosodic Modulation Protocol',
-          subtitle: 'On-Demand Interval Recalibration',
-          body: `To command maximum adaptability from your <span class="text-white font-mono font-bold">${root}</span> root:<br/>• <span class="text-white font-semibold">Command Finality:</span> Introduce the sharp 7th (<span class="text-amber-300 font-mono font-bold">${sharp7} → ${root}</span>) and flat 6th (<span class="text-amber-300 font-mono font-bold">${flat6}</span>) to shift into <em>${root} Harmonic Minor</em>.<br/>• <span class="text-white font-semibold">Analytical Inquiry:</span> Emphasize <span class="text-cyan-300 font-mono font-bold">${min3}</span> and <span class="text-cyan-300 font-mono font-bold">${maj6}</span> (<em>${root} Dorian</em>).<br/>• <span class="text-white font-semibold">Broad Alignment:</span> Resolve clauses through <span class="text-emerald-300 font-mono font-bold">${maj3}</span> and <span class="text-emerald-300 font-mono font-bold">${dom5}</span>.`
+          subtitle: 'On-Demand Semitone Pivots across the 24 Structures',
+          body: n.mod
         }
       ];
     }
@@ -3078,19 +4016,20 @@
       const scaleDef = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
 
       // 1. Update Headline Banner
-      document.getElementById('primarySpeechKeyHeadline').textContent = `${rootName} ${scaleName}`;
-      document.getElementById('dossierActiveKeyBadge').textContent = `Profile: ${rootName} ${scaleName}`;
+      document.getElementById('primarySpeechKeyHeadline').textContent = `${rootName} ${scaleDef.displayName}`;
+      document.getElementById('dossierActiveKeyBadge').textContent = `Profile: ${rootName} ${scaleDef.displayName}`;
+      document.getElementById('speechActiveFamilyBadge').textContent = scaleDef.familyFull;
 
       const scaleNotesStr = scaleDef.intervals.map(i => NOTE_NAMES[(rootPc + i) % 12]).join(' – ');
       if (scaleName === 'Harmonic Minor') {
         const flat6 = NOTE_NAMES[(rootPc + 8) % 12];
         const sharp7 = NOTE_NAMES[(rootPc + 11) % 12];
         document.getElementById('primarySpeechKeySubline').innerHTML = `
-          Scale Formula: <span class="font-mono text-indigo-300 font-semibold">${scaleNotesStr}</span> • Characterized by the 3-semitone augmented second (<span class="font-mono text-amber-300">${flat6} → ${sharp7}</span>) and half-step leading resolution (<span class="font-mono text-emerald-300">${sharp7} → ${rootName}</span>).
+          Scale Formula: <span class="font-mono text-indigo-300 font-semibold">${scaleNotesStr}</span> (${scaleDef.formula}) • Characterized by the 3-semitone augmented second (<span class="font-mono text-amber-300">${flat6} → ${sharp7}</span>) and half-step leading resolution (<span class="font-mono text-emerald-300">${sharp7} → ${rootName}</span>).
         `;
       } else {
         document.getElementById('primarySpeechKeySubline').innerHTML = `
-          Scale Formula: <span class="font-mono text-indigo-300 font-semibold">${scaleNotesStr}</span> (${scaleDef.formula}) • Tonic Center anchored on <span class="font-mono text-emerald-300">${rootName}</span>.
+          Scale Notes: <span class="font-mono text-indigo-300 font-semibold">${scaleNotesStr}</span> • Formula: <span class="font-mono text-amber-300">${scaleDef.formula}</span> • Perceptual Archetype: <span class="text-emerald-300 font-semibold">${scaleDef.archetype}</span>.
         `;
       }
 
@@ -3162,7 +4101,7 @@
         `;
       }).join('');
 
-      // 3. Render Panel B: Multi-Key Composition
+      // 3. Render Panel B: Multi-Key Composition (Top 5 of 288 Keys)
       const multiKeys = computeMultiKeyComposition();
       document.getElementById('speechPrimaryShareKpi').textContent = `${multiKeys[0].sharePct}%`;
 
@@ -3173,26 +4112,29 @@
 
       const keyListEl = document.getElementById('speechKeyCompositionList');
       keyListEl.innerHTML = multiKeys.map((k, idx) => `
-        <div class="p-3 rounded-xl bg-slate-950/85 border border-slate-800/90 space-y-1">
+        <div onclick="selectSpeechRootAndScale(${k.rootPc}, '${k.scaleName}', false)"
+          class="cursor-pointer p-2.5 rounded-xl bg-slate-950/85 hover:bg-slate-900 border ${idx === 0 ? 'border-indigo-500/40' : 'border-slate-800/90 hover:border-slate-700'} space-y-1 transition"
+          title="Click to inspect ${k.keyName} in the Perceptual Framework">
           <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full ${k.colorClass}"></span>
-              <span class="font-display font-bold text-xs sm:text-sm text-white">#${idx + 1} ${k.keyName}</span>
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-2.5 h-2.5 rounded-full shrink-0 ${k.colorClass}"></span>
+              <span class="font-display font-bold text-xs sm:text-sm text-white truncate">#${idx + 1} ${k.keyName}</span>
             </div>
-            <span class="px-2 py-0.5 rounded border font-mono font-extrabold text-xs font-tabular ${k.badgeClass}">
+            <span class="px-2 py-0.5 rounded border font-mono font-extrabold text-xs font-tabular shrink-0 ${k.badgeClass}">
               ${k.sharePct}% of speech
             </span>
           </div>
-          <p class="text-[11px] font-mono text-slate-400 pl-4">
+          <p class="text-[11px] font-mono text-slate-400 pl-4 leading-snug">
             ${k.context}
           </p>
         </div>
       `).join('');
 
       const domName = NOTE_NAMES[(rootPc + 7) % 12];
-      const leadName = scaleName === 'Harmonic Minor' ? NOTE_NAMES[(rootPc + 11) % 12] : NOTE_NAMES[(rootPc + 10) % 12];
+      const lastInt = scaleDef.intervals[scaleDef.intervals.length - 1];
+      const leadName = NOTE_NAMES[(rootPc + lastInt) % 12];
       document.getElementById('prosodicShiftSummary').innerHTML = `
-        Your declarative clauses anchor in <span class="text-white font-semibold">${multiKeys[0].keyName} (${multiKeys[0].sharePct}%)</span>, while mid-sentence analytical suspensions pivot into <span class="text-indigo-300 font-semibold">${multiKeys[1].keyName} (${multiKeys[1].sharePct}%)</span> before locking onto tonic finality via <span class="text-amber-300 font-semibold">${leadName} / ${domName} → ${rootName}</span>.
+        Out of <span class="text-white font-semibold">288 possible vocal key signatures</span>, your speech anchors primarily in <span class="text-indigo-300 font-semibold">${multiKeys[0].keyName} (${multiKeys[0].sharePct}%)</span>, modulates into <span class="text-amber-300 font-semibold">${multiKeys[1].keyName} (${multiKeys[1].sharePct}%)</span> during mid-sentence analytical clauses, and resolves via <span class="text-emerald-300 font-semibold">${leadName} / ${domName} → ${rootName}</span>.
       `;
 
       // 4. Render 6 In-Depth Perceptual & Interpretive Framework Cards
