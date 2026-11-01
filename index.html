@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CHAR Pitch & Key Tuner — Vocal, Hum & Whistle Pitch, Key & Progression Tracker</title>
+  <title>CHARtune Pitch & Key Tuner — Vocal, Hum & Whistle Pitch, Key & Progression Tracker</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
@@ -113,7 +113,7 @@
         <div id="micStatusDot" class="w-3 h-3 rounded-full bg-slate-600 ring-4 ring-slate-800 transition-all duration-300"></div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-display font-bold text-base sm:text-lg tracking-tight text-white">CHAR <span class="text-indigo-400">Pitch & Key Tuner</span></h1>
+            <h1 class="font-display font-bold text-base sm:text-lg tracking-tight text-white">CHARtune <span class="text-indigo-400">Pitch & Key Tuner</span></h1>
             <span class="text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">DSP 65–2600Hz</span>
           </div>
           <p class="text-[11px] text-slate-400 hidden sm:block">Vocal, Hum & Whistle Pitch, Key & Session Recording Workstation</p>
@@ -1456,7 +1456,7 @@
         notesSummary,
         wavUrl: audioUrl,
         ext: ext.toUpperCase(),
-        filename: `CHAR-Session-${state.pleasureClips.length + 1}-${keySummary.replace(/\s+/g, '_')}.${ext}`
+        filename: `CHARtune-Session-${state.pleasureClips.length + 1}-${keySummary.replace(/\s+/g, '_')}.${ext}`
       };
 
       state.pleasureClips.unshift(clipObj);
@@ -2078,7 +2078,7 @@
         `"${n.impliedRoman} (${n.impliedChordName})"`, `"${n.detectedKey}"`, n.isPleasureHighlighted
       ]);
       const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-      downloadFile(csvContent, `CHAR-Session-Log-${Date.now()}.csv`, 'text/csv');
+      downloadFile(csvContent, `CHARtune-Session-Log-${Date.now()}.csv`, 'text/csv');
       showToast('Session CSV Exported!', 'emerald');
     }
 
@@ -2096,7 +2096,7 @@
         totalNotes: state.sessionLog.length,
         notes: state.sessionLog.slice().reverse()
       };
-      downloadFile(JSON.stringify(payload, null, 2), `CHAR-Session-${Date.now()}.json`, 'application/json');
+      downloadFile(JSON.stringify(payload, null, 2), `CHARtune-Session-${Date.now()}.json`, 'application/json');
       showToast('Session JSON Exported!', 'emerald');
     }
 
@@ -2105,7 +2105,7 @@
         ? `${NOTE_DISPLAY[state.detectedRootPitchClass]} ${state.detectedScaleName}`
         : 'N/A';
       const progStr = state.chordProgression.map(c => `${c.roman}(${c.chordName})`).join(' -> ') || 'None';
-      const summary = `CHAR Pitch & Key Tuner Session Summary\nDetected Key: ${keyStr}\nProgression: ${progStr}\nTotal Notes: ${state.sessionLog.length}\nIn-Key Accuracy: ${document.getElementById('kpiInKeyPct').textContent}\nAvg Micro-Tuning: ${document.getElementById('kpiAvgCents').textContent}`;
+      const summary = `CHARtune Pitch & Key Tuner Session Summary\nDetected Key: ${keyStr}\nProgression: ${progStr}\nTotal Notes: ${state.sessionLog.length}\nIn-Key Accuracy: ${document.getElementById('kpiInKeyPct').textContent}\nAvg Micro-Tuning: ${document.getElementById('kpiAvgCents').textContent}`;
 
       const textarea = document.createElement('textarea');
       textarea.value = summary;
