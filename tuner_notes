@@ -1,0 +1,21 @@
+# VoxKey Tuner App - Local & Remote Operations Reference
+
+## 1. Directory & URL Locations
+- Local Path: /home/charles/tuner-app/
+- Main Application File: /home/charles/tuner-app/index.html
+- Reference File: /home/charles/tuner-app/tuner_notes
+- GitHub Repository: https://github.com/srfshredder-lang/tuner-app
+- Live Mobile URL: https://srfshredder-lang.github.io/tuner-app/
+
+## 2. Pushing Future Updates
+Whenever index.html is modified, run:
+  cd /home/charles/tuner-app
+  git add index.html tuner_notes
+  git commit -m "Update tuner application"
+  git push origin main
+
+## 3. Diagnostic Commands
+- Check file status: git status
+- Verify remote URL: git remote -v
+- View commit history: git log --oneline -n 5
+- Check GitHub Pages status: gh api /repos/srfshredder-lang/tuner-app/pages
