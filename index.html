@@ -1562,8 +1562,6 @@
             timestamp: now
           });
         } else {
-          // Check if unpitched vocal burst is an audible pleasure exclamation
-          checkAcousticPleasureBurst(analysis, now);
           finalizeActiveLockedNote(now);
           decayPitchHUD();
         }
