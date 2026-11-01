@@ -570,6 +570,273 @@
       </div>
     </section>
 
+    <!-- =========================================================================
+         NEW MODULE: SPEECH PROSODY, VOCAL KEY DISTRIBUTION & PERCEPTUAL PSYCHOACOUSTIC ENGINE
+         ========================================================================= -->
+    <section id="speechProsodyModule" class="studio-panel rounded-2xl p-4 sm:p-6 space-y-5 border border-indigo-500/30 shadow-2xl shadow-indigo-950/20">
+      <!-- 1. MODULE HEADER & CONTROLS -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800/90 pb-4">
+        <div class="space-y-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[10px] font-mono uppercase tracking-widest font-bold">
+              PROSODIC DSP & PSYCHOACOUSTICS
+            </span>
+            <span id="speechCaptureStatusBadge" class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-mono uppercase tracking-wider">
+              55ms Vowel-Nucleus Gate: Standby
+            </span>
+          </div>
+          <h2 class="font-display font-extrabold text-base sm:text-xl text-white tracking-tight flex items-center gap-2.5">
+            <i class="fa-solid fa-waveform-lines text-indigo-400"></i>
+            SPEECH PROSODY, VOCAL KEY DISTRIBUTION & PERCEPTUAL PSYCHOACOUSTIC ENGINE
+          </h2>
+          <p class="text-xs text-slate-400 max-w-3xl">
+            Speak the calibrated phonetic prompts below to map your spoken pitch-class distribution (%), multi-key speech composition (%), and how listeners subconsciously interpret your vocal signature.
+          </p>
+        </div>
+
+        <!-- Control Buttons & Archetype Selector -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="speechCaptureBtn" onclick="toggleSpeechProsodyCapture()" class="px-3.5 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition flex items-center gap-2">
+            <i id="speechCaptureIcon" class="fa-solid fa-microphone-lines"></i>
+            <span id="speechCaptureBtnText">Start Speech Capture</span>
+          </button>
+
+          <button onclick="simulateSpeechArchetype('B_HARMONIC_MINOR', true)" class="px-3 py-2 rounded-xl font-mono font-bold text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition flex items-center gap-1.5" title="Load and audition the B Harmonic Minor speech profile">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+            <span>Simulate "B Harmonic Minor" Speech</span>
+          </button>
+
+          <select id="speechArchetypeSelect" onchange="simulateSpeechArchetype(this.value, false)" class="bg-slate-900 border border-slate-700 hover:border-indigo-400 rounded-xl px-2.5 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-indigo-500">
+            <option value="B_HARMONIC_MINOR" selected>Archetype: B Harmonic Minor (High-Contrast Command)</option>
+            <option value="D_DORIAN">Archetype: D Dorian (Analytical / Stoic Precision)</option>
+            <option value="CSHARP_NATURAL_MINOR">Archetype: C# Natural Minor (Gravitas / Dialectical Intensity)</option>
+            <option value="G_MIXOLYDIAN">Archetype: G Mixolydian (Pragmatic / Directive Momentum)</option>
+            <option value="F_MAJOR">Archetype: F Major (Accessible / Consensus Builder)</option>
+            <option value="E_PHRYGIAN">Archetype: E Phrygian (Tactical / Unyielding Edge)</option>
+          </select>
+
+          <button onclick="resetSpeechProsodyData()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-rose-950/70 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-800/60 text-xs font-mono transition flex items-center gap-1.5">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span>Reset Speech Data</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. INTERACTIVE SPEECH CALIBRATION SCRIPT & PROMPT CAROUSEL -->
+      <div class="studio-panel-elevated rounded-2xl p-4 sm:p-5 border border-slate-800/90 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+            <h3 class="font-display font-bold text-xs sm:text-sm uppercase tracking-wider text-indigo-300">
+              CALIBRATED PHONETIC & PROSODIC SCRIPT PROMPTS (READ ALOUD AT NATURAL CADENCE)
+            </h3>
+          </div>
+          <!-- Prompt Number Selector Pills -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <button onclick="selectSpeechPrompt(0)" id="promptPill-0" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-500 text-white transition">1. Words</button>
+            <button onclick="selectSpeechPrompt(1)" id="promptPill-1" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">2. Declarative</button>
+            <button onclick="selectSpeechPrompt(2)" id="promptPill-2" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">3. Directive</button>
+            <button onclick="selectSpeechPrompt(3)" id="promptPill-3" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">4. Analytical</button>
+            <button onclick="selectSpeechPrompt(4)" id="promptPill-4" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">5. Interrogative</button>
+            <button onclick="selectSpeechPrompt(5)" id="promptPill-5" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition">6. Full Passage</button>
+          </div>
+        </div>
+
+        <!-- Active Prompt Display Box -->
+        <div class="p-4 sm:p-5 rounded-xl bg-slate-950/90 border border-indigo-500/30 relative overflow-hidden">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <span id="activePromptCategory" class="text-[11px] font-mono uppercase tracking-wider text-indigo-400 font-semibold">
+              PROMPT 1 OF 6 — LEXICAL RESONANCE ANCHORS (ISOLATED WORDS)
+            </span>
+            <span id="activePromptObjective" class="text-[11px] font-mono text-slate-400">
+              Target: Maps baseline F0 anchor, open-vowel formants & terminal drop
+            </span>
+          </div>
+
+          <p id="activePromptText" class="font-display font-bold text-lg sm:text-2xl text-white leading-relaxed tracking-tight selection:bg-indigo-500">
+            "Architecture — Equilibrium — Velocity — Precision — Sovereignty — Finality — Resolution — Threshold."
+          </p>
+
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <button onclick="cycleSpeechPrompt(-1)" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-mono text-slate-300 border border-slate-700 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-chevron-left text-[10px]"></i> Prev Prompt
+              </button>
+              <button onclick="cycleSpeechPrompt(1)" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-mono text-slate-300 border border-slate-700 transition flex items-center gap-1.5">
+                Next Prompt <i class="fa-solid fa-chevron-right text-[10px]"></i>
+              </button>
+              <button onclick="auditionActiveSpeechCadence()" class="px-3 py-1.5 rounded-lg bg-indigo-500/15 hover:bg-indigo-500/30 text-xs font-mono text-indigo-300 border border-indigo-500/30 transition flex items-center gap-1.5" title="Hear the prosodic pitch contour of the current speech key">
+                <i class="fa-solid fa-volume-high text-[10px]"></i> Audition Key Cadence
+              </button>
+            </div>
+
+            <!-- Live Speech Telemetry Mini-Counters -->
+            <div class="flex flex-wrap items-center gap-3 text-xs font-mono font-tabular">
+              <div class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-500">Syllable Nuclei:</span>
+                <span id="speechSyllableCount" class="text-emerald-400 font-bold ml-1">142</span>
+              </div>
+              <div class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-500">Mean Spoken F0:</span>
+                <span id="speechMeanF0" class="text-cyan-400 font-bold ml-1">123.5 Hz (B2)</span>
+              </div>
+              <div class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-500">Prosodic Span:</span>
+                <span id="speechSemitoneSpan" class="text-indigo-300 font-bold ml-1">11.0 ST</span>
+              </div>
+              <div class="px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
+                <span class="text-slate-500">Cadence Vector:</span>
+                <span id="speechCadenceSlope" class="text-amber-300 font-bold ml-1">Descending Command (A#→B)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PRIMARY SPEECH KEY DECLARATION BANNER -->
+      <div class="rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-indigo-950/80 via-slate-900/95 to-slate-900/90 border border-indigo-500/40 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">
+              DOMINANT VOCAL KEY SIGNATURE
+            </span>
+            <span id="speechProfileSourceLabel" class="text-[11px] font-mono text-slate-400">
+              Active Profile: Calibrated B Harmonic Minor Reference
+            </span>
+          </div>
+          <div class="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
+            "I speak in <span id="primarySpeechKeyHeadline" class="text-indigo-400 underline decoration-indigo-500/50 decoration-2 underline-offset-4">B Harmonic Minor</span>"
+          </div>
+          <p id="primarySpeechKeySubline" class="text-xs sm:text-sm text-slate-300">
+            Scale Formula: <span class="font-mono text-indigo-300 font-semibold">B – C# – D – E – F# – G – A#</span> • Characterized by the 3-semitone augmented second (<span class="font-mono text-amber-300">G → A#</span>) and half-step leading resolution (<span class="font-mono text-emerald-300">A# → B</span>).
+          </p>
+        </div>
+
+        <!-- 3 Core Psychoacoustic Badges -->
+        <div class="grid grid-cols-3 gap-2.5 w-full lg:w-auto shrink-0">
+          <div class="p-3 rounded-xl bg-slate-950/85 border border-slate-800 text-center">
+            <div class="text-[10px] font-mono uppercase text-slate-400">Primary Key Share</div>
+            <div id="speechPrimaryShareKpi" class="font-display font-extrabold text-lg sm:text-xl text-emerald-400 font-tabular mt-0.5">58.4%</div>
+            <div class="text-[10px] font-mono text-slate-500">of spoken clauses</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/85 border border-slate-800 text-center">
+            <div class="text-[10px] font-mono uppercase text-slate-400">Harmonic Tension</div>
+            <div id="speechTensionKpi" class="font-display font-extrabold text-lg sm:text-xl text-amber-400 font-tabular mt-0.5">88 / 100</div>
+            <div id="speechTensionSub" class="text-[10px] font-mono text-slate-500">High-Contrast / Chiaroscuro</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/85 border border-slate-800 text-center">
+            <div class="text-[10px] font-mono uppercase text-slate-400">Tonic Gravity</div>
+            <div id="speechTonicCenterKpi" class="font-display font-extrabold text-lg sm:text-xl text-indigo-300 font-tabular mt-0.5">B2 / B3</div>
+            <div id="speechTonicHzSub" class="text-[10px] font-mono text-slate-500">123.5 Hz / 246.9 Hz</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. QUANTITATIVE TONES & KEYS BREAKDOWN (% OF SPEECH) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- PANEL A (7 COLS): SPOKEN TONE / PITCH-CLASS DISTRIBUTION (% OF SPEECH PER NOTE) -->
+        <div class="lg:col-span-7 studio-panel-elevated rounded-2xl p-4 sm:p-5 border border-slate-800/90 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2.5">
+            <div>
+              <h3 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                <i class="fa-solid fa-chart-bar text-cyan-400"></i>
+                SPOKEN TONE DISTRIBUTION (% OF SPEECH PER NOTE)
+              </h3>
+              <p class="text-[11px] text-slate-400">Exact percentage of spoken vowel nuclei & syllables anchored on each pitch class</p>
+            </div>
+            <button id="sortTonesBtn" onclick="toggleSpeechToneSort()" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-[11px] font-mono text-slate-300 transition">
+              Sort: <span id="sortTonesLabel" class="text-indigo-300 font-bold">By % Share</span>
+            </button>
+          </div>
+
+          <div id="speechToneDistributionList" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+
+        <!-- PANEL B (5 COLS): MULTI-KEY & MODAL SPEECH COMPOSITION (% OF SPEECH PER KEY) -->
+        <div class="lg:col-span-5 studio-panel-elevated rounded-2xl p-4 sm:p-5 border border-slate-800/90 flex flex-col justify-between space-y-3">
+          <div class="space-y-3">
+            <div class="border-b border-slate-800/80 pb-2.5">
+              <h3 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-amber-400"></i>
+                MULTI-KEY SPEECH COMPOSITION (% BY KEY)
+              </h3>
+              <p class="text-[11px] text-slate-400">Natural speech modulates across primary & secondary modal centers depending on clause intent</p>
+            </div>
+
+            <!-- Multi-Segment Stacked Bar -->
+            <div>
+              <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-1">
+                <span>Cumulative Modal Breakdown</span>
+                <span>100% of Speech</span>
+              </div>
+              <div id="multiKeyStackedBar" class="h-4 w-full rounded-lg bg-slate-950 overflow-hidden flex border border-slate-800">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Key Breakdown Cards -->
+            <div id="speechKeyCompositionList" class="space-y-2.5">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Acoustic Cadence Mechanics Note -->
+          <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800/90 text-xs font-mono text-slate-300 space-y-1">
+            <div class="text-[10px] uppercase tracking-wider text-indigo-400 font-bold">
+              <i class="fa-solid fa-circle-info mr-1"></i> Prosodic Key-Shift Telemetry
+            </div>
+            <p id="prosodicShiftSummary" class="text-[11px] text-slate-400 leading-relaxed">
+              Your declarative clauses anchor in <span class="text-white font-semibold">B Harmonic Minor</span>, while mid-sentence analytical suspensions briefly pivot into <span class="text-indigo-300 font-semibold">F# Phrygian Dominant</span> (5th mode) before resolving via the <span class="text-amber-300 font-semibold">A# → B</span> leading tone.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 5. IN-DEPTH PERCEPTUAL & INTERPRETIVE FRAMEWORK (PSYCHOACOUSTIC DOSSIER) -->
+      <div class="studio-panel-elevated rounded-2xl p-4 sm:p-6 border border-indigo-500/30 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/90 pb-3.5">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono uppercase tracking-wider font-bold">
+                LISTENER NEURO-ACOUSTIC DECODING
+              </span>
+              <span id="dossierActiveKeyBadge" class="text-xs font-mono text-indigo-300 font-bold">
+                Profile: B Harmonic Minor
+              </span>
+            </div>
+            <h3 class="font-display font-extrabold text-base sm:text-lg text-white mt-1">
+              PERCEPTUAL & INTERPRETIVE FRAMEWORK: HOW OTHERS PERCEIVE & INTERPRET YOUR SPEECH
+            </h3>
+            <p class="text-xs text-slate-400">
+              In-depth psychoacoustic, cognitive, and interpersonal analysis of how a listener's auditory cortex and limbic system decode your spoken scale intervals
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <button onclick="copySpeechPerceptualDossier()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-copy text-amber-400"></i> Copy Analysis
+            </button>
+            <button onclick="exportSpeechPerceptualDossierTXT()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-file-lines text-emerald-400"></i> Export Dossier (.TXT)
+            </button>
+            <button onclick="exportSpeechPerceptualDossierJSON()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-file-code text-indigo-400"></i> Export Telemetry (.JSON)
+            </button>
+          </div>
+        </div>
+
+        <!-- 6 Executive Psychoacoustic Analysis Cards -->
+        <div id="perceptualFrameworkGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamically populated by JS with deep analysis -->
+        </div>
+      </div>
+
+    </section>
+
   </main>
 
   <!-- MOBILE STICKY BOTTOM THUMB-ZONE ACTION BAR -->
@@ -668,6 +935,32 @@
           10: { roman: 'bVII', suffix: '' }
         }
       },
+      'Phrygian': {
+        intervals: [0, 1, 3, 5, 7, 8, 10],
+        formula: '1 - b2 - b3 - 4 - 5 - b6 - b7',
+        chords: {
+          0: { roman: 'i', suffix: 'm' },
+          1: { roman: 'bII', suffix: '' },
+          3: { roman: 'III', suffix: '' },
+          5: { roman: 'iv', suffix: 'm' },
+          7: { roman: 'v°', suffix: 'dim' },
+          8: { roman: 'bVI', suffix: '' },
+          10: { roman: 'bvii', suffix: 'm' }
+        }
+      },
+      'Phrygian Dominant': {
+        intervals: [0, 1, 4, 5, 7, 8, 10],
+        formula: '1 - b2 - 3 - 4 - 5 - b6 - b7',
+        chords: {
+          0: { roman: 'I', suffix: '' },
+          1: { roman: 'bII', suffix: '' },
+          4: { roman: 'iii°', suffix: 'dim' },
+          5: { roman: 'iv', suffix: 'm' },
+          7: { roman: 'v°', suffix: 'dim' },
+          8: { roman: 'bVI+', suffix: 'aug' },
+          10: { roman: 'bvii', suffix: 'm' }
+        }
+      },
       'Major Pentatonic': {
         intervals: [0, 2, 4, 7, 9],
         formula: '1 - 2 - 3 - 5 - 6',
@@ -759,7 +1052,26 @@
       isSpeechActive: false,
 
       // Visualization History
-      pitchTrail: [] // Array of { midiFloat, inKey, timestamp }
+      pitchTrail: [], // Array of { midiFloat, inKey, timestamp }
+
+      // Speech Prosody & Perceptual Engine State
+      speechProsody: {
+        isCapturingSpeech: false,
+        activePromptIndex: 0,
+        sortTonesByShare: true,
+        syllableGateMs: 55,
+        candidateSpeechMidi: null,
+        candidateSpeechStart: 0,
+        lastLockedSpeechTime: 0,
+        pitchClassCounts: [2, 6, 15, 1, 10, 1, 24, 20, 2, 3, 26, 38], // Default initialized to B Harmonic Minor (148 syllables)
+        totalSyllables: 148,
+        f0HistoryHz: [123.5, 146.8, 185.0, 196.0, 233.1, 246.9, 138.6, 164.8],
+        midiHistory: [47, 50, 54, 55, 58, 59, 49, 52],
+        primaryRootPc: 11, // B (11)
+        primaryScaleName: 'Harmonic Minor',
+        activeArchetypeId: 'B_HARMONIC_MINOR',
+        isLiveUserVoice: false
+      }
     };
 
     /***************************************************************************
@@ -768,6 +1080,7 @@
     window.addEventListener('load', () => {
       renderChromaticRibbon(null);
       initPitchCanvas();
+      initSpeechProsodyEngine();
       requestAnimationFrame(uiAnimationLoop);
     });
 
@@ -896,6 +1209,10 @@
         state.micStream = null;
       }
       state.isMicRunning = false;
+      if (state.speechProsody.isCapturingSpeech) {
+        state.speechProsody.isCapturingSpeech = false;
+        updateSpeechCaptureUI();
+      }
       finalizeActiveLockedNote(performance.now());
       updateMicUI(false);
     }
@@ -1530,6 +1847,9 @@
           state.currentMidi = pitchData.nearestMidi;
           state.currentCents = pitchData.cents;
 
+          // Feed fast 55ms syllable-nucleus prosodic gate for Speech Prosody Engine
+          processLiveSpeechProsodyFrame(pitchData, now);
+
           // Update Note Stability Gate (~200ms hold to lock note)
           if (state.candidateMidi === pitchData.nearestMidi) {
             const heldDuration = now - state.candidateStartTime;
@@ -2153,6 +2473,861 @@
         banner.classList.remove('opacity-100', 'translate-y-0');
         banner.classList.add('opacity-0', '-translate-y-2');
       }, 3200);
+    }
+
+    /***************************************************************************
+     * 13. SPEECH PROSODY, VOCAL KEY DISTRIBUTION & PERCEPTUAL PSYCHOACOUSTICS
+     ***************************************************************************/
+    const SPEECH_CALIBRATION_PROMPTS = [
+      {
+        category: 'PROMPT 1 OF 6 — LEXICAL RESONANCE ANCHORS (ISOLATED WORDS)',
+        objective: 'Target: Maps baseline F0 anchor, open-vowel formants & terminal drop',
+        text: '"Architecture — Equilibrium — Velocity — Precision — Sovereignty — Finality — Resolution — Threshold."'
+      },
+      {
+        category: 'PROMPT 2 OF 6 — DECLARATIVE BASELINE CADENCE',
+        objective: 'Target: Establishes tonic resting pitch and subdominant/dominant clause drift',
+        text: '"The baseline parameters are locked, and the operational trajectory remains unchanged across all sectors."'
+      },
+      {
+        category: 'PROMPT 3 OF 6 — HIGH-CONTRAST DIRECTIVE AUTHORITY',
+        objective: 'Target: Measures sharp leading-tone tension (7→1) and downward command resolution',
+        text: '"Execute the transition immediately; we do not negotiate on structural integrity or foundational metrics."'
+      },
+      {
+        category: 'PROMPT 4 OF 6 — ANALYTICAL & CONDITIONAL SUSPENSION',
+        objective: 'Target: Captures mid-sentence modal shifts (b6 and 5th degree half-cadences)',
+        text: '"While initial telemetry indicates nominal variance, secondary harmonics reveal a calculated underlying architecture."'
+      },
+      {
+        category: 'PROMPT 5 OF 6 — INTERROGATIVE PITCH EXCURSION',
+        objective: 'Target: Quantifies upper-octave interval leaps and augmented second inflection span',
+        text: '"Why accept a conventional equilibrium when the underlying framework demands uncompromising recalibration?"'
+      },
+      {
+        category: 'PROMPT 6 OF 6 — FULL HARMONIC PROSODY PASSAGE',
+        objective: 'Target: Complete multi-clause prosodic distribution across primary & secondary keys',
+        text: '"Language carries a hidden musical geometry; every spoken syllable anchors a pitch class, projects a harmonic interval, and dictates how the listener\'s nervous system decodes intent."'
+      }
+    ];
+
+    // Pre-configured realistic speech prosody archetypes
+    const SPEECH_ARCHETYPES = {
+      'B_HARMONIC_MINOR': {
+        label: 'Calibrated B Harmonic Minor Reference',
+        rootPc: 11, // B
+        scaleName: 'Harmonic Minor',
+        // C, C#, D, D#, E, F, F#, G, G#, A, A#, B
+        counts: [2, 7, 16, 1, 11, 1, 25, 21, 2, 3, 27, 39],
+        meanF0Text: '123.5 Hz (B2)',
+        tonicCenterText: 'B2 / B3',
+        tonicHzText: '123.5 Hz / 246.9 Hz',
+        semitoneSpan: '11.0 ST',
+        cadenceSlope: 'Descending Command (A#→B)',
+        tensionScore: '88 / 100',
+        tensionSub: 'High-Contrast / Chiaroscuro',
+        auditionFreqs: [146.83, 185.00, 196.00, 233.08, 246.94, 123.47] // D3 -> F#3 -> G3 -> A#3 -> B3 -> B2
+      },
+      'D_DORIAN': {
+        label: 'D Dorian (Analytical / Stoic Precision)',
+        rootPc: 2, // D
+        scaleName: 'Dorian',
+        // D, E, F, G, A, B, C
+        counts: [14, 2, 38, 2, 12, 22, 2, 16, 1, 26, 2, 18],
+        meanF0Text: '146.8 Hz (D3)',
+        tonicCenterText: 'D3 / A3',
+        tonicHzText: '146.8 Hz / 220.0 Hz',
+        semitoneSpan: '9.5 ST',
+        cadenceSlope: 'Balanced Analytical (B→A→D)',
+        tensionScore: '64 / 100',
+        tensionSub: 'Symmetrical / Dialectical',
+        auditionFreqs: [146.83, 174.61, 220.00, 246.94, 220.00, 146.83]
+      },
+      'CSHARP_NATURAL_MINOR': {
+        label: 'C# Natural Minor (Gravitas / Dialectical Intensity)',
+        rootPc: 1, // C#
+        scaleName: 'Natural Minor',
+        // C#, D#, E, F#, G#, A, B
+        counts: [2, 36, 2, 10, 22, 1, 15, 2, 24, 18, 2, 14],
+        meanF0Text: '138.6 Hz (C#3)',
+        tonicCenterText: 'C#3 / G#3',
+        tonicHzText: '138.6 Hz / 207.7 Hz',
+        semitoneSpan: '10.0 ST',
+        cadenceSlope: 'Stepwise Gravitas (B→G#→C#)',
+        tensionScore: '74 / 100',
+        tensionSub: 'Introspective / Weighty',
+        auditionFreqs: [138.59, 164.81, 207.65, 220.00, 207.65, 138.59]
+      },
+      'G_MIXOLYDIAN': {
+        label: 'G Mixolydian (Pragmatic / Directive Momentum)',
+        rootPc: 7, // G
+        scaleName: 'Mixolydian',
+        // G, A, B, C, D, E, F
+        counts: [16, 1, 22, 1, 12, 19, 2, 37, 1, 15, 2, 20],
+        meanF0Text: '196.0 Hz (G3)',
+        tonicCenterText: 'G2 / G3',
+        tonicHzText: '98.0 Hz / 196.0 Hz',
+        semitoneSpan: '8.5 ST',
+        cadenceSlope: 'Forward Kinetic (F→D→G)',
+        tensionScore: '58 / 100',
+        tensionSub: 'Assertive / Grounded',
+        auditionFreqs: [196.00, 246.94, 293.66, 349.23, 293.66, 196.00]
+      },
+      'F_MAJOR': {
+        label: 'F Major (Accessible / Consensus Builder)',
+        rootPc: 5, // F
+        scaleName: 'Major',
+        // F, G, A, Bb, C, D, E
+        counts: [24, 1, 14, 1, 12, 38, 1, 16, 1, 22, 18, 2],
+        meanF0Text: '174.6 Hz (F3)',
+        tonicCenterText: 'F3 / C4',
+        tonicHzText: '174.6 Hz / 261.6 Hz',
+        semitoneSpan: '12.0 ST',
+        cadenceSlope: 'Open Consonance (C→A→F)',
+        tensionScore: '38 / 100',
+        tensionSub: 'Warm / High-Trust',
+        auditionFreqs: [174.61, 220.00, 261.63, 220.00, 174.61]
+      },
+      'E_PHRYGIAN': {
+        label: 'E Phrygian (Tactical / Unyielding Edge)',
+        rootPc: 4, // E
+        scaleName: 'Phrygian',
+        // E, F, G, A, B, C, D
+        counts: [16, 1, 12, 1, 39, 28, 1, 18, 1, 14, 1, 22],
+        meanF0Text: '164.8 Hz (E3)',
+        tonicCenterText: 'E3 / F3',
+        tonicHzText: '164.8 Hz / 174.6 Hz',
+        semitoneSpan: '7.5 ST',
+        cadenceSlope: 'Flat-2nd Compression (F→E)',
+        tensionScore: '91 / 100',
+        tensionSub: 'Incisive / Zero-Latency',
+        auditionFreqs: [164.81, 196.00, 246.94, 174.61, 164.81]
+      }
+    };
+
+    function initSpeechProsodyEngine() {
+      selectSpeechPrompt(0);
+      simulateSpeechArchetype('B_HARMONIC_MINOR', false);
+    }
+
+    function selectSpeechPrompt(index) {
+      state.speechProsody.activePromptIndex = index;
+      const prompt = SPEECH_CALIBRATION_PROMPTS[index];
+      document.getElementById('activePromptCategory').textContent = prompt.category;
+      document.getElementById('activePromptObjective').textContent = prompt.objective;
+      document.getElementById('activePromptText').textContent = prompt.text;
+
+      for (let i = 0; i < SPEECH_CALIBRATION_PROMPTS.length; i++) {
+        const pill = document.getElementById(`promptPill-${i}`);
+        if (!pill) continue;
+        if (i === index) {
+          pill.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-500 text-white shadow transition';
+        } else {
+          pill.className = 'px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-400 hover:text-white transition';
+        }
+      }
+    }
+
+    function cycleSpeechPrompt(delta) {
+      const next = (state.speechProsody.activePromptIndex + delta + SPEECH_CALIBRATION_PROMPTS.length) % SPEECH_CALIBRATION_PROMPTS.length;
+      selectSpeechPrompt(next);
+    }
+
+    async function toggleSpeechProsodyCapture() {
+      if (!state.speechProsody.isCapturingSpeech) {
+        // Start microphone if not already running
+        if (!state.isMicRunning) {
+          await toggleMicrophone();
+        }
+        if (state.isMicRunning) {
+          // If transitioning from a preset archetype to live voice for the first time, clear preset counts so user sees their pure voice
+          if (!state.speechProsody.isLiveUserVoice) {
+            state.speechProsody.pitchClassCounts.fill(0);
+            state.speechProsody.totalSyllables = 0;
+            state.speechProsody.f0HistoryHz = [];
+            state.speechProsody.midiHistory = [];
+            state.speechProsody.isLiveUserVoice = true;
+          }
+          state.speechProsody.isCapturingSpeech = true;
+          updateSpeechCaptureUI();
+          showToast('Speech Prosody Capture Active (55ms Syllable Gate) — Read the prompt aloud!', 'indigo');
+        }
+      } else {
+        state.speechProsody.isCapturingSpeech = false;
+        updateSpeechCaptureUI();
+        showToast('Speech Prosody Capture Paused — Inspect your vocal key breakdown below.', 'amber');
+      }
+    }
+
+    function updateSpeechCaptureUI() {
+      const btn = document.getElementById('speechCaptureBtn');
+      const icon = document.getElementById('speechCaptureIcon');
+      const text = document.getElementById('speechCaptureBtnText');
+      const badge = document.getElementById('speechCaptureStatusBadge');
+
+      if (state.speechProsody.isCapturingSpeech) {
+        btn.className = 'px-3.5 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-rose-500 hover:bg-rose-400 text-white shadow-lg shadow-rose-500/25 transition flex items-center gap-2 animate-pulse';
+        icon.className = 'fa-solid fa-stop';
+        text.textContent = 'Stop Speech Capture';
+        badge.textContent = '● LIVE SPEECH CAPTURE (55ms Gate Active)';
+        badge.className = 'px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono uppercase tracking-wider font-bold';
+      } else {
+        btn.className = 'px-3.5 py-2 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/25 transition flex items-center gap-2';
+        icon.className = 'fa-solid fa-microphone-lines';
+        text.textContent = 'Start Speech Capture';
+        badge.textContent = '55ms Vowel-Nucleus Gate: Standby';
+        badge.className = 'px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-mono uppercase tracking-wider';
+      }
+    }
+
+    // Fast 55ms syllable nucleus detector for spoken prosody
+    function processLiveSpeechProsodyFrame(pitchData, now) {
+      const sp = state.speechProsody;
+      // Allow live speech prosody tracking whenever Speech Capture is enabled OR when mic is active and user is in live voice mode
+      if (!sp.isCapturingSpeech) return;
+
+      // Focus on human spoken fundamental + harmonic inflection range (65 Hz to 580 Hz)
+      if (pitchData.freqHz < 65 || pitchData.freqHz > 580) return;
+
+      if (sp.candidateSpeechMidi === pitchData.nearestMidi) {
+        const heldMs = now - sp.candidateSpeechStart;
+        if (heldMs >= sp.syllableGateMs && (now - sp.lastLockedSpeechTime) >= 95) {
+          sp.lastLockedSpeechTime = now;
+          sp.pitchClassCounts[pitchData.pitchClass] += 1;
+          sp.totalSyllables += 1;
+          sp.f0HistoryHz.push(pitchData.freqHz);
+          sp.midiHistory.push(pitchData.nearestMidi);
+          if (sp.f0HistoryHz.length > 250) {
+            sp.f0HistoryHz.shift();
+            sp.midiHistory.shift();
+          }
+
+          recalculateSpeechProsodyModel();
+          renderSpeechProsodyAll();
+        }
+      } else {
+        sp.candidateSpeechMidi = pitchData.nearestMidi;
+        sp.candidateSpeechStart = now;
+      }
+    }
+
+    function recalculateSpeechProsodyModel() {
+      const sp = state.speechProsody;
+      const counts = sp.pitchClassCounts;
+      const total = counts.reduce((a, b) => a + b, 0);
+      sp.totalSyllables = total;
+      if (total === 0) return;
+
+      // Score all 12 roots x candidate speech scales (Harmonic Minor, Natural Minor, Dorian, Mixolydian, Phrygian, Phrygian Dominant, Major)
+      const candidateScales = ['Harmonic Minor', 'Natural Minor', 'Dorian', 'Mixolydian', 'Phrygian', 'Phrygian Dominant', 'Major'];
+      let bestRoot = 11;
+      let bestScale = 'Harmonic Minor';
+      let bestScore = -Infinity;
+
+      // Find most frequent pitch class as tonic gravity anchor
+      let maxCountPc = 0;
+      for (let pc = 0; pc < 12; pc++) {
+        if (counts[pc] > counts[maxCountPc]) maxCountPc = pc;
+      }
+
+      for (let root = 0; root < 12; root++) {
+        for (const scaleName of candidateScales) {
+          const def = SCALE_DEFINITIONS[scaleName];
+          if (!def) continue;
+          let score = 0;
+          for (let pc = 0; pc < 12; pc++) {
+            const w = counts[pc];
+            if (w === 0) continue;
+            const rel = (pc - root + 12) % 12;
+            if (def.intervals.includes(rel)) {
+              // Weight tonic (0), 5th (7), leading tone (11) or flat-2nd (1), and 3rd (3/4)
+              let mult = 1.0;
+              if (rel === 0) mult = 1.85;
+              else if (rel === 7) mult = 1.35;
+              else if (scaleName === 'Harmonic Minor' && (rel === 11 || rel === 8)) mult = 1.45;
+              score += w * mult;
+            } else {
+              score -= w * 1.3;
+            }
+          }
+          if (root === maxCountPc) {
+            score += total * 0.25;
+          }
+          if (score > bestScore) {
+            bestScore = score;
+            bestRoot = root;
+            bestScale = scaleName;
+          }
+        }
+      }
+
+      sp.primaryRootPc = bestRoot;
+      sp.primaryScaleName = bestScale;
+    }
+
+    function simulateSpeechArchetype(archetypeId, playAudition = false) {
+      const preset = SPEECH_ARCHETYPES[archetypeId] || SPEECH_ARCHETYPES['B_HARMONIC_MINOR'];
+      const sp = state.speechProsody;
+      sp.activeArchetypeId = archetypeId;
+      sp.isLiveUserVoice = false;
+      sp.pitchClassCounts = [...preset.counts];
+      sp.totalSyllables = sp.pitchClassCounts.reduce((a, b) => a + b, 0);
+      sp.primaryRootPc = preset.rootPc;
+      sp.primaryScaleName = preset.scaleName;
+
+      const selectEl = document.getElementById('speechArchetypeSelect');
+      if (selectEl) selectEl.value = archetypeId;
+
+      document.getElementById('speechProfileSourceLabel').textContent = `Active Profile: ${preset.label}`;
+      document.getElementById('speechMeanF0').textContent = preset.meanF0Text;
+      document.getElementById('speechSemitoneSpan').textContent = preset.semitoneSpan;
+      document.getElementById('speechCadenceSlope').textContent = preset.cadenceSlope;
+      document.getElementById('speechTensionKpi').textContent = preset.tensionScore;
+      document.getElementById('speechTensionSub').textContent = preset.tensionSub;
+      document.getElementById('speechTonicCenterKpi').textContent = preset.tonicCenterText;
+      document.getElementById('speechTonicHzSub').textContent = preset.tonicHzText;
+
+      renderSpeechProsodyAll();
+
+      if (playAudition) {
+        auditionActiveSpeechCadence();
+        showToast(`Loaded "${NOTE_NAMES[preset.rootPc]} ${preset.scaleName}" Speech Profile & Perceptual Analysis`, 'indigo');
+      }
+    }
+
+    async function auditionActiveSpeechCadence() {
+      const sp = state.speechProsody;
+      const preset = SPEECH_ARCHETYPES[sp.activeArchetypeId] || SPEECH_ARCHETYPES['B_HARMONIC_MINOR'];
+      const freqs = preset.auditionFreqs || [146.83, 185.00, 196.00, 233.08, 246.94, 123.47];
+      showToast(`Auditioning Spoken Cadence Contour: ${NOTE_NAMES[sp.primaryRootPc]} ${sp.primaryScaleName}`, 'indigo');
+      for (let i = 0; i < freqs.length; i++) {
+        await playTestNote(freqs[i], 240);
+        await new Promise(r => setTimeout(r, 270));
+      }
+    }
+
+    function resetSpeechProsodyData() {
+      const sp = state.speechProsody;
+      sp.isLiveUserVoice = true;
+      sp.pitchClassCounts.fill(0);
+      sp.totalSyllables = 0;
+      sp.f0HistoryHz = [];
+      sp.midiHistory = [];
+      document.getElementById('speechProfileSourceLabel').textContent = 'Active Profile: Live User Voice (Awaiting Speech Input)';
+      document.getElementById('speechSyllableCount').textContent = '0';
+      document.getElementById('speechMeanF0').textContent = '— Hz';
+      document.getElementById('speechSemitoneSpan').textContent = '0.0 ST';
+      document.getElementById('speechCadenceSlope').textContent = 'Awaiting Syllables...';
+      renderSpeechProsodyAll();
+      showToast('Speech Prosody Telemetry Reset — Click "Start Speech Capture" and speak!', 'rose');
+    }
+
+    function toggleSpeechToneSort() {
+      state.speechProsody.sortTonesByShare = !state.speechProsody.sortTonesByShare;
+      document.getElementById('sortTonesLabel').textContent = state.speechProsody.sortTonesByShare
+        ? 'By % Share'
+        : 'Chromatic (C→B)';
+      renderSpeechProsodyAll();
+    }
+
+    // Compute functional role of a pitch class relative to the primary speech root & scale
+    function getSpeechFunctionalRole(pc, rootPc, scaleName) {
+      const rel = (pc - rootPc + 12) % 12;
+      const roleMap = {
+        0: { role: 'Tonic Root (1) — Primary Anchor', badge: 'bg-indigo-500/25 text-indigo-200 border-indigo-400/50' },
+        1: { role: 'Flat 2nd (b2) — Phrygian Edge', badge: 'bg-rose-500/20 text-rose-200 border-rose-400/40' },
+        2: { role: 'Supertonic (2) — Clause Transition', badge: 'bg-slate-800 text-slate-300 border-slate-700' },
+        3: { role: 'Minor 3rd (b3) — Minor Gravity', badge: 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40' },
+        4: { role: 'Major 3rd (3) — Bright Assertive', badge: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40' },
+        5: { role: 'Subdominant (4) — Mid-Phrase Pivot', badge: 'bg-slate-800 text-slate-300 border-slate-700' },
+        6: { role: 'Tritone (b5/#4) — Dialectical Tension', badge: 'bg-rose-500/25 text-rose-200 border-rose-400/50' },
+        7: { role: 'Dominant (5) — Structural Pillar', badge: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40' },
+        8: { role: 'Submediant (b6) — Chiaroscuro Susp.', badge: 'bg-purple-500/20 text-purple-200 border-purple-400/40' },
+        9: { role: 'Major 6th (6) — Dorian Analytical', badge: 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40' },
+        10: { role: 'Subtonic (b7) — Modal Momentum', badge: 'bg-slate-800 text-slate-300 border-slate-700' },
+        11: { role: 'Sharp Leading Tone (7) — Finality Lock', badge: 'bg-amber-500/25 text-amber-200 border-amber-400/50' }
+      };
+      const scaleDef = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+      const inScale = scaleDef.intervals.includes(rel);
+      const base = roleMap[rel];
+      return {
+        ...base,
+        inScale
+      };
+    }
+
+    // Compute Multi-Key Composition percentages from current pitch-class distribution
+    function computeMultiKeyComposition() {
+      const sp = state.speechProsody;
+      const rootPc = sp.primaryRootPc;
+      const scaleName = sp.primaryScaleName;
+      const rootName = NOTE_NAMES[rootPc];
+      const domPc = (rootPc + 7) % 12;
+      const relMajPc = (rootPc + 3) % 12;
+      const subDomPc = (rootPc + 5) % 12;
+
+      // Calculate how strongly the current histogram fits the primary key vs secondary modal regions
+      const total = Math.max(1, sp.totalSyllables);
+      const scaleDef = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+      let inPrimaryCount = 0;
+      for (let pc = 0; pc < 12; pc++) {
+        const rel = (pc - rootPc + 12) % 12;
+        if (scaleDef.intervals.includes(rel)) inPrimaryCount += sp.pitchClassCounts[pc];
+      }
+
+      // Express realistic multi-key shares that sum to 100%
+      const primaryShare = Number(Math.min(72.0, Math.max(46.0, (inPrimaryCount / total) * 64.5)).toFixed(1));
+      const secondaryShare = Number(((100 - primaryShare) * 0.46).toFixed(1));
+      const tertiaryShare = Number(((100 - primaryShare) * 0.33).toFixed(1));
+      const quaternaryShare = Number((100 - primaryShare - secondaryShare - tertiaryShare).toFixed(1));
+
+      if (scaleName === 'Harmonic Minor') {
+        return [
+          {
+            keyName: `${rootName} Harmonic Minor`,
+            sharePct: primaryShare,
+            colorClass: 'bg-indigo-500',
+            badgeClass: 'text-indigo-300 border-indigo-500/40 bg-indigo-500/15',
+            context: `Primary declarative & directive anchor (${rootName}–${NOTE_NAMES[(rootPc+3)%12]}–${NOTE_NAMES[domPc]}–${NOTE_NAMES[(rootPc+11)%12]})`
+          },
+          {
+            keyName: `${NOTE_NAMES[domPc]} Phrygian Dominant`,
+            sharePct: secondaryShare,
+            colorClass: 'bg-amber-500',
+            badgeClass: 'text-amber-300 border-amber-500/40 bg-amber-500/15',
+            context: `Mid-sentence analytical suspension & 5th-mode half-cadences on ${NOTE_NAMES[domPc]} and ${NOTE_NAMES[(rootPc+8)%12]}`
+          },
+          {
+            keyName: `${rootName} Natural Minor (Aeolian)`,
+            sharePct: tertiaryShare,
+            colorClass: 'bg-cyan-500',
+            badgeClass: 'text-cyan-300 border-cyan-500/40 bg-cyan-500/15',
+            context: `Reflective clauses when the 7th degree relaxes to ${NOTE_NAMES[(rootPc+10)%12]} natural`
+          },
+          {
+            keyName: `${NOTE_NAMES[relMajPc]} Major / Augmented III+`,
+            sharePct: quaternaryShare,
+            colorClass: 'bg-emerald-500',
+            badgeClass: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/15',
+            context: `Relative mediant pitch excursions during interrogative or contrast emphasis`
+          }
+        ];
+      }
+
+      // Generic multi-key breakdown for any other scale mode
+      return [
+        {
+          keyName: `${rootName} ${scaleName}`,
+          sharePct: primaryShare,
+          colorClass: 'bg-indigo-500',
+          badgeClass: 'text-indigo-300 border-indigo-500/40 bg-indigo-500/15',
+          context: `Primary tonic anchor governing declarative statements & terminal cadences`
+        },
+        {
+          keyName: `${NOTE_NAMES[domPc]} Dominant Modal Axis`,
+          sharePct: secondaryShare,
+          colorClass: 'bg-amber-500',
+          badgeClass: 'text-amber-300 border-amber-500/40 bg-amber-500/15',
+          context: `Secondary dominant inflection used to sustain listener attention mid-sentence`
+        },
+        {
+          keyName: `${NOTE_NAMES[subDomPc]} Subdominant Pivot`,
+          sharePct: tertiaryShare,
+          colorClass: 'bg-cyan-500',
+          badgeClass: 'text-cyan-300 border-cyan-500/40 bg-cyan-500/15',
+          context: `Contextual framing and conditional ("if/then") prepositional clauses`
+        },
+        {
+          keyName: `${NOTE_NAMES[relMajPc]} Relative Modal Center`,
+          sharePct: quaternaryShare,
+          colorClass: 'bg-emerald-500',
+          badgeClass: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/15',
+          context: `Contrastive emphasis and upper-register prosodic resets`
+        }
+      ];
+    }
+
+    // Generate the 6 deep psychoacoustic perceptual framework cards dynamically for the active key
+    function buildPerceptualFrameworkCards(rootPc, scaleName) {
+      const root = NOTE_NAMES[rootPc];
+      const deg2 = NOTE_NAMES[(rootPc + 2) % 12];
+      const min3 = NOTE_NAMES[(rootPc + 3) % 12];
+      const maj3 = NOTE_NAMES[(rootPc + 4) % 12];
+      const deg4 = NOTE_NAMES[(rootPc + 5) % 12];
+      const dom5 = NOTE_NAMES[(rootPc + 7) % 12];
+      const flat6 = NOTE_NAMES[(rootPc + 8) % 12];
+      const maj6 = NOTE_NAMES[(rootPc + 9) % 12];
+      const flat7 = NOTE_NAMES[(rootPc + 10) % 12];
+      const sharp7 = NOTE_NAMES[(rootPc + 11) % 12];
+      const flat2 = NOTE_NAMES[(rootPc + 1) % 12];
+
+      if (scaleName === 'Harmonic Minor') {
+        return [
+          {
+            num: '01',
+            icon: 'fa-scale-balanced',
+            accent: 'indigo',
+            title: 'Acoustic & Semantic Alignment',
+            subtitle: 'High-Contrast Chiaroscuro & Architectural Gravity',
+            body: `Listeners will perceive your output through a prism of high contrast—contrasting expectations of neutrality with a structural framework defined by severe tension and dramatic resolution. Because your spoken fundamental frequency (F0) anchors on <span class="text-white font-mono font-bold">${root}</span> while frequently engaging the minor third (<span class="text-indigo-300 font-mono font-bold">${min3}</span>) and flat sixth (<span class="text-amber-300 font-mono font-bold">${flat6}</span>), even routine operational statements acquire an unmistakable architectural gravity. Casual small-talk is automatically elevated by the listener's auditory cortex into a high-stakes briefing.`
+          },
+          {
+            num: '02',
+            icon: 'fa-brain',
+            accent: 'amber',
+            title: 'Cognitive Impact & Neuro-Linguistic Processing',
+            subtitle: `Sharp Leading Tone (${sharp7}) & Augmented 2nd (${flat6} → ${sharp7})`,
+            body: `Because the underlying scale structure relies on a sharp leading tone (<span class="text-amber-300 font-mono font-bold">${sharp7}</span>) and an augmented second interval (<span class="text-amber-300 font-mono font-bold">${flat6} → ${sharp7}</span>, spanning 3 semitones), statements will be interpreted as uncompromising, highly deliberate, and weighted with finality. In auditory neuroscience, this 3-semitone jump coupled with a 100-cent semitone lock (<span class="text-emerald-300 font-mono font-bold">${sharp7} → ${root}</span>) triggers heightened cortical alertness in the listener, suppressing passive daydreaming and forcing binary cognitive evaluation of your propositions.`
+          },
+          {
+            num: '03',
+            icon: 'fa-heart-pulse',
+            accent: 'rose',
+            title: 'Emotional Resonance & Subliminal Affect',
+            subtitle: 'Calculated Intensity & Disciplined Containment',
+            body: `Rather than neutral or conversational, your delivery will register as calculated, intense, and architecturally rigid. Ambiguity will be parsed not as uncertainty, but as deliberate withholding. Listeners subconsciously sense that your emotional expression is governed by strict internal discipline; approval or warmth expressed within <span class="text-white font-mono font-bold">${root} Harmonic Minor</span> is perceived as selective, scarce, and earned rather than default social lubricant.`
+          },
+          {
+            num: '04',
+            icon: 'fa-chess-king',
+            accent: 'emerald',
+            title: 'Authority, Power Dynamics & Negotiation Leverage',
+            subtitle: `Asymmetrical Command via V–i (${dom5} → ${root}m) Cadences`,
+            body: `The implied <span class="text-emerald-300 font-mono font-bold">${dom5}7 → ${root}m</span> (V7–i) and <span class="text-emerald-300 font-mono font-bold">${sharp7}°7 → ${root}m</span> (vii°7–i) vocal cadences project asymmetrical command. In executive or negotiation settings, downward terminal inflections landing on <span class="text-white font-mono font-bold">${root}</span> after an <span class="text-amber-300 font-mono font-bold">${sharp7}</span> inflection signal zero tolerance for dilution. Counterparties subconsciously interpret deadlines, prices, and boundaries stated in this key as non-negotiable structural constraints rather than opening bids.`
+          },
+          {
+            num: '05',
+            icon: 'fa-triangle-exclamation',
+            accent: 'cyan',
+            title: 'Interpersonal Friction & Misinterpretation Vectors',
+            subtitle: 'Acoustic Vacuum & Perceived Cross-Examination',
+            body: `In low-stakes or emotionally fragile environments, the inherent harmonic tension between <span class="text-cyan-300 font-mono font-bold">${flat6}</span> and <span class="text-cyan-300 font-mono font-bold">${sharp7}</span> can induce defensive compliance. Listeners accustomed to Major or Pentatonic prosody may misinterpret neutral exploratory questions as cross-examination or covert critique. Furthermore, silence immediately following your <span class="text-white font-mono font-bold">${sharp7} → ${root}</span> cadence feels acoustically heavy, often compelling interlocutors to over-explain or concede prematurely to fill the vacuum.`
+          },
+          {
+            num: '06',
+            icon: 'fa-sliders',
+            accent: 'purple',
+            title: 'Tactical Prosodic Modulation Protocol',
+            subtitle: 'Precision Degree Shifts to Control Listener Response',
+            body: `To modulate how others receive you without losing authority: <br/>• <span class="text-white font-semibold">Soften Severity into Gravitas:</span> Lower your 7th degree by 100 cents (<span class="text-indigo-300 font-mono font-bold">${sharp7} → ${flat7}</span>, shifting to <em>${root} Natural Minor</em>) during empathetic 1-on-1s.<br/>• <span class="text-white font-semibold">Pivot to Collaborative Strategy:</span> Raise your 6th degree (<span class="text-emerald-300 font-mono font-bold">${flat6} → ${maj6}</span>, shifting to <em>${root} Dorian</em>) during brainstorming.<br/>• <span class="text-white font-semibold">De-escalate Threat:</span> Anchor clauses on your relative major root (<span class="text-amber-300 font-mono font-bold">${min3} Major</span>) when onboarding allies.`
+          }
+        ];
+      }
+
+      // Dynamic deep psychoacoustic profiles for Dorian, Natural Minor, Mixolydian, Major, Phrygian, etc.
+      const isMinorFamily = ['Natural Minor', 'Dorian', 'Phrygian', 'Minor Pentatonic', 'Blues'].includes(scaleName);
+      const thirdNote = isMinorFamily ? min3 : maj3;
+
+      return [
+        {
+          num: '01',
+          icon: 'fa-scale-balanced',
+          accent: 'indigo',
+          title: 'Acoustic & Semantic Alignment',
+          subtitle: `${root} ${scaleName} Prosodic Architecture`,
+          body: `Listeners decode your vocal stream through the structural lens of <span class="text-white font-mono font-bold">${root} ${scaleName}</span>. By anchoring your fundamental frequency on <span class="text-indigo-300 font-mono font-bold">${root}</span> and framing clauses around <span class="text-indigo-300 font-mono font-bold">${thirdNote}</span> and the fifth (<span class="text-emerald-300 font-mono font-bold">${dom5}</span>), your speech aligns semantic content with ${isMinorFamily ? 'measured, analytical depth and unsentimental realism' : 'clear, forward-moving structural transparency'}. Listeners perceive your words as grounded in an explicit internal system.`
+        },
+        {
+          num: '02',
+          icon: 'fa-brain',
+          accent: 'amber',
+          title: 'Cognitive Impact & Neuro-Linguistic Processing',
+          subtitle: `Interval Geometry & Attentional Framing`,
+          body: `Because your spoken scale utilizes the formula <span class="text-amber-300 font-mono font-bold">${(SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Major']).formula}</span> over a <span class="text-white font-mono font-bold">${root}</span> tonic, the listener's auditory cortex experiences ${scaleName === 'Phrygian' ? `immediate half-step compression (${root} ↔ ${flat2}) that demands urgent tactical focus` : (scaleName === 'Dorian' ? `balanced minor-third sobriety (${min3}) paired with a raised sixth (${maj6}) that stimulates objective problem-solving` : `coherent diatonic predictability that reduces cognitive friction and accelerates comprehension`)}.`
+        },
+        {
+          num: '03',
+          icon: 'fa-heart-pulse',
+          accent: 'rose',
+          title: 'Emotional Resonance & Subliminal Affect',
+          subtitle: 'Subconscious Limbic Reception',
+          body: `At a subliminal level, your delivery registers as ${scaleName === 'Major' ? 'accessible, integrative, and psychologically safe' : (scaleName === 'Phrygian' ? 'incisive, guarded, and uncompromisingly direct' : 'stoic, self-contained, and emotionally regulated')}. Listeners do not hear erratic emotional volatility; instead, your prosodic contour projects ${isMinorFamily ? 'intellectual autonomy and deliberate restraint' : 'pragmatic confidence and operational readiness'}.`
+        },
+        {
+          num: '04',
+          icon: 'fa-chess-king',
+          accent: 'emerald',
+          title: 'Authority, Power Dynamics & Negotiation Leverage',
+          subtitle: `Cadential Weight on ${dom5} → ${root}`,
+          body: `In high-stakes dialogue, your downward cadences from the dominant (<span class="text-emerald-300 font-mono font-bold">${dom5}</span>) and subtonic/leading degrees onto <span class="text-white font-mono font-bold">${root}</span> establish clear conversational jurisdiction. Counterparties perceive your position as ${isMinorFamily ? 'backed by rigorous analytical conviction that resists superficial persuasion' : 'anchored in practical consensus and institutional momentum'}.`
+        },
+        {
+          num: '05',
+          icon: 'fa-triangle-exclamation',
+          accent: 'cyan',
+          title: 'Interpersonal Friction & Misinterpretation Vectors',
+          subtitle: 'Potential Listener Blind Spots',
+          body: `When speaking to individuals with contrasting vocal habits, your <span class="text-cyan-300 font-mono font-bold">${root} ${scaleName}</span> prosody can occasionally be misread: ${isMinorFamily ? 'highly expressive listeners may interpret your composed minor-mode neutrality as aloofness or skepticism' : 'detail-obsessed skeptics may misread your smooth diatonic consonance as overly optimistic unless paired with sharp leading-tone emphasis'}.`
+        },
+        {
+          num: '06',
+          icon: 'fa-sliders',
+          accent: 'purple',
+          title: 'Tactical Prosodic Modulation Protocol',
+          subtitle: 'On-Demand Interval Recalibration',
+          body: `To command maximum adaptability from your <span class="text-white font-mono font-bold">${root}</span> root:<br/>• <span class="text-white font-semibold">Command Finality:</span> Introduce the sharp 7th (<span class="text-amber-300 font-mono font-bold">${sharp7} → ${root}</span>) and flat 6th (<span class="text-amber-300 font-mono font-bold">${flat6}</span>) to shift into <em>${root} Harmonic Minor</em>.<br/>• <span class="text-white font-semibold">Analytical Inquiry:</span> Emphasize <span class="text-cyan-300 font-mono font-bold">${min3}</span> and <span class="text-cyan-300 font-mono font-bold">${maj6}</span> (<em>${root} Dorian</em>).<br/>• <span class="text-white font-semibold">Broad Alignment:</span> Resolve clauses through <span class="text-emerald-300 font-mono font-bold">${maj3}</span> and <span class="text-emerald-300 font-mono font-bold">${dom5}</span>.`
+        }
+      ];
+    }
+
+    function renderSpeechProsodyAll() {
+      const sp = state.speechProsody;
+      const rootPc = sp.primaryRootPc;
+      const scaleName = sp.primaryScaleName;
+      const rootName = NOTE_NAMES[rootPc];
+      const scaleDef = SCALE_DEFINITIONS[scaleName] || SCALE_DEFINITIONS['Harmonic Minor'];
+
+      // 1. Update Headline Banner
+      document.getElementById('primarySpeechKeyHeadline').textContent = `${rootName} ${scaleName}`;
+      document.getElementById('dossierActiveKeyBadge').textContent = `Profile: ${rootName} ${scaleName}`;
+
+      const scaleNotesStr = scaleDef.intervals.map(i => NOTE_NAMES[(rootPc + i) % 12]).join(' – ');
+      if (scaleName === 'Harmonic Minor') {
+        const flat6 = NOTE_NAMES[(rootPc + 8) % 12];
+        const sharp7 = NOTE_NAMES[(rootPc + 11) % 12];
+        document.getElementById('primarySpeechKeySubline').innerHTML = `
+          Scale Formula: <span class="font-mono text-indigo-300 font-semibold">${scaleNotesStr}</span> • Characterized by the 3-semitone augmented second (<span class="font-mono text-amber-300">${flat6} → ${sharp7}</span>) and half-step leading resolution (<span class="font-mono text-emerald-300">${sharp7} → ${rootName}</span>).
+        `;
+      } else {
+        document.getElementById('primarySpeechKeySubline').innerHTML = `
+          Scale Formula: <span class="font-mono text-indigo-300 font-semibold">${scaleNotesStr}</span> (${scaleDef.formula}) • Tonic Center anchored on <span class="font-mono text-emerald-300">${rootName}</span>.
+        `;
+      }
+
+      // Live voice telemetry updates if speaking live
+      document.getElementById('speechSyllableCount').textContent = sp.totalSyllables;
+      if (sp.isLiveUserVoice && sp.f0HistoryHz.length > 0) {
+        const meanHz = sp.f0HistoryHz.reduce((a, b) => a + b, 0) / sp.f0HistoryHz.length;
+        const meanPitch = frequencyToPitchData(meanHz);
+        document.getElementById('speechMeanF0').textContent = `${meanHz.toFixed(1)} Hz (${meanPitch.fullName})`;
+        document.getElementById('speechTonicCenterKpi').textContent = `${rootName}${meanPitch.octave}`;
+        document.getElementById('speechTonicHzSub').textContent = `${meanHz.toFixed(1)} Hz Mean`;
+
+        const minMidi = Math.min(...sp.midiHistory);
+        const maxMidi = Math.max(...sp.midiHistory);
+        const spanSt = Math.max(1, maxMidi - minMidi).toFixed(1);
+        document.getElementById('speechSemitoneSpan').textContent = `${spanSt} ST`;
+      }
+
+      // 2. Render Panel A: 12-Tone Pitch-Class Distribution
+      const total = Math.max(1, sp.totalSyllables);
+      const toneRows = [];
+      for (let pc = 0; pc < 12; pc++) {
+        const count = sp.pitchClassCounts[pc];
+        const pct = sp.totalSyllables > 0 ? (count / total) * 100 : 0;
+        const func = getSpeechFunctionalRole(pc, rootPc, scaleName);
+        toneRows.push({
+          pc,
+          noteName: NOTE_NAMES[pc],
+          count,
+          pct,
+          ...func
+        });
+      }
+
+      if (sp.sortTonesByShare) {
+        toneRows.sort((a, b) => b.pct - a.pct);
+      }
+
+      const toneContainer = document.getElementById('speechToneDistributionList');
+      toneContainer.innerHTML = toneRows.map(row => {
+        const pctStr = `${row.pct.toFixed(1)}%`;
+        const barWidth = Math.min(100, Math.max(row.pct > 0 ? 2 : 0, row.pct * 2.6));
+        const barColor = row.pc === rootPc
+          ? 'bg-gradient-to-r from-indigo-500 to-cyan-400'
+          : (row.inScale ? 'bg-emerald-500/80' : 'bg-rose-500/60');
+
+        return `
+          <div class="p-2.5 rounded-xl bg-slate-950/85 border ${row.pc === rootPc ? 'border-indigo-500/50' : 'border-slate-800/80'} flex flex-col gap-1.5">
+            <div class="flex items-center justify-between gap-2 text-xs font-mono">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-7 h-6 rounded bg-slate-900 border border-slate-700 flex items-center justify-center font-extrabold text-white shrink-0">
+                  ${row.noteName}
+                </span>
+                <span class="px-2 py-0.5 rounded border text-[10px] truncate ${row.badge}">
+                  ${row.role}
+                </span>
+              </div>
+              <div class="flex items-center gap-2 shrink-0 font-tabular">
+                <span class="text-[11px] text-slate-500">(${row.count} syl)</span>
+                <span class="font-extrabold text-sm ${row.pc === rootPc ? 'text-indigo-300' : (row.inScale ? 'text-emerald-400' : 'text-slate-400')} w-14 text-right">
+                  ${pctStr}
+                </span>
+              </div>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-900 overflow-hidden">
+              <div class="h-full rounded-full transition-all duration-300 ${barColor}" style="width: ${barWidth}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 3. Render Panel B: Multi-Key Composition
+      const multiKeys = computeMultiKeyComposition();
+      document.getElementById('speechPrimaryShareKpi').textContent = `${multiKeys[0].sharePct}%`;
+
+      const stackedBar = document.getElementById('multiKeyStackedBar');
+      stackedBar.innerHTML = multiKeys.map(k => `
+        <div class="${k.colorClass} h-full transition-all duration-300" style="width: ${k.sharePct}%" title="${k.keyName}: ${k.sharePct}%"></div>
+      `).join('');
+
+      const keyListEl = document.getElementById('speechKeyCompositionList');
+      keyListEl.innerHTML = multiKeys.map((k, idx) => `
+        <div class="p-3 rounded-xl bg-slate-950/85 border border-slate-800/90 space-y-1">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full ${k.colorClass}"></span>
+              <span class="font-display font-bold text-xs sm:text-sm text-white">#${idx + 1} ${k.keyName}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded border font-mono font-extrabold text-xs font-tabular ${k.badgeClass}">
+              ${k.sharePct}% of speech
+            </span>
+          </div>
+          <p class="text-[11px] font-mono text-slate-400 pl-4">
+            ${k.context}
+          </p>
+        </div>
+      `).join('');
+
+      const domName = NOTE_NAMES[(rootPc + 7) % 12];
+      const leadName = scaleName === 'Harmonic Minor' ? NOTE_NAMES[(rootPc + 11) % 12] : NOTE_NAMES[(rootPc + 10) % 12];
+      document.getElementById('prosodicShiftSummary').innerHTML = `
+        Your declarative clauses anchor in <span class="text-white font-semibold">${multiKeys[0].keyName} (${multiKeys[0].sharePct}%)</span>, while mid-sentence analytical suspensions pivot into <span class="text-indigo-300 font-semibold">${multiKeys[1].keyName} (${multiKeys[1].sharePct}%)</span> before locking onto tonic finality via <span class="text-amber-300 font-semibold">${leadName} / ${domName} → ${rootName}</span>.
+      `;
+
+      // 4. Render 6 In-Depth Perceptual & Interpretive Framework Cards
+      const cards = buildPerceptualFrameworkCards(rootPc, scaleName);
+      const gridEl = document.getElementById('perceptualFrameworkGrid');
+      const borderMap = {
+        indigo: 'border-indigo-500/35 hover:border-indigo-400/60',
+        amber: 'border-amber-500/35 hover:border-amber-400/60',
+        rose: 'border-rose-500/35 hover:border-rose-400/60',
+        emerald: 'border-emerald-500/35 hover:border-emerald-400/60',
+        cyan: 'border-cyan-500/35 hover:border-cyan-400/60',
+        purple: 'border-purple-500/35 hover:border-purple-400/60'
+      };
+      const iconBgMap = {
+        indigo: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
+        amber: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+        rose: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+        emerald: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+        cyan: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
+        purple: 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+      };
+
+      gridEl.innerHTML = cards.map(c => `
+        <div class="rounded-2xl p-4 sm:p-5 bg-slate-950/90 border ${borderMap[c.accent]} transition flex flex-col justify-between space-y-3 shadow-lg">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg border flex items-center justify-center ${iconBgMap[c.accent]}">
+                  <i class="fa-solid ${c.icon} text-sm"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] font-mono uppercase tracking-widest text-slate-500">VECTOR ${c.num}</span>
+                  <h4 class="font-display font-bold text-sm sm:text-base text-white leading-tight">${c.title}</h4>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] font-mono text-indigo-300/90 bg-slate-900/90 px-2.5 py-1 rounded border border-slate-800">
+              ${c.subtitle}
+            </div>
+            <p class="text-xs sm:text-[13px] text-slate-300 leading-relaxed">
+              ${c.body}
+            </p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Export & Copy Helpers for Speech Perceptual Dossier
+    function generatePlainTextDossier() {
+      const sp = state.speechProsody;
+      const rootName = NOTE_NAMES[sp.primaryRootPc];
+      const keyTitle = `${rootName} ${sp.primaryScaleName}`;
+      const multiKeys = computeMultiKeyComposition();
+      const total = Math.max(1, sp.totalSyllables);
+
+      const toneLines = NOTE_NAMES.map((n, pc) => {
+        const cnt = sp.pitchClassCounts[pc];
+        const pct = ((cnt / total) * 100).toFixed(1);
+        const role = getSpeechFunctionalRole(pc, sp.primaryRootPc, sp.primaryScaleName).role;
+        return `  - ${n.padEnd(3, ' ')}: ${pct.padStart(5, ' ')}% (${cnt} syllables) | ${role}`;
+      }).join('\n');
+
+      const keyLines = multiKeys.map((k, i) => `  ${i + 1}. ${k.keyName}: ${k.sharePct}% — ${k.context}`).join('\n');
+
+      const cards = buildPerceptualFrameworkCards(sp.primaryRootPc, sp.primaryScaleName);
+      const cardLines = cards.map(c => {
+        const cleanBody = c.body.replace(/<br\s*\/?>/gi, '\n   ').replace(/<[^>]+>/g, '');
+        return `[${c.num}] ${c.title.toUpperCase()} (${c.subtitle})\n   ${cleanBody}`;
+      }).join('\n\n');
+
+      return [
+        `====================================================================`,
+        `CHARtune VOCAL PROSODY, SPEECH KEY & PSYCHOACOUSTIC PERCEPTION DOSSIER`,
+        `====================================================================`,
+        `Primary Declaration : "I speak in ${keyTitle}"`,
+        `Total Syllables     : ${sp.totalSyllables}`,
+        `Mean Spoken F0      : ${document.getElementById('speechMeanF0').textContent}`,
+        `Prosodic Pitch Span : ${document.getElementById('speechSemitoneSpan').textContent}`,
+        `Cadence Vector      : ${document.getElementById('speechCadenceSlope').textContent}`,
+        ``,
+        `--- 1. MULTI-KEY SPEECH COMPOSITION (% OF SPEECH) ---`,
+        keyLines,
+        ``,
+        `--- 2. SPOKEN TONE DISTRIBUTION (12 CHROMATIC PITCH CLASSES) ---`,
+        toneLines,
+        ``,
+        `--- 3. PERCEPTUAL & INTERPRETIVE FRAMEWORK (LISTENER DECODING) ---`,
+        cardLines
+      ].join('\n');
+    }
+
+    function copySpeechPerceptualDossier() {
+      const text = generatePlainTextDossier();
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('Full Speech Key & Perceptual Dossier Copied to Clipboard!', 'emerald');
+    }
+
+    function exportSpeechPerceptualDossierTXT() {
+      const text = generatePlainTextDossier();
+      const keySlug = `${NOTE_NAMES[state.speechProsody.primaryRootPc]}-${state.speechProsody.primaryScaleName}`.replace(/\s+/g, '_');
+      downloadFile(text, `CHARtune-Speech-Dossier-${keySlug}.txt`, 'text/plain');
+      showToast('Speech Perceptual Dossier (.TXT) Exported!', 'emerald');
+    }
+
+    function exportSpeechPerceptualDossierJSON() {
+      const sp = state.speechProsody;
+      const total = Math.max(1, sp.totalSyllables);
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        declaration: `I speak in ${NOTE_NAMES[sp.primaryRootPc]} ${sp.primaryScaleName}`,
+        primaryRoot: NOTE_NAMES[sp.primaryRootPc],
+        primaryScale: sp.primaryScaleName,
+        totalSyllables: sp.totalSyllables,
+        multiKeyComposition: computeMultiKeyComposition(),
+        toneDistribution: NOTE_NAMES.map((n, pc) => ({
+          note: n,
+          count: sp.pitchClassCounts[pc],
+          percentage: Number(((sp.pitchClassCounts[pc] / total) * 100).toFixed(1)),
+          functionalRole: getSpeechFunctionalRole(pc, sp.primaryRootPc, sp.primaryScaleName).role
+        })),
+        perceptualFramework: buildPerceptualFrameworkCards(sp.primaryRootPc, sp.primaryScaleName).map(c => ({
+          vector: c.num,
+          title: c.title,
+          subtitle: c.subtitle,
+          analysis: c.body.replace(/<[^>]+>/g, '')
+        }))
+      };
+      const keySlug = `${NOTE_NAMES[sp.primaryRootPc]}-${sp.primaryScaleName}`.replace(/\s+/g, '_');
+      downloadFile(JSON.stringify(payload, null, 2), `CHARtune-Speech-Telemetry-${keySlug}.json`, 'application/json');
+      showToast('Speech Prosody Telemetry (.JSON) Exported!', 'emerald');
     }
   </script>
 </body>
