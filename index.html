@@ -858,9 +858,11 @@
         state.masterRecordBus.gain.value = 1.0;
 
         // ScriptProcessorNode to continuously write time-domain PCM into the 12s ring buffer
-        state.scriptProcessor = state.audioCtx.createScriptProcessor(2048, 1, 1);
+        state.scriptProcessor = state.audioCtx.createScriptProcessor(4096, 1, 1);
         state.scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
           const inputBuffer = audioProcessingEvent.inputBuffer.getChannelData(0);
+          const outputBuffer = audioProcessingEvent.outputBuffer.getChannelData(0);
+          outputBuffer.fill(0);
           writeToRingBuffer(inputBuffer);
         };
 
@@ -1341,7 +1343,7 @@
     ];
 
     function initWebSpeechPleasureDetector() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const SpeechRecognition = undefined /* disabled: prevents mobile HAL audio tearing */ || undefined /* disabled: prevents mobile HAL audio tearing */;
       if (!SpeechRecognition) {
         document.getElementById('lastSpeechTranscript').textContent = 'Acoustic Burst Pleasure Trigger Ready (Speech API unsupported on this browser)';
         return;
