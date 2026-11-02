@@ -154,6 +154,12 @@
           <span id="pleasureMonitorText" class="text-slate-400">Session Rec: OFF</span>
         </button>
 
+        <!-- ADD THIS NEW CLEAR SESSION BUTTON WITH CONFIRMATION: -->
+        <button onclick="confirmClearSession()" class="px-2.5 py-1.5 rounded-lg font-mono text-xs bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-800/60 transition flex items-center gap-1.5" title="Clear all session data">
+          <i class="fa-solid fa-trash-can text-[11px]"></i>
+          <span class="hidden xs:inline">Clear Session</span>
+        </button>
+
         <!-- Primary Mic Start/Stop Button (Desktop/Header) -->
         <button id="headerMicBtn" onclick="toggleMicrophone()" class="px-3.5 py-1.5 rounded-lg font-display font-bold text-xs uppercase tracking-wider bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/20 transition flex items-center gap-1.5">
           <i class="fa-solid fa-microphone" id="headerMicIcon"></i>
@@ -205,7 +211,7 @@
     <!-- =========================================================================
          EXPANDABLE BOX 1: SESSION KPI SUMMARY STRIP
          ========================================================================= -->
-    <details id="boxKpiSummary" class="collapsible-box studio-panel rounded-2xl overflow-hidden" open>
+    <details id="boxKpiSummary" class="collapsible-box studio-panel rounded-2xl overflow-hidden">
       <summary class="px-4 py-3 flex items-center justify-between gap-2 hover:bg-slate-900/50 transition">
         <div class="flex items-center gap-2.5">
           <div class="w-7 h-7 rounded-lg bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
@@ -284,7 +290,7 @@
 
       <!-- LEFT COLUMN (7 COLS): EXPANDABLE BOX 2 — REAL-TIME PITCH & DIRECTIONAL CORRECTION HUD -->
       <div class="lg:col-span-7 space-y-4">
-        <details id="boxPitchHud" class="collapsible-box studio-panel rounded-2xl overflow-hidden" open>
+        <details id="boxPitchHud" class="collapsible-box studio-panel rounded-2xl overflow-hidden">
           <summary class="px-4 py-3.5 flex items-center justify-between gap-2 hover:bg-slate-900/50 transition">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
@@ -445,7 +451,7 @@
         <!-- =========================================================================
              EXPANDABLE BOX 3: KEY, SCALE & CHORD PROGRESSION TRACKER PANEL
              ========================================================================= -->
-        <details id="boxKeyEngine" class="collapsible-box studio-panel rounded-2xl overflow-hidden" open>
+        <details id="boxKeyEngine" class="collapsible-box studio-panel rounded-2xl overflow-hidden">
           <summary class="px-4 py-3.5 flex items-center justify-between gap-2 hover:bg-slate-900/50 transition">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
@@ -589,7 +595,7 @@
         <!-- =========================================================================
              EXPANDABLE BOX 4: FULL-SESSION AUDIO RECORDER PANEL
              ========================================================================= -->
-        <details id="boxSessionRecorder" class="collapsible-box studio-panel rounded-2xl overflow-hidden border border-slate-800" open>
+        <details id="boxSessionRecorder" class="collapsible-box studio-panel rounded-2xl overflow-hidden border border-slate-800">
           <summary class="px-4 py-3.5 flex items-center justify-between gap-2 hover:bg-slate-900/50 transition">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
@@ -662,7 +668,7 @@
     <!-- =========================================================================
          EXPANDABLE BOX 6: COMPREHENSIVE SESSION TELEMETRY LOG
          ========================================================================= -->
-    <details id="boxTelemetryLog" class="collapsible-box studio-panel rounded-2xl overflow-hidden" open>
+    <details id="boxTelemetryLog" class="collapsible-box studio-panel rounded-2xl overflow-hidden">
       <summary class="px-4 py-3.5 flex items-center justify-between gap-2 hover:bg-slate-900/50 transition">
         <div class="flex items-center gap-2.5">
           <div class="w-8 h-8 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
@@ -729,7 +735,7 @@
 <!-- =========================================================================
          EXPANDABLE BOX 7: SPEECH PROSODY, VOCAL KEY DISTRIBUTION & PERCEPTUAL ENGINE
          ========================================================================= -->
-    <details id="boxSpeechProsody" class="collapsible-box studio-panel rounded-2xl overflow-hidden border border-indigo-500/30 shadow-2xl shadow-indigo-950/20" open>
+    <details id="boxSpeechProsody" class="collapsible-box studio-panel rounded-2xl overflow-hidden border border-indigo-500/30 shadow-2xl shadow-indigo-950/20">
       <summary class="px-4 py-3.5 flex items-center justify-between gap-2 hover:bg-slate-900/50 transition">
         <div class="flex items-center gap-2.5">
           <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300">
@@ -3008,7 +3014,36 @@
         await new Promise(r => setTimeout(r, 390));
       }
     }
+    /***************************************************************************
+     * 14. PULL-TO-REFRESH GUARD & CLEAR SESSION CONFIRMATION
+     ***************************************************************************/
+    // Intercepts overscroll/pull-to-refresh at the very top of the document
+    // so mobile browsers don't wipe your session telemetry data.
+    let touchStartY = 0;
+    window.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
 
+    window.addEventListener('touchmove', (e) => {
+      const touchY = e.touches[0].clientY;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      // If user pulls down while already at the very top of the page,
+      // prevent default browser reload / refresh behavior.
+      if (scrollTop <= 0 && touchY > touchStartY) {
+        // Only prevent if it's a deliberate top-of-page overscroll pull
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+      }
+    }, { passive: false });
+
+    function confirmClearSession() {
+      const confirmed = window.confirm("Are you sure you want to clear all session notes, history, and recordings? This cannot be undone.");
+      if (confirmed) {
+        clearSessionLog();
+      }
+    }
     /***************************************************************************
      * 12. CONTROLS, CALIBRATION & EXPORT UTILITIES
      ***************************************************************************/
